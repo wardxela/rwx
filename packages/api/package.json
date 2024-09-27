@@ -1,5 +1,5 @@
 {
-  "name": "@acme/api",
+  "name": "@rwx/api",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -19,20 +19,20 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@acme/auth": "*",
-    "@acme/db": "*",
-    "@acme/validators": "*",
+    "@rwx/auth": "*",
+    "@rwx/db": "*",
+    "@rwx/validators": "*",
     "@trpc/server": "catalog:",
     "superjson": "2.2.1",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@acme/eslint-config": "*",
-    "@acme/prettier-config": "*",
-    "@acme/tsconfig": "*",
+    "@rwx/eslint-config": "*",
+    "@rwx/prettier-config": "*",
+    "@rwx/tsconfig": "*",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@rwx/prettier-config"
 }

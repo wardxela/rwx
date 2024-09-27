@@ -8,10 +8,10 @@
     "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
-    "db:push": "turbo -F @acme/db push",
-    "db:studio": "turbo -F @acme/db studio",
+    "db:push": "turbo -F @rwx/db push",
+    "db:studio": "turbo -F @rwx/db studio",
     "dev": "turbo watch dev --continue",
-    "dev:next": "turbo watch dev -F @acme/nextjs...",
+    "dev:next": "turbo watch dev -F @rwx/nextjs...",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
     "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
     "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
@@ -22,13 +22,13 @@
     "ui-add": "turbo run ui-add"
   },
   "devDependencies": {
-    "@acme/prettier-config": "*",
+    "@rwx/prettier-config": "*",
     "@turbo/gen": "^2.1.1",
     "prettier": "catalog:",
     "turbo": "^2.1.1",
     "typescript": "catalog:"
   },
-  "prettier": "@acme/prettier-config",
+  "prettier": "@rwx/prettier-config",
   "packageManager": "bun@1.1.29",
   "workspaces": [
     "apps/*",

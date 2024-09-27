@@ -1,5 +1,5 @@
 {
-  "name": "@acme/eslint-config",
+  "name": "@rwx/eslint-config",
   "private": true,
   "version": "0.3.0",
   "type": "module",
@@ -24,11 +24,11 @@
     "typescript-eslint": "^8.3.0"
   },
   "devDependencies": {
-    "@acme/prettier-config": "*",
-    "@acme/tsconfig": "*",
+    "@rwx/prettier-config": "*",
+    "@rwx/tsconfig": "*",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@rwx/prettier-config"
 }

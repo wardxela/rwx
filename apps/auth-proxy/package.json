@@ -1,5 +1,5 @@
 {
-  "name": "@acme/auth-proxy",
+  "name": "@rwx/auth-proxy",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,10 +13,10 @@
     "@auth/core": "0.34.2"
   },
   "devDependencies": {
-    "@acme/eslint-config": "*",
-    "@acme/prettier-config": "*",
-    "@acme/tailwind-config": "*",
-    "@acme/tsconfig": "*",
+    "@rwx/eslint-config": "*",
+    "@rwx/prettier-config": "*",
+    "@rwx/tailwind-config": "*",
+    "@rwx/tsconfig": "*",
     "@types/node": "^20.14.15",
     "eslint": "catalog:",
     "h3": "^1.12.0",
@@ -24,5 +24,5 @@
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@rwx/prettier-config"
 }
