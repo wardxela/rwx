@@ -5,8 +5,7 @@
   "type": "module",
   "exports": {
     ".": {
-      "@rwx/typescript-live-types": "./src/index.ts",
-      "import": "./dist/index.cjs"
+      "default": "./dist/index.ts"
     }
   },
   "license": "MIT",
