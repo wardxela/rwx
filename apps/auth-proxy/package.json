@@ -13,10 +13,10 @@
     "@auth/core": "0.34.2"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "*",
-    "@rwx/prettier-config": "*",
-    "@rwx/tailwind-config": "*",
-    "@rwx/tsconfig": "*",
+    "@rwx/eslint-config": "workspace:*",
+    "@rwx/prettier-config": "workspace:*",
+    "@rwx/tailwind-config": "workspace:*",
+    "@rwx/tsconfig": "workspace:*",
     "@types/node": "^20.14.15",
     "eslint": "catalog:",
     "h3": "^1.12.0",

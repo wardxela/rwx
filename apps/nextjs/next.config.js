@@ -7,16 +7,9 @@ createJiti(fileURLToPath(import.meta.url))("./src/env");
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-
-  /** Enables hot reloading for local packages without a build step */
-  transpilePackages: [
-    "@rwx/api",
-    "@rwx/auth",
-    "@rwx/db",
-    "@rwx/ui",
-    "@rwx/validators",
-  ],
-
+  experimental: {
+    // serverComponentsExternalPackages: ["@rwx/api", "@rwx/auth"],
+  },
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },

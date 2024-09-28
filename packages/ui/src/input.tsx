@@ -1,6 +1,8 @@
+"use client";
+
 import * as React from "react";
 
-import { cn } from "@rwx/ui";
+import { cn } from "./";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 

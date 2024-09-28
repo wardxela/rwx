@@ -5,33 +5,33 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+      "@rwx/typescript-live-types": "./src/index.ts",
+      "import": "./dist/index.cjs"
     }
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "tsc",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@rwx/auth": "*",
-    "@rwx/db": "*",
-    "@rwx/validators": "*",
+    "@rwx/auth": "workspace:*",
+    "@rwx/db": "workspace:*",
     "@trpc/server": "catalog:",
     "superjson": "2.2.1",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "*",
-    "@rwx/prettier-config": "*",
-    "@rwx/tsconfig": "*",
+    "@rwx/eslint-config": "workspace:*",
+    "@rwx/prettier-config": "workspace:*",
+    "@rwx/tsconfig": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "tsup": "catalog:",
     "typescript": "catalog:"
   },
   "prettier": "@rwx/prettier-config"

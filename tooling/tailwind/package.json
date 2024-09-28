@@ -20,9 +20,9 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "*",
-    "@rwx/prettier-config": "*",
-    "@rwx/tsconfig": "*",
+    "@rwx/eslint-config": "workspace:*",
+    "@rwx/prettier-config": "workspace:*",
+    "@rwx/tsconfig": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"

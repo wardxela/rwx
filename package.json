@@ -6,11 +6,11 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "clean": "git clean -xdf node_modules",
+    "clean": "git clean -xdf node_modules .turbo",
     "clean:workspaces": "turbo run clean",
     "db:push": "turbo -F @rwx/db push",
     "db:studio": "turbo -F @rwx/db studio",
-    "dev": "turbo watch dev --continue",
+    "dev": "turbo run dev --continue",
     "dev:next": "turbo watch dev -F @rwx/nextjs...",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
     "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
@@ -22,14 +22,18 @@
     "ui-add": "turbo run ui-add"
   },
   "devDependencies": {
-    "@rwx/prettier-config": "*",
+    "@rwx/api": "workspace:^",
+    "@rwx/auth": "workspace:^",
+    "@rwx/db": "workspace:^",
+    "@rwx/prettier-config": "workspace:*",
+    "@rwx/ui": "workspace:^",
     "@turbo/gen": "^2.1.1",
     "prettier": "catalog:",
     "turbo": "^2.1.1",
     "typescript": "catalog:"
   },
   "prettier": "@rwx/prettier-config",
-  "packageManager": "bun@1.1.29",
+  "packageManager": "pnpm@9.11.0",
   "workspaces": [
     "apps/*",
     "packages/*",

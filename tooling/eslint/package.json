@@ -24,8 +24,8 @@
     "typescript-eslint": "^8.3.0"
   },
   "devDependencies": {
-    "@rwx/prettier-config": "*",
-    "@rwx/tsconfig": "*",
+    "@rwx/prettier-config": "workspace:*",
+    "@rwx/tsconfig": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"

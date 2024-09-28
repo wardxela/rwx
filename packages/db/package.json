@@ -5,23 +5,23 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
+      "@rwx/typescript-live-types": "./src/index.ts",
+      "default": "./dist/index.cjs"
     },
     "./client": {
-      "types": "./dist/client.d.ts",
-      "default": "./src/client.ts"
+      "@rwx/typescript-live-types": "./src/client.ts",
+      "default": "./dist/client.cjs"
     },
     "./schema": {
-      "types": "./dist/schema.d.ts",
-      "default": "./src/schema.ts"
+      "@rwx/typescript-live-types": "./src/schema.ts",
+      "default": "./dist/schema.cjs"
     }
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "tsc",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "push": "pnpm with-env drizzle-kit push",
@@ -33,16 +33,20 @@
     "@vercel/postgres": "^0.9.0",
     "drizzle-orm": "^0.33.0",
     "drizzle-zod": "^0.5.1",
+    "pg": "^8.13.0",
+    "postgres": "^3.4.4",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "*",
-    "@rwx/prettier-config": "*",
-    "@rwx/tsconfig": "*",
+    "@rwx/eslint-config": "workspace:*",
+    "@rwx/prettier-config": "workspace:*",
+    "@rwx/tsconfig": "workspace:*",
+    "@types/pg": "^8.11.10",
     "dotenv-cli": "^7.4.2",
     "drizzle-kit": "^0.24.2",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "tsup": "catalog:",
     "typescript": "catalog:"
   },
   "prettier": "@rwx/prettier-config"

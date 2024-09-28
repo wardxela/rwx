@@ -14,11 +14,9 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@rwx/api": "*",
-    "@rwx/auth": "*",
-    "@rwx/db": "*",
-    "@rwx/ui": "*",
-    "@rwx/validators": "*",
+    "@rwx/api": "workspace:*",
+    "@rwx/auth": "workspace:*",
+    "@rwx/ui": "workspace:*",
     "@t3-oss/env-nextjs": "^0.11.1",
     "@tanstack/react-query": "catalog:",
     "@trpc/client": "catalog:",
@@ -32,10 +30,10 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "*",
-    "@rwx/prettier-config": "*",
-    "@rwx/tailwind-config": "*",
-    "@rwx/tsconfig": "*",
+    "@rwx/eslint-config": "workspace:*",
+    "@rwx/prettier-config": "workspace:*",
+    "@rwx/tailwind-config": "workspace:*",
+    "@rwx/tsconfig": "workspace:*",
     "@types/node": "^20.14.15",
     "@types/react": "catalog:react18",
     "@types/react-dom": "catalog:react18",

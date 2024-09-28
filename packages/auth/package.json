@@ -5,13 +5,19 @@
   "type": "module",
   "exports": {
     ".": {
-      "react-server": "./src/index.rsc.ts",
-      "default": "./src/index.ts"
+      "@rwx/typescript-live-types": "./src/index.ts",
+      "react-server": "./dist/index.rsc.cjs",
+      "default": "./dist/index.cjs"
     },
-    "./env": "./env.ts"
+    "./env": {
+      "@rwx/typescript-live-types": "./src/env.ts",
+      "default": "./dist/env.cjs"
+    }
   },
   "license": "MIT",
   "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
@@ -20,7 +26,7 @@
   "dependencies": {
     "@auth/core": "0.34.2",
     "@auth/drizzle-adapter": "^1.4.2",
-    "@rwx/db": "*",
+    "@rwx/db": "workspace:*",
     "@t3-oss/env-nextjs": "^0.11.1",
     "next": "^14.2.5",
     "next-auth": "5.0.0-beta.20",
@@ -29,11 +35,12 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "*",
-    "@rwx/prettier-config": "*",
-    "@rwx/tsconfig": "*",
+    "@rwx/eslint-config": "workspace:*",
+    "@rwx/prettier-config": "workspace:*",
+    "@rwx/tsconfig": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "tsup": "catalog:",
     "typescript": "catalog:"
   },
   "prettier": "@rwx/prettier-config"

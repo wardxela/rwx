@@ -5,22 +5,19 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/src/index.d.ts",
-      "default": "./src/index.ts"
+      "@rwx/typescript-live-types": "./src/index.ts",
+      "default": "./dist/index.cjs"
     },
     "./*": {
-      "types": "./dist/src/*.d.ts",
-      "default": [
-        "./src/*.ts",
-        "./src/*.tsx"
-      ]
+      "@rwx/typescript-live-types": "./src/*.tsx",
+      "default": "./dist/*.cjs"
     }
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "tsc",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
@@ -39,13 +36,14 @@
     "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "*",
-    "@rwx/prettier-config": "*",
-    "@rwx/tsconfig": "*",
+    "@rwx/eslint-config": "workspace:*",
+    "@rwx/prettier-config": "workspace:*",
+    "@rwx/tsconfig": "workspace:*",
     "@types/react": "catalog:react18",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "react": "catalog:react18",
+    "tsup": "catalog:",
     "typescript": "catalog:",
     "zod": "catalog:"
   },
