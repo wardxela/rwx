@@ -6,10 +6,9 @@
   },
   "scripts": {
     "build": "turbo run build",
+    "build:api": "turbo -F @rwx/api build:api",
     "clean": "git clean -xdf node_modules .turbo",
     "clean:workspaces": "turbo run clean",
-    "db:push": "turbo -F @rwx/db push",
-    "db:studio": "turbo -F @rwx/db studio",
     "dev": "turbo run dev --continue",
     "dev:next": "turbo watch dev -F @rwx/nextjs...",
     "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",

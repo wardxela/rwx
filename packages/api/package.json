@@ -5,23 +5,26 @@
   "type": "module",
   "exports": {
     ".": {
-      "default": "./dist/index.ts"
+      "default": "./src/index.ts"
     }
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc",
+    "build:api": "npx openapi-typescript http://localhost:3001/swagger-json -o ./src/schema.d.ts",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.12.2"
   },
   "devDependencies": {
     "@rwx/eslint-config": "workspace:*",
     "@rwx/prettier-config": "workspace:*",
     "@rwx/tsconfig": "workspace:*",
     "eslint": "catalog:",
+    "openapi-typescript": "^7.4.1",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
