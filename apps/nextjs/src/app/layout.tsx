@@ -6,30 +6,23 @@ import { cn } from "@rwx/ui";
 import { ThemeProvider, ThemeToggle } from "@rwx/ui/theme";
 import { Toaster } from "@rwx/ui/toast";
 
-import { TRPCReactProvider } from "~/trpc/react";
-
 import "~/app/globals.css";
 
 import { env } from "~/env";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    env.VERCEL_ENV === "production"
-      ? "https://turbo.t3.gg"
+    env.NODE_ENV === "production"
+      ? "https://todo.please.com"
       : "http://localhost:3000",
   ),
-  title: "Create T3 Turbo",
-  description: "Simple monorepo with shared backend for web & mobile apps",
+  title: "RWX",
+  description: "Feature-rich educational platform",
   openGraph: {
-    title: "Create T3 Turbo",
-    description: "Simple monorepo with shared backend for web & mobile apps",
-    url: "https://create-t3-turbo.vercel.app",
-    siteName: "Create T3 Turbo",
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@jullerino",
-    creator: "@jullerino",
+    title: "RWX",
+    description: "Feature-rich educational platform",
+    // url: "https://create-t3-turbo.vercel.app",
+    siteName: "RWX",
   },
 };
 
@@ -51,7 +44,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TRPCReactProvider>{props.children}</TRPCReactProvider>
+          {props.children}
           <div className="absolute bottom-4 right-4">
             <ThemeToggle />
           </div>

@@ -24,9 +24,7 @@
     /** Transpile using Bundler (not tsc) */
     "module": "Preserve",
     "moduleResolution": "Bundler",
-    "noEmit": true,
-
-    "customConditions": ["@rwx/typescript-live-types"]
+    "noEmit": true
   },
   "exclude": ["node_modules", "build", "dist", ".next"]
 }

@@ -5,18 +5,16 @@
   "type": "module",
   "exports": {
     ".": {
-      "@rwx/typescript-live-types": "./src/index.ts",
-      "default": "./dist/index.cjs"
+      "default": "./src/index.ts"
     },
     "./*": {
-      "@rwx/typescript-live-types": "./src/*.tsx",
-      "default": "./dist/*.cjs"
+      "default": "./src/*.tsx"
     }
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tsc",
+    "dev": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
@@ -43,7 +41,6 @@
     "eslint": "catalog:",
     "prettier": "catalog:",
     "react": "catalog:react18",
-    "tsup": "catalog:",
     "typescript": "catalog:",
     "zod": "catalog:"
   },

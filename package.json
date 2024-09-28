@@ -22,11 +22,10 @@
     "ui-add": "turbo run ui-add"
   },
   "devDependencies": {
-    "@rwx/api": "workspace:^",
-    "@rwx/auth": "workspace:^",
-    "@rwx/db": "workspace:^",
+    "@rwx/api": "workspace:*",
+    "@rwx/auth": "workspace:*",
     "@rwx/prettier-config": "workspace:*",
-    "@rwx/ui": "workspace:^",
+    "@rwx/ui": "workspace:*",
     "@turbo/gen": "^2.1.1",
     "prettier": "catalog:",
     "turbo": "^2.1.1",

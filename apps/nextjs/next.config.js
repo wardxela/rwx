@@ -7,9 +7,7 @@ createJiti(fileURLToPath(import.meta.url))("./src/env");
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-  experimental: {
-    // serverComponentsExternalPackages: ["@rwx/api", "@rwx/auth"],
-  },
+  transpilePackages: ["@rwx/auth", "@rwx/api", "@rwx/ui"],
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },

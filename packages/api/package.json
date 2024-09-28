@@ -11,19 +11,12 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tsc",
+    "dev": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
-  },
-  "dependencies": {
-    "@rwx/auth": "workspace:*",
-    "@rwx/db": "workspace:*",
-    "@trpc/server": "catalog:",
-    "superjson": "2.2.1",
-    "zod": "catalog:"
   },
   "devDependencies": {
     "@rwx/eslint-config": "workspace:*",
@@ -31,7 +24,6 @@
     "@rwx/tsconfig": "workspace:*",
     "eslint": "catalog:",
     "prettier": "catalog:",
-    "tsup": "catalog:",
     "typescript": "catalog:"
   },
   "prettier": "@rwx/prettier-config"
