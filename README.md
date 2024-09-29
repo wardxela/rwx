@@ -12,7 +12,7 @@ You can find the current task list [here](https://github.com/users/wardxela/proj
 
 General development plan:
 
-- [ ] Finish setting up development environment
+- [x] Finish setting up development environment
 - [ ] Configure CI/CD to easily ship new releases
 - [ ] Design database schemas
 - [ ] Create Backend with Nest.js
