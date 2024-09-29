@@ -6,7 +6,7 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "build:api": "turbo -F @rwx/api build:api",
+    "build:openapi": "turbo -F @rwx/nestjs build:openapi",
     "clean": "git clean -xdf node_modules .turbo",
     "clean:workspaces": "turbo run clean",
     "dev": "turbo run dev --continue",

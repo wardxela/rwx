@@ -9,7 +9,7 @@
       "dependsOn": ["^build"],
       "outputs": [".cache/tsbuildinfo.json", "dist/**"]
     },
-    "build:api": {
+    "build:openapi": {
       "cache": false
     },
     "dev": {
