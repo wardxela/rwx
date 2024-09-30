@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from "@nestjs/common";
 
-import { YandexAuthGuard } from "./strategy/yandex-auth.guard";
+import { YandexAuthGuard } from "./strategies/yandex-auth.guard";
 
 @Controller("auth")
 export class AuthController {

@@ -22,8 +22,6 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@rwx/api": "workspace:*",
-    "@rwx/auth": "workspace:*",
     "@rwx/prettier-config": "workspace:*",
     "@rwx/ui": "workspace:*",
     "@turbo/gen": "^2.1.1",
@@ -32,11 +30,11 @@
     "turbo": "^2.1.1",
     "typescript": "catalog:"
   },
-  "prettier": "@rwx/prettier-config",
-  "packageManager": "pnpm@9.11.0",
   "workspaces": [
     "apps/*",
     "packages/*",
     "tooling/*"
-  ]
+  ],
+  "packageManager": "pnpm@9.11.0",
+  "prettier": "@rwx/prettier-config"
 }

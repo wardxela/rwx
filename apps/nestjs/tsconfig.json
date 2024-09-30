@@ -16,5 +16,12 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true
   },
-  "exclude": ["scripts"]
+  "exclude": [
+    "../../node_modules",
+    "node_modules",
+    "scripts",
+    "test",
+    "dist",
+    "**/*spec.ts"
+  ]
 }

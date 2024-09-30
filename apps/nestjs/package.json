@@ -30,10 +30,15 @@
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.4.2",
+    "@rwx/db": "workspace:^",
+    "kysely": "^0.27.4",
+    "nestjs-kysely": "^1.0.0",
     "passport": "^0.7.0",
     "passport-oauth2": "^1.8.0",
+    "pg": "^8.13.0",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -46,6 +51,7 @@
     "@types/jest": "^29.5.2",
     "@types/node": "catalog:",
     "@types/passport-oauth2": "^1.4.17",
+    "@types/pg": "^8.11.10",
     "@types/supertest": "^6.0.0",
     "eslint": "catalog:",
     "jest": "^29.5.0",

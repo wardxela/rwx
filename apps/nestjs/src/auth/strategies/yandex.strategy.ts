@@ -1,23 +1,17 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy, StrategyOptions } from "passport-oauth2";
+import { ConfigService } from "src/config/config.service";
 
 @Injectable()
 export class YandexStrategy extends PassportStrategy(Strategy, "yandex") {
-  constructor(private configService: ConfigService) {
-    const clientID = configService.get<string>("YANDEX_CLIENT_ID");
-    const clientSecret = configService.get<string>("YANDEX_CLIENT_SECRET");
-    // TODO: create general-purpose validation to avoid such checks in the future
-    if (!clientID || !clientSecret) {
-      throw new Error("YANDEX_CLIENT_ID and YANDEX_CLIENT_SECRET must be set");
-    }
+  constructor(configService: ConfigService) {
     super({
       authorizationURL: "https://oauth.yandex.ru/authorize",
       tokenURL: "https://oauth.yandex.ru/token",
-      clientID,
-      clientSecret,
-      // TODO: move to .env
+      clientID: configService.get("YANDEX_CLIENT_ID"),
+      clientSecret: configService.get("YANDEX_CLIENT_SECRET"),
+      // TODO: move host to .env. Path should be the same i guess.
       callbackURL: "http://localhost:3001/auth/yandex/callback",
     } satisfies StrategyOptions);
   }
