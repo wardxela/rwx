@@ -1,0 +1,18 @@
+{
+  "name": "@rwx/db",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.ts"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "prisma generate",
+    "clean": "git clean -xdf .cache .turbo dist node_modules"
+  },
+  "devDependencies": {
+    "prisma": "^5.20.0",
+    "prisma-kysely": "^1.8.0"
+  }
+}
