@@ -17,6 +17,7 @@ export class YandexStrategy extends PassportStrategy(Strategy, "yandex") {
   }
 
   validate(accessToken: string, refreshToken: string) {
+    // We should
     return {
       name: "test",
       accessToken,

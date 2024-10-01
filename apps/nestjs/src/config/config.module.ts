@@ -9,7 +9,7 @@ import { validate } from "./env.validation";
   imports: [
     NestConfigModule.forRoot({
       envFilePath: "../../.env",
-      validate: validate,
+      validate,
     }),
   ],
   providers: [ConfigService],
