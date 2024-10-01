@@ -1,17 +1,13 @@
 import { Injectable } from "@nestjs/common";
+import { Selectable } from "kysely";
+import { ProviderUserInfo, UsersService } from "src/users/users.service";
 
-export interface ProviderUserInfo {
-  provider: string;
-  user: {
-    id: string;
-    name: string;
-    avatar?: string;
-    email?: string;
-  };
-}
+import { User } from "@rwx/db";
 
 @Injectable()
 export class AuthService {
+  constructor(private readonly usersService: UsersService) {}
+
   /**
    * Inspired by Auth.js.
    * @link https://authjs.dev/
@@ -33,7 +29,25 @@ export class AuthService {
    * If existing user logs in via another provider with the same email,
    * we return existing user instead of creating a new one.
    */
-  oauth2Login(info: ProviderUserInfo) {
-    console.log(info);
+  async oauth2Login(providerUser: ProviderUserInfo): Promise<Selectable<User>> {
+    const user = await this.usersService.findByProviderId(
+      providerUser.provider,
+      providerUser.user.id,
+    );
+    if (user) {
+      return user;
+    }
+    if (providerUser.user.email) {
+      const user = await this.usersService.findByEmail(providerUser.user.email);
+      if (user) {
+        await this.usersService.connectAccount({
+          userId: user.id,
+          provider: providerUser.provider,
+          providerId: providerUser.user.id,
+        });
+        return user;
+      }
+    }
+    return this.usersService.createByProvider(providerUser);
   }
 }

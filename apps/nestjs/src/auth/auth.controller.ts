@@ -13,6 +13,7 @@ export class AuthController {
   @UseGuards(YandexAuthGuard)
   @Get("yandex/callback")
   callbackYandex() {
+    // TODO: redirect back to Next.js app
     console.log("here you are");
   }
 
