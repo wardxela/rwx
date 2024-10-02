@@ -4,16 +4,14 @@ packages:
   - tooling/*
 
 catalog:
-  "@tanstack/react-query": ^5.51.23
-  "@trpc/client": ^11.0.0-rc.477
-  "@trpc/react-query": ^11.0.0-rc.477
-  "@trpc/server": ^11.0.0-rc.477
   "@types/node": ^20.14.15
+  "@nestjs/swagger": ^7.4.2
   eslint: ^9.9.0
   prettier: ^3.3.3
   tailwindcss: ^3.4.10
   typescript: ^5.5.4
   zod: ^3.23.8
+  tsx: ^4.19.1
 
 catalogs:
   react18:

@@ -1,5 +1,5 @@
 {
-  "extends": "@rwx/tsconfig/internal-package.json",
-  "include": ["src"],
+  "extends": "@rwx/tsconfig/base.json",
+  "include": ["src", "scripts"],
   "exclude": ["node_modules"]
 }

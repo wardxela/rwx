@@ -16,9 +16,6 @@
       "cache": false,
       "persistent": true
     },
-    "db:dev": {
-      "outputs": ["dist/**"]
-    },
     "format": {
       "outputs": [".cache/.prettiercache"],
       "outputLogs": "new-only"

@@ -1,22 +1,18 @@
-import fs from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { NestFactory } from "@nestjs/core";
+import fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import openapiTS, { astToString } from "openapi-typescript";
 
-import { AppModule } from "../src/app.module";
+import { createApp } from "@rwx/nestjs";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-const apiClientSchemaPath = path.resolve(
-  dirname,
-  "../../../packages/api/src/schema.d.ts",
-);
+const apiClientSchemaPath = path.resolve(dirname, "../src/dist/schema.d.ts");
 
 async function main() {
-  const app = await NestFactory.create(AppModule);
+  const app = await createApp();
 
   const config = new DocumentBuilder()
     .setTitle("RWX API")
