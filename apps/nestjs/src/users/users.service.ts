@@ -23,6 +23,13 @@ export interface ConnectAccountParams {
 @Injectable()
 export class UsersService {
   constructor(@InjectKysely() private readonly db: Kysely<DB>) {}
+  async findById(id: string): Promise<Selectable<User>> {
+    return this.db
+      .selectFrom("User")
+      .where("User.id", "=", id)
+      .selectAll("User")
+      .executeTakeFirstOrThrow();
+  }
 
   async findByEmail(email: string): Promise<Selectable<User> | undefined> {
     return this.db

@@ -4,6 +4,9 @@ import { ProviderUserInfo, UsersService } from "src/users/users.service";
 
 import { User } from "@rwx/db";
 
+// TODO: augment with Express.User
+export type SessionUser = Selectable<User>;
+
 @Injectable()
 export class AuthService {
   constructor(private readonly usersService: UsersService) {}
@@ -29,7 +32,7 @@ export class AuthService {
    * If existing user logs in via another provider with the same email,
    * we return existing user instead of creating a new one.
    */
-  async oauth2Login(providerUser: ProviderUserInfo): Promise<Selectable<User>> {
+  async oauth2Login(providerUser: ProviderUserInfo): Promise<SessionUser> {
     const user = await this.usersService.findByProviderId(
       providerUser.provider,
       providerUser.user.id,
