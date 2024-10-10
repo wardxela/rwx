@@ -1,4 +1,4 @@
-import api from "@rwx/api";
+import api from "~/shared/api";
 
 export default async function HomePage() {
   const result = await api
