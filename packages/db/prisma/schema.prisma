@@ -33,3 +33,11 @@ model Account {
   
   @@unique([providerName, providerId])
 }
+
+model Session {
+  sid    String   @id
+  sess   Json
+  expire DateTime @db.Timestamp(6)
+
+  @@index([expire])
+}
