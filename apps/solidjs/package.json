@@ -27,9 +27,11 @@
     "@rwx/prettier-config": "workspace:*",
     "@rwx/tailwind-config": "workspace:*",
     "@rwx/tsconfig": "workspace:*",
+    "@tailwindcss/postcss": "catalog:",
     "dotenv-cli": "^7.4.2",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },
   "engines": {

@@ -24,7 +24,6 @@
   "devDependencies": {
     "@rwx/api": "workspace:^",
     "@rwx/prettier-config": "workspace:*",
-    "@rwx/ui": "workspace:*",
     "@turbo/gen": "^2.1.3",
     "@types/node": "^22.7.5",
     "husky": "^9.1.6",
