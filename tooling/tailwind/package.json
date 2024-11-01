@@ -9,16 +9,11 @@
   "license": "MIT",
   "scripts": {
     "clean": "git clean -xdf .cache .turbo node_modules",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
-    "typecheck": "tsc"
+    "format": "prettier --check . --ignore-path ../../.gitignore"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "workspace:*",
     "@rwx/prettier-config": "workspace:*",
-    "@rwx/tsconfig": "workspace:*",
-    "eslint": "catalog:",
-    "prettier": "catalog:",
-    "typescript": "catalog:"
+    "prettier": "catalog:"
   },
   "prettier": "@rwx/prettier-config"
 }
