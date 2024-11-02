@@ -28,6 +28,7 @@
     "typecheck": "tsc --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@kobalte/core": "^0.13.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "solid-js": "catalog:",

@@ -10,7 +10,7 @@
     "clean": "git clean -xdf .cache .next .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
-    "typecheck": "tsc",
+    "typecheck": "tsc --customConditions disable",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
