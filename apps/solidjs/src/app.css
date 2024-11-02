@@ -1,1 +1,2 @@
 @import "@rwx/tailwind-config/style.css";
+@source '../../../node_modules/@rwx/ui/dist';

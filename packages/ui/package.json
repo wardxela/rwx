@@ -1,0 +1,46 @@
+{
+  "name": "@rwx/ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./utils": {
+      "@rwx/live-types": "./src/lib/utils.ts",
+      "types": "./dist/lib/utils.d.ts",
+      "default": "./dist/lib/utils.js"
+    },
+    "./components/*": {
+      "@rwx/live-types": "./src/components/*.tsx",
+      "types": "./dist/components/*.d.ts",
+      "default": "./dist/components/*.jsx"
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsup",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsup --watch",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "solid-js": "catalog:",
+    "tailwind-merge": "^2.5.4"
+  },
+  "devDependencies": {
+    "@rwx/eslint-config": "workspace:*",
+    "@rwx/prettier-config": "workspace:*",
+    "@rwx/tsconfig": "workspace:*",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@rwx/prettier-config"
+}

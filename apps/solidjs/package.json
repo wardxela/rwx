@@ -15,11 +15,12 @@
   },
   "dependencies": {
     "@rwx/api": "workspace:*",
+    "@rwx/ui": "workspace:*",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.0.10",
     "openapi-fetch": "^0.12.2",
-    "solid-js": "^1.9.2",
+    "solid-js": "catalog:",
     "vinxi": "^0.4.3"
   },
   "devDependencies": {

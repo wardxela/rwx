@@ -4,14 +4,11 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "target": "ESNext",
-    "module": "ESNext",
-    "allowSyntheticDefaultImports": true,
-    "types": ["vinxi/types/client"],
+    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
     }
   },
   "include": ["."],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

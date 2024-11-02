@@ -6,10 +6,12 @@ packages:
 catalog:
   "@types/node": ^20.14.15
   "@nestjs/swagger": ^7.4.2
+  "solid-js": ^1.9.2
+  "@tailwindcss/postcss": 4.0.0-alpha.31
   eslint: ^9.9.0
   prettier: ^3.3.3
   tailwindcss: ^4.0.0-alpha.31
-  "@tailwindcss/postcss": 4.0.0-alpha.31
   typescript: ^5.5.4
   zod: ^3.23.8
   tsx: ^4.19.1
+  tsup: ^8.3.5
