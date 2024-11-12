@@ -89,4 +89,5 @@ export const Breadcrumb: Component = () => {
 const knownSegments: Record<string, string> = {
   courses: "Курсы",
   blog: "Блог",
+  login: "Войти",
 };
