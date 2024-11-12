@@ -165,7 +165,7 @@ export default function HomePage() {
       <section class="mb-24">
         <div class="container flex items-center justify-between gap-10">
           <img
-            src="/improve-skills.png"
+            src="/improve-skills.svg"
             alt="improve your skills"
             class="max-w-xl"
           />

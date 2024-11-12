@@ -6,8 +6,8 @@ export interface BlogArticleCardLinkProps {}
 export const BlogArticleCardLink: Component<BlogArticleCardLinkProps> = () => {
   return (
     <a
-      href="/"
-      class="block rounded-2xl border border-gray-200 transition hover:-translate-y-6 hover:shadow-lg"
+      href="/blog/1"
+      class="block rounded-2xl border border-gray-200 transition hover:-translate-y-2 hover:shadow-lg"
     >
       <img
         src="/article-example.png"
@@ -23,7 +23,8 @@ export const BlogArticleCardLink: Component<BlogArticleCardLinkProps> = () => {
           <div class="text-neutral-600">Jan 24, 2024</div>
         </div>
         <div class="text-lg text-neutral-600">
-          Lorem Ipsum is simply dummy text of the printing
+          Looking for an amazing & well-functional LearnPress WordPress
+          Theme?...
         </div>
       </div>
     </a>
