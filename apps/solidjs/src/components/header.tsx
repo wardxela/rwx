@@ -1,56 +1,52 @@
+import type { ParentComponent } from "solid-js";
+import { A } from "@solidjs/router";
+
 export const Header = () => {
   return (
     <header>
       <div class="container flex items-center justify-between">
-        <a href="/" class="flex items-center gap-1">
+        <A href="/" class="flex items-center gap-1">
           <img src="/icon.svg" alt="logotype" />
           <div class="text-3xl font-bold">ЧПИ</div>
-        </a>
+        </A>
         <nav>
           <ul class="flex h-full items-center">
             <li>
-              <a
-                href="/"
-                class="block bg-neutral-100 px-5 py-6 leading-tight font-semibold text-orange-500 capitalize"
-              >
-                Главная
-              </a>
+              <HeaderLink href="/">Главная</HeaderLink>
             </li>
             <li>
-              <a
-                href="/"
-                class="block px-5 py-6 leading-tight font-semibold capitalize transition hover:bg-neutral-100 hover:text-orange-500"
-              >
-                Курсы
-              </a>
+              <HeaderLink href="/courses">Курсы</HeaderLink>
             </li>
             <li>
-              <a
-                href="/"
-                class="block px-5 py-6 leading-tight font-semibold capitalize transition hover:bg-neutral-100 hover:text-orange-500"
-              >
-                Блог
-              </a>
-            </li>
-            <li>
-              <a
-                href="/"
-                class="block px-5 py-6 leading-tight font-semibold capitalize transition hover:bg-neutral-100 hover:text-orange-500"
-              >
-                Больше
-              </a>
+              <HeaderLink href="/blog">Блог</HeaderLink>
             </li>
           </ul>
         </nav>
         <div class="flex items-center gap-5">
-          <a href="/login" class="font-medium transition hover:text-orange-500">
-            Войти / Зарегистрироваться
-          </a>
+          <HeaderLink href="/login">Войти / Зарегистрироваться</HeaderLink>
           <a href="" class="grid place-items-center">
             <img src="/search.svg" alt="search" />
           </a>
         </div>
       </div>
     </header>
+  );
+};
+
+interface HeaderLinkProps {
+  href: string;
+}
+
+const HeaderLink: ParentComponent<HeaderLinkProps> = (props) => {
+  return (
+    <A
+      href={props.href}
+      class="block px-5 py-6 leading-tight font-semibold transition"
+      inactiveClass="hover:bg-neutral-100 hover:text-orange-500"
+      activeClass="bg-neutral-100 text-orange-500"
+      end
+    >
+      {props.children}
+    </A>
   );
 };

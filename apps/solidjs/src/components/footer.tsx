@@ -1,6 +1,14 @@
-export const Footer = () => {
+import type { Component } from "solid-js";
+
+import { cn } from "@rwx/ui/utils";
+
+export interface FooterProps {
+  class?: string;
+}
+
+export const Footer: Component<FooterProps> = (props) => {
   return (
-    <footer class="bg-neutral-100">
+    <footer class={cn("bg-neutral-100", props.class)}>
       <div class="container">
         <div class="flex grow flex-wrap gap-7 py-24">
           <div class="max-w-sm shrink-0">
