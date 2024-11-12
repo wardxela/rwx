@@ -8,7 +8,6 @@ export class ConfigService {
   constructor(private configService: NestConfigService) {}
 
   get<K extends keyof Env>(key: K): Env[K] {
-     
     return this.configService.get(key)!;
   }
 }

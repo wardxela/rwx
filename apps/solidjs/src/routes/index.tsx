@@ -1,7 +1,9 @@
 import { For } from "solid-js";
 
-import { Header } from "~/components/header";
+import { Button } from "@rwx/ui/components/button";
+
 import type { CategoryLinkProps } from "~/features/categories";
+import { Header } from "~/components/header";
 import { CategoryLink } from "~/features/categories";
 import { CourseRelevantCard } from "~/features/courses";
 
@@ -24,9 +26,7 @@ export default function Home() {
               Учись онлайн, развивай навыки, достигай целей – с нами обучение
               просто и доступно.
             </p>
-            <button class="inline-flex h-12 cursor-pointer items-center justify-center gap-2.5 rounded-3xl bg-orange-500 px-6 py-2.5 text-lg leading-7 font-medium text-white">
-              Список Курсов
-            </button>
+            <Button>Список Курсов</Button>
           </div>
         </div>
       </section>
@@ -210,21 +210,85 @@ export default function Home() {
             Что студенты говорят о ЧПИ
           </div>
           <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7">
-            <div class="inline-flex flex-col items-start justify-start gap-7 rounded-3xl border border-gray-200 px-8 py-10">
-              <div class="self-stretch text-lg leading-7 font-normal text-black">
+            <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
+              <img src="/quote.svg" alt="quote" class="mb-5 w-10" />
+              <div class="mb-7 text-lg leading-7">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s. Lorem Ipsum is simply dummy text of
+                the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s.
+              </div>
+              <div class="mt-auto mb-2 text-xl font-semibold capitalize">
+                Кто-то там
+              </div>
+              <div class="text-lg leading-7 text-neutral-600">Дизайнер</div>
+            </div>
+            <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
+              <img src="/quote.svg" alt="quote" class="mb-5 w-10" />
+              <div class="mb-7 text-lg leading-7">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s.
               </div>
-              <div class="flex flex-col items-start justify-start gap-2">
-                <div class="text-xl leading-normal font-semibold text-black capitalize">
-                  Кто-то там
-                </div>
-                <div class="text-lg leading-7 font-normal text-neutral-600">
-                  Дизайнер
-                </div>
+              <div class="mt-auto mb-2 text-xl font-semibold capitalize">
+                Кто-то там
+              </div>
+              <div class="text-lg leading-7 text-neutral-600">Дизайнер</div>
+            </div>
+            <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
+              <img src="/quote.svg" alt="quote" class="mb-5 w-10" />
+              <div class="mb-7 text-lg leading-7">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s.
+              </div>
+              <div class="mt-auto mb-2 text-xl font-semibold capitalize">
+                Кто-то там
+              </div>
+              <div class="text-lg leading-7 text-neutral-600">Дизайнер</div>
+            </div>
+            <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
+              <img src="/quote.svg" alt="quote" class="mb-5 w-10" />
+              <div class="mb-7 text-lg leading-7">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s.
+              </div>
+              <div class="mt-auto mb-2 text-xl font-semibold capitalize">
+                Кто-то там
+              </div>
+              <div class="text-lg leading-7 text-neutral-600">Дизайнер</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="mb-24">
+        <div class="mx-auto max-w-7xl px-5">
+          <div class="flex items-center rounded-3xl bg-gradient-to-r from-sky-200 to-purple-200 px-12 py-16">
+            <div class="grid size-32 place-items-center rounded-full bg-white">
+              <img src="/student.svg" alt="student" class="w-16" />
+            </div>
+            <h1 class="ml-8 text-xl font-semibold">Давайте Начнем Учиться</h1>
+            <Button class="ml-auto">Я студент</Button>
+            <Button class="ml-5">Стать Преподавателем</Button>
+          </div>
+        </div>
+      </section>
+      <section class="mb-24">
+        <div class="mx-auto max-w-7xl px-5">
+          <div class="mb-16 flex items-center justify-between">
+            <div>
+              <div class="mb-3 text-[32px] leading-10 font-semibold">
+                Последние Публикации
+              </div>
+              <div class="text-lg leading-7 text-neutral-600">
+                Ознакомьтесь с нашими бесплатными статьями
               </div>
             </div>
+            <button class="inline-flex h-12 cursor-pointer items-center justify-center gap-2.5 rounded-3xl border-2 border-neutral-400 px-6 py-2.5">
+              <div class="text-lg leading-7 font-medium">Все Статьи</div>
+            </button>
           </div>
         </div>
       </section>

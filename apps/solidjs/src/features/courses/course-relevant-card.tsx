@@ -1,4 +1,4 @@
-import type { Component} from "solid-js";
+import type { Component } from "solid-js";
 import { Match, Show, Switch } from "solid-js";
 
 import {

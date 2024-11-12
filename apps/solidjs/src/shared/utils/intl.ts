@@ -2,6 +2,7 @@ const russianCardinalPluralRules = new Intl.PluralRules("ru", {
   type: "cardinal",
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const russianOrdinalPluralRules = new Intl.PluralRules("ru", {
   type: "ordinal",
 });
