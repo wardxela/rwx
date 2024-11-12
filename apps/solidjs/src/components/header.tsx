@@ -1,7 +1,7 @@
-export function Header() {
+export const Header = () => {
   return (
     <header>
-      <div class="mx-auto flex max-w-7xl items-center justify-between px-5">
+      <div class="container flex items-center justify-between">
         <a href="/" class="flex items-center gap-1">
           <img src="/icon.svg" alt="logotype" />
           <div class="text-3xl font-bold">ЧПИ</div>
@@ -53,4 +53,4 @@ export function Header() {
       </div>
     </header>
   );
-}
+};

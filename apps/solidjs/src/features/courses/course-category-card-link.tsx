@@ -2,14 +2,16 @@ import type { Component } from "solid-js";
 
 import { getRussianOrdinalPluralWord } from "~/shared/utils/intl";
 
-export interface CategoryLinkProps {
+export interface CourseCategoryLinkProps {
   href: string;
   imgSrc: string;
   title: string;
   count: number;
 }
 
-export const CategoryLink: Component<CategoryLinkProps> = (props) => {
+export const CourseCategoryLink: Component<CourseCategoryLinkProps> = (
+  props,
+) => {
   const coursesText = () =>
     getRussianOrdinalPluralWord({
       count: props.count,

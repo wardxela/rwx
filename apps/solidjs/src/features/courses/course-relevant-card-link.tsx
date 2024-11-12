@@ -6,7 +6,7 @@ import {
   getRussianOrdinalPluralWord,
 } from "~/shared/utils/intl";
 
-export interface CourseRelevantCardProps {
+export interface CourseRelevantCardLinkProps {
   preview: string;
   title: string;
   author: string;
@@ -17,7 +17,7 @@ export interface CourseRelevantCardProps {
   oldPrice?: number;
 }
 
-export const CourseRelevantCard: Component<CourseRelevantCardProps> = (
+export const CourseRelevantCardLink: Component<CourseRelevantCardLinkProps> = (
   props,
 ) => {
   const durationText = () => formatTimeDelta(props.durationMs);

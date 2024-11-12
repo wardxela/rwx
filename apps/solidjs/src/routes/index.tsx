@@ -2,12 +2,13 @@ import { For } from "solid-js";
 
 import { Button } from "@rwx/ui/components/button";
 
-import type { CategoryLinkProps } from "~/features/categories";
+import type { CourseCategoryLinkProps } from "~/features/courses";
+import { Footer } from "~/components/footer";
 import { Header } from "~/components/header";
-import { CategoryLink } from "~/features/categories";
-import { CourseRelevantCard } from "~/features/courses";
+import { BlogArticleCardLink } from "~/features/blog/blog-article-card-link";
+import { CourseCategoryLink, CourseRelevantCardLink } from "~/features/courses";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <Header />
@@ -17,7 +18,7 @@ export default function Home() {
           src="/hero-bg.png"
           alt="background"
         />
-        <div class="mx-auto flex min-h-[700px] max-w-7xl items-center px-5">
+        <div class="container flex min-h-[700px] items-center">
           <div class="max-w-lg">
             <h1 class="mb-6 text-5xl leading-[60px] font-semibold text-black">
               Улучши свои <br /> навыки
@@ -26,12 +27,12 @@ export default function Home() {
               Учись онлайн, развивай навыки, достигай целей – с нами обучение
               просто и доступно.
             </p>
-            <Button>Список Курсов</Button>
+            <Button size="lg">Список Курсов</Button>
           </div>
         </div>
       </section>
       <section class="mb-24">
-        <div class="mx-auto max-w-7xl px-5">
+        <div class="container">
           <div class="mb-16 flex items-center justify-between">
             <div>
               <h2 class="mb-3 text-3xl leading-10 font-semibold">Категории</h2>
@@ -39,19 +40,19 @@ export default function Home() {
                 Ознакомьтесь с нашими популярными категориями
               </div>
             </div>
-            <button class="inline-flex h-12 cursor-pointer items-center justify-center gap-2.5 rounded-3xl border-2 border-neutral-400 px-6 py-2.5">
-              <div class="text-lg leading-7 font-medium">Все Категории</div>
-            </button>
+            <Button size="lg" variant="outline">
+              Все Категории
+            </Button>
           </div>
           <div class="grid grid-cols-[repeat(auto-fill,minmax(234px,1fr))] gap-7">
             <For each={staticCategories}>
-              {(item) => <CategoryLink {...item} />}
+              {(item) => <CourseCategoryLink {...item} />}
             </For>
           </div>
         </div>
       </section>
       <section class="mb-24">
-        <div class="mx-auto max-w-7xl px-5">
+        <div class="container">
           <div class="mb-16 flex items-center justify-between">
             <div>
               <div class="mb-3 text-[32px] leading-10 font-semibold">
@@ -61,12 +62,12 @@ export default function Home() {
                 Ознакомьтесь с нашими популярными курсами
               </div>
             </div>
-            <button class="inline-flex h-12 cursor-pointer items-center justify-center gap-2.5 rounded-3xl border-2 border-neutral-400 px-6 py-2.5">
-              <div class="text-lg leading-7 font-medium">Все Курсы</div>
-            </button>
+            <Button size="lg" variant="outline">
+              Все Курсы
+            </Button>
           </div>
           <div class="grid grid-cols-[repeat(auto-fill,minmax(410px,1fr))] gap-7">
-            <CourseRelevantCard
+            <CourseRelevantCardLink
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
@@ -76,7 +77,7 @@ export default function Home() {
               oldPrice={19999}
               price={0}
             />
-            <CourseRelevantCard
+            <CourseRelevantCardLink
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
@@ -86,7 +87,7 @@ export default function Home() {
               oldPrice={19999}
               price={11999}
             />
-            <CourseRelevantCard
+            <CourseRelevantCardLink
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
@@ -95,7 +96,7 @@ export default function Home() {
               studentsCount={102}
               price={29999}
             />
-            <CourseRelevantCard
+            <CourseRelevantCardLink
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
@@ -108,7 +109,7 @@ export default function Home() {
         </div>
       </section>
       <div class="relative mb-24">
-        <div class="mx-auto max-w-7xl px-5">
+        <div class="container">
           <div class="relative p-12">
             <img
               src="/add-ons-bg.png"
@@ -126,17 +127,13 @@ export default function Home() {
                 Новый уровень плагина ЧПИ - ЧПИ для WordPress. Более мощный,
                 гибкий и волшебный внутри.
               </div>
-              <div class="inline-flex h-12 cursor-pointer items-center justify-center gap-2.5 rounded-3xl bg-orange-500 px-6 py-2.5 text-white">
-                <div class="text-lg leading-[27px] font-medium capitalize">
-                  Исследуйте курс
-                </div>
-              </div>
+              <Button size="lg">Исследуйте курс</Button>
             </div>
           </div>
         </div>
       </div>
       <div class="mb-24">
-        <div class="mx-auto grid max-w-7xl grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7 px-5">
+        <div class="container grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7">
           <div class="rounded-3xl bg-neutral-100 py-12 text-center">
             <div class="mb-3 text-2xl leading-10 font-semibold text-orange-500 capitalize">
               25K+
@@ -166,7 +163,7 @@ export default function Home() {
         </div>
       </div>
       <section class="mb-24">
-        <div class="mx-auto flex max-w-7xl items-center justify-between gap-10 px-5">
+        <div class="container flex items-center justify-between gap-10">
           <img
             src="/improve-skills.png"
             alt="improve your skills"
@@ -202,10 +199,10 @@ export default function Home() {
         </div>
       </section>
       <section class="mb-24">
-        <div class="mx-auto max-w-7xl px-5">
-          <h1 class="mb-3 text-center text-3xl leading-10 font-semibold capitalize">
+        <div class="container">
+          <h2 class="mb-3 text-center text-3xl leading-10 font-semibold capitalize">
             Отзывы студентов
-          </h1>
+          </h2>
           <div class="font- mb-12 text-center text-lg leading-7 text-neutral-600">
             Что студенты говорят о ЧПИ
           </div>
@@ -264,19 +261,23 @@ export default function Home() {
         </div>
       </section>
       <section class="mb-24">
-        <div class="mx-auto max-w-7xl px-5">
+        <div class="container">
           <div class="flex items-center rounded-3xl bg-gradient-to-r from-sky-200 to-purple-200 px-12 py-16">
             <div class="grid size-32 place-items-center rounded-full bg-white">
               <img src="/student.svg" alt="student" class="w-16" />
             </div>
-            <h1 class="ml-8 text-xl font-semibold">Давайте Начнем Учиться</h1>
-            <Button class="ml-auto">Я студент</Button>
-            <Button class="ml-5">Стать Преподавателем</Button>
+            <h2 class="ml-8 text-xl font-semibold">Давайте Начнем Учиться</h2>
+            <Button size="lg" variant="outline-primary" class="ml-auto">
+              Я студент
+            </Button>
+            <Button size="lg" class="ml-5">
+              Стать Преподавателем
+            </Button>
           </div>
         </div>
       </section>
       <section class="mb-24">
-        <div class="mx-auto max-w-7xl px-5">
+        <div class="container">
           <div class="mb-16 flex items-center justify-between">
             <div>
               <div class="mb-3 text-[32px] leading-10 font-semibold">
@@ -286,17 +287,23 @@ export default function Home() {
                 Ознакомьтесь с нашими бесплатными статьями
               </div>
             </div>
-            <button class="inline-flex h-12 cursor-pointer items-center justify-center gap-2.5 rounded-3xl border-2 border-neutral-400 px-6 py-2.5">
-              <div class="text-lg leading-7 font-medium">Все Статьи</div>
-            </button>
+            <Button size="lg" variant="outline">
+              Все Статьи
+            </Button>
+          </div>
+          <div class="grid grid-cols-[repeat(auto-fill,minmax(410px,1fr))] gap-7">
+            <BlogArticleCardLink />
+            <BlogArticleCardLink />
+            <BlogArticleCardLink />
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }
 
-const staticCategories: CategoryLinkProps[] = [
+const staticCategories: CourseCategoryLinkProps[] = [
   {
     href: "/",
     imgSrc: "/design.svg",

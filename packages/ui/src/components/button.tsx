@@ -8,7 +8,7 @@ import { splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
 const buttonVariants = cva(
-  "ring-offset-background focus-visible:ring-ring inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
+  "ring-offset-background focus-visible:ring-ring inline-flex cursor-pointer items-center justify-center font-medium transition-colors select-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -17,16 +17,18 @@ const buttonVariants = cva(
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
           "border-input hover:bg-accent hover:text-accent-foreground border",
+        "outline-primary":
+          "border-primary text-primary hover:bg-primary/90 hover:text-primary-foreground border",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "size-10",
+        default: "h-10 rounded-md px-4 py-2 text-sm",
+        sm: "h-9 rounded-md px-3 text-sm",
+        lg: "h-12 rounded-3xl px-6 py-2.5 text-lg",
+        icon: "size-10 text-sm",
       },
     },
     defaultVariants: {
