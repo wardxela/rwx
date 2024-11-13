@@ -1,3 +1,4 @@
+import * as path from "node:path";
 import { Global, Module } from "@nestjs/common";
 import { ConfigModule as NestConfigModule } from "@nestjs/config";
 
@@ -8,7 +9,7 @@ import { validate } from "./env.validation";
 @Module({
   imports: [
     NestConfigModule.forRoot({
-      envFilePath: "../../.env",
+      envFilePath: path.resolve(__dirname, "../../../../.env"),
       validate,
     }),
   ],
