@@ -1,5 +1,5 @@
 @import "@rwx/tailwind-config/style.css";
-@source '../../../node_modules/@rwx/ui/dist';
+@source '../../../node_modules/@rwx/ui/src';
 
 html,
 body,
