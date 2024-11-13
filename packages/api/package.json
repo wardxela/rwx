@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./dist/schema.d.ts"
+    ".": "./src/schema.d.ts"
   },
   "license": "MIT",
   "scripts": {

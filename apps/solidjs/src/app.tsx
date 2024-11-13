@@ -6,8 +6,10 @@ import { Suspense } from "solid-js";
 import "./app.css";
 
 export default function App() {
+  console.log(import.meta.env.SERVER_BASE_URL);
   return (
     <Router
+      base={import.meta.env.SERVER_BASE_URL}
       root={(props) => (
         <MetaProvider>
           <Title>SolidStart - Basic</Title>

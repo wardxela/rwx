@@ -9,8 +9,8 @@ import { createApp } from "@rwx/nestjs";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-const dist = path.resolve(dirname, "../dist");
-const apiClientSchemaPath = path.resolve(dist, "schema.d.ts");
+const output = path.resolve(dirname, "../src");
+const apiClientSchemaPath = path.resolve(output, "schema.d.ts");
 
 async function main() {
   const app = await createApp();
@@ -25,7 +25,7 @@ async function main() {
   const ast = await openapiTS(JSON.stringify(document));
   const contents = astToString(ast);
 
-  await fs.mkdir(dist, { recursive: true });
+  await fs.mkdir(output, { recursive: true });
   await fs.writeFile(apiClientSchemaPath, contents);
 }
 
