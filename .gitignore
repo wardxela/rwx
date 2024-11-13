@@ -8,24 +8,16 @@ node_modules
 # testing
 coverage
 
-# next.js
-.next/
-out/
-next-env.d.ts
-
-# nitro
-.nitro/
-.output/
-
 # expo
-.expo/
-expo-env.d.ts
-apps/expo/.gitignore
-apps/expo/ios
-apps/expo/android
 
 # production
-build
+dist
+.solid
+.output
+.vercel
+.netlify
+.vinxi
+app.config.timestamp_*.js
 
 # misc
 .DS_Store
@@ -42,12 +34,6 @@ yarn-error.log*
 .env*.local
 !packages/db/.env
 
-# vercel
-.vercel
-
-# typescript
-dist/
+# Cache
 .cache
-
-# turbo
 .turbo
