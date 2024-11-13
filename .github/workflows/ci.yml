@@ -64,6 +64,11 @@ jobs:
       - name: Setup
         uses: ./tooling/github/setup
 
+      # TODO: we should provide real .env
+      - name: Copy env
+        shell: bash
+        run: cp .env.example .env
+
       - name: Build
         run: pnpm build
 
