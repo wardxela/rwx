@@ -4,6 +4,7 @@ import { For, Show } from "solid-js";
 import { Button } from "@rwx/ui/components/button";
 import {
   TextField,
+  TextFieldErrorMessage,
   TextFieldInput,
   TextFieldTextArea,
 } from "@rwx/ui/components/text-field";
@@ -186,11 +187,25 @@ export default function BlogArticle() {
           <div class="mb-10 text-lg text-neutral-600">20 комментариев</div>
           <div class="mb-7 text-lg font-semibold">Оставить комментарий</div>
           <form class="mb-10 grid grid-cols-2 gap-7">
-            <TextField>
-              <TextFieldInput type="text" required placeholder="Имя*" />
+            <TextField validationState="invalid">
+              <TextFieldInput
+                class="border-destructive"
+                type="text"
+                required
+                placeholder="Имя*"
+              />
+              <TextFieldErrorMessage>Обязательное поле</TextFieldErrorMessage>
             </TextField>
-            <TextField>
-              <TextFieldInput type="email" required placeholder="Email*" />
+            <TextField validationState="invalid">
+              <TextFieldInput
+                class="border-destructive"
+                type="email"
+                required
+                placeholder="Email*"
+              />
+              <TextFieldErrorMessage>
+                Неверный формат почты
+              </TextFieldErrorMessage>
             </TextField>
             <TextField class="col-span-2">
               <TextFieldTextArea required placeholder="Комментарий*" />

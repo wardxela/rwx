@@ -10,7 +10,7 @@ export default function Page() {
           <div class="flex flex-col gap-2">
             <Button
               as="a"
-              href={`${process.env.NEXT_PUBLIC_NESTJS_URL}/auth/yandex`}
+              href={`${import.meta.env.VITE_NESTJS_URL}/auth/yandex`}
               variant="outline"
               class="gap-2"
             >
@@ -34,7 +34,7 @@ export default function Page() {
             </Button>
             <Button
               as="a"
-              href={`${process.env.NEXT_PUBLIC_NESTJS_URL}/auth/github`}
+              href={`${import.meta.env.VITE_NESTJS_URL}/auth/github`}
               variant="outline"
               class="gap-2"
             >

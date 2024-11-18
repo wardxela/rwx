@@ -76,13 +76,13 @@ const TextFieldTextArea = <T extends ValidComponent = "textarea">(
 };
 
 const labelVariants = cva(
-  "text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+  "mt-2 text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
   {
     variants: {
       variant: {
         label: "data-[invalid]:text-destructive",
-        description: "text-destructive",
-        error: "text-muted-foreground font-normal",
+        description: "text-muted-foreground",
+        error: "text-destructive",
       },
     },
     defaultVariants: {

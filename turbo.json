@@ -44,15 +44,8 @@
     "AUTH_REDIRECT_PROXY_URL",
     "AUTH_SECRET",
     "PORT",
-    "SERVER_BASE_URL"
+    "SERVER_BASE_URL",
+    "VITE_NESTJS_URL"
   ],
-  "globalPassThroughEnv": [
-    "NODE_ENV",
-    "CI",
-    "VERCEL",
-    "VERCEL_ENV",
-    "VERCEL_URL",
-    "npm_lifecycle_event",
-    "NEXT_PUBLIC_NESTJS_URL"
-  ]
+  "globalPassThroughEnv": ["NODE_ENV", "npm_lifecycle_event"]
 }
