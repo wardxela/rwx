@@ -11,7 +11,7 @@ export const Footer: Component<FooterProps> = (props) => {
     <footer class={cn("bg-neutral-100", props.class)}>
       <div class="container">
         <div class="flex grow flex-wrap gap-7 py-24">
-          <div class="max-w-sm shrink-0">
+          <div class="md:max-w-sm">
             <h6 class="mb-8 flex items-center gap-1">
               <img src="/icon.svg" alt="logo" />
               <span class="text-2xl leading-8 font-bold">ЧПИ</span>
