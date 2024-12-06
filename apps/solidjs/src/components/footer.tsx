@@ -14,7 +14,7 @@ export const Footer: Component<FooterProps> = (props) => {
           <div class="md:max-w-sm">
             <h6 class="mb-8 flex items-center gap-1">
               <img src="/icon.svg" alt="logo" />
-              <span class="text-2xl leading-8 font-bold">ЧПИ</span>
+              <span class="text-2xl leading-8 font-bold">ЧИП</span>
             </h6>
             <div class="text-lg leading-7 text-neutral-600">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

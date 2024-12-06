@@ -43,7 +43,7 @@ const HeaderDesktop: Component<HeaderDesktopProps> = (props) => {
     <nav class="container flex h-16 items-center justify-between">
       <A href="/" class="flex items-center gap-2">
         <img src="/icon.svg" alt="Главная" class="max-w-8" />
-        <div class="text-2xl font-bold">ЧПИ</div>
+        <div class="text-2xl font-bold">ЧИП</div>
       </A>
       <div class="hidden h-full grow items-center lg:flex">
         <div class="mx-auto flex h-full items-center">

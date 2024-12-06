@@ -6,7 +6,7 @@ export default function Page() {
       <div class="container">
         <div class="mx-auto flex max-w-xs flex-col py-20">
           <img src="/icon.svg" alt="logo" class="mx-auto mb-4 w-14" />
-          <h1 class="mx-auto mb-6 text-xl font-bold">ЧПИ</h1>
+          <h1 class="mx-auto mb-6 text-xl font-bold">ЧИП</h1>
           <div class="flex flex-col gap-2">
             <Button
               as="a"

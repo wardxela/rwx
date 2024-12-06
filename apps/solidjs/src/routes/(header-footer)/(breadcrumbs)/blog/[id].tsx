@@ -120,7 +120,7 @@ export default function BlogArticle() {
             LMS
           </div>
           <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 text-neutral-600">
-            ЧПИ
+            ЧИП
           </div>
           <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 text-neutral-600">
             Преподаватель

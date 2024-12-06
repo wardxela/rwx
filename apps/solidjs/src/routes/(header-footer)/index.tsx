@@ -3,15 +3,12 @@ import { For } from "solid-js";
 import { Button } from "@rwx/ui/components/button";
 
 import type { CourseCategoryLinkProps } from "~/features/courses";
-import { Footer } from "~/components/footer";
-import { Header } from "~/components/header";
 import { BlogArticleCardLink } from "~/features/blog/blog-article-card-link";
 import { CourseCategoryLink, CourseRelevantCardLink } from "~/features/courses";
 
 export default function HomePage() {
   return (
     <>
-      <Header />
       <section class="relative mb-24">
         <img
           class="absolute top-0 left-0 -z-10 block h-full w-full object-cover"
@@ -118,13 +115,13 @@ export default function HomePage() {
             />
             <div class="max-w-md">
               <div class="mb-3 leading-tight font-semibold text-neutral-600 capitalize">
-                ПОЛУЧИТЕ БОЛЬШЕ ОТ ЧПИ
+                ПОЛУЧИТЕ БОЛЬШЕ ОТ ЧИП
               </div>
               <div class="mb-6 text-3xl leading-10 font-bold capitalize">
-                ЧПИ Дополнения
+                ЧИП Дополнения
               </div>
               <div class="mb-5 text-lg leading-7 text-neutral-600">
-                Новый уровень плагина ЧПИ - ЧПИ для WordPress. Более мощный,
+                Новый уровень плагина ЧИП - ЧИП для WordPress. Более мощный,
                 гибкий и волшебный внутри.
               </div>
               <Button size="lg">Исследуйте курс</Button>
@@ -171,7 +168,7 @@ export default function HomePage() {
           />
           <div class="max-w-lg">
             <h2 class="mb-6 text-3xl leading-10 font-semibold capitalize">
-              Развивайте свои навыки <br /> с помощью ЧПИ
+              Развивайте свои навыки <br /> с помощью ЧИП
             </h2>
             <p class="mb-4 text-lg leading-7 text-neutral-600">
               Учись онлайн, развивай навыки, достигай целей – с нами обучение
@@ -204,7 +201,7 @@ export default function HomePage() {
             Отзывы студентов
           </h2>
           <div class="font- mb-12 text-center text-lg leading-7 text-neutral-600">
-            Что студенты говорят о ЧПИ
+            Что студенты говорят о ЧИП
           </div>
           <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7">
             <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
@@ -298,7 +295,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 }

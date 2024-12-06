@@ -90,4 +90,5 @@ const knownSegments: Record<string, string> = {
   courses: "Курсы",
   blog: "Блог",
   login: "Войти",
+  contacts: "Контакты",
 };

@@ -71,7 +71,7 @@ export const BlogSidebar = () => {
           <TagCheckbox>Бесплатные курсы</TagCheckbox>
           <TagCheckbox>Маркетинг</TagCheckbox>
           <TagCheckbox>Идея</TagCheckbox>
-          <TagCheckbox>ЧПИ</TagCheckbox>
+          <TagCheckbox>ЧИП</TagCheckbox>
           <TagCheckbox>Преподаватель</TagCheckbox>
         </div>
       </div>
