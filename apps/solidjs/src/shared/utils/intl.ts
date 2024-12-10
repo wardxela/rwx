@@ -28,7 +28,6 @@ export function getRussianOrdinalPluralWord({
       return one;
     case "few":
       return few;
-    case "many":
     default:
       return many;
   }

@@ -1,6 +1,6 @@
 import type { PolymorphicProps } from "@kobalte/core";
-import type { Component, ComponentProps, JSX, ValidComponent } from "solid-js";
 import * as BreadcrumbPrimitive from "@kobalte/core/breadcrumbs";
+import type { Component, ComponentProps, JSX, ValidComponent } from "solid-js";
 import { Show, splitProps } from "solid-js";
 
 import { cn } from "~/lib/utils";
@@ -78,6 +78,7 @@ const BreadcrumbSeparator = <T extends ValidComponent = "span">(
             stroke-linecap="round"
             stroke-linejoin="round"
           >
+            <title>Разделитель</title>
             <path d="M9 6l6 6l-6 6" />
           </svg>
         }
@@ -105,6 +106,7 @@ const BreadcrumbEllipsis: Component<ComponentProps<"span">> = (props) => {
         stroke-linejoin="round"
         class="size-4"
       >
+        <title>Троеточие</title>
         <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
         <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
         <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />

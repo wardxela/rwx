@@ -15,7 +15,6 @@
     "build": "nest build",
     "clean": "git clean -xdf .cache .turbo node_modules dist",
     "dev": "nest start --watch",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -33,8 +32,8 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
-    "@nestjs/swagger": "catalog:",
-    "@rwx/db": "workspace:^",
+    "@nestjs/swagger": "^7.4.2",
+    "@rwx/db": "workspace:*",
     "connect-pg-simple": "^10.0.0",
     "express-session": "^1.18.0",
     "kysely": "^0.27.4",
@@ -50,41 +49,29 @@
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
-    "@rwx/eslint-config": "workspace:*",
-    "@rwx/prettier-config": "workspace:*",
-    "@rwx/tsconfig": "workspace:^",
+    "@rwx/tsconfig": "workspace:*",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/express": "^4.17.17",
     "@types/express-session": "^1.18.0",
     "@types/jest": "^29.5.2",
-    "@types/node": "catalog:",
+    "@types/node": "^20.14.15",
     "@types/passport-oauth2": "^1.4.17",
     "@types/pg": "^8.11.10",
     "@types/supertest": "^6.0.0",
-    "eslint": "catalog:",
     "jest": "^29.5.0",
-    "prettier": "catalog:",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
-    "ts-jest": "^29.1.0",
-    "typescript": "catalog:"
+    "ts-jest": "^29.1.0"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
+    "moduleFileExtensions": ["js", "json", "ts"],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
+    "collectCoverageFrom": ["**/*.(t|j)s"],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-  "prettier": "@rwx/prettier-config"
+  }
 }

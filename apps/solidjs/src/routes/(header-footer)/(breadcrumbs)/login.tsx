@@ -21,6 +21,7 @@ export default function Page() {
                 viewBox="0 0 24 24"
                 fill="none"
               >
+                <title>Яндекс</title>
                 <path
                   d="M2.04 12c0-5.523 4.476-10 10-10 5.522 0 10 4.477 10 10s-4.478 10-10 10c-5.524 0-10-4.477-10-10z"
                   fill="#FC3F1D"
@@ -45,6 +46,7 @@ export default function Page() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
+                <title>GitHub</title>
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"

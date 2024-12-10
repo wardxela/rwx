@@ -1,5 +1,5 @@
-import type { Component, ParentComponent } from "solid-js";
 import { A, useLocation } from "@solidjs/router";
+import type { Component, ParentComponent } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 
 export const Header = () => {
@@ -66,6 +66,7 @@ const HeaderDesktop: Component<HeaderDesktopProps> = (props) => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
+          <title>Открыть меню</title>
           <svg
             class="size-6"
             fill="none"

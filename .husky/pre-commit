@@ -1,3 +1,2 @@
-pnpm typecheck
-pnpm lint
-pnpm format
+bun run typecheck
+bun run biome

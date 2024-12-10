@@ -2,8 +2,8 @@ import { For } from "solid-js";
 
 import { Button } from "@rwx/ui/components/button";
 
-import type { CourseCategoryLinkProps } from "~/features/courses";
 import { BlogArticleCardLink } from "~/features/blog/blog-article-card-link";
+import type { CourseCategoryLinkProps } from "~/features/courses";
 import { CourseCategoryLink, CourseRelevantCardLink } from "~/features/courses";
 
 export default function HomePage() {

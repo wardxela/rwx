@@ -1,6 +1,6 @@
-import type { Account, DB, User } from "@rwx/db";
 import { Injectable } from "@nestjs/common";
-import { Kysely, Selectable } from "kysely";
+import type { Account, DB, User } from "@rwx/db";
+import type { Kysely, Selectable } from "kysely";
 import { InjectKysely } from "nestjs-kysely";
 
 export interface ProviderUserInfo {

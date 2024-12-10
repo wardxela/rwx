@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface BlogArticleCardLinkProps {}
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
+export type BlogArticleCardLinkProps = {};
 
 export const BlogArticleCardLink: Component<BlogArticleCardLinkProps> = () => {
   return (

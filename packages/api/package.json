@@ -10,24 +10,16 @@
   "scripts": {
     "build:api": "tsx ./scripts/openapi.ts",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint",
     "typecheck": "tsc --customConditions disable"
   },
   "dependencies": {
     "openapi-fetch": "^0.12.2"
   },
   "devDependencies": {
-    "@nestjs/swagger": "catalog:",
-    "@rwx/eslint-config": "workspace:*",
-    "@rwx/nestjs": "workspace:^",
-    "@rwx/prettier-config": "workspace:*",
+    "@nestjs/swagger": "^7.4.2",
+    "@rwx/nestjs": "workspace:*",
     "@rwx/tsconfig": "workspace:*",
-    "eslint": "catalog:",
     "openapi-typescript": "^7.4.1",
-    "prettier": "catalog:",
-    "tsx": "catalog:",
-    "typescript": "catalog:"
-  },
-  "prettier": "@rwx/prettier-config"
+    "tsx": "^4.19.1"
+  }
 }

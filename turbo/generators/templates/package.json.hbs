@@ -11,17 +11,9 @@
     "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "dev": "tsc",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint",
     "typecheck": "tsc --emitDeclarationOnly false"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "workspace:*",
-    "@rwx/prettier-config": "workspace:*",
-    "@rwx/tsconfig": "workspace:*",
-    "eslint": "catalog:",
-    "prettier": "catalog:",
-    "typescript": "catalog:"
-  },
-  "prettier": "@rwx/prettier-config"
+    "@rwx/tsconfig": "*"
+  }
 }

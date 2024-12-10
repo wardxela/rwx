@@ -8,7 +8,6 @@
     "start": "pnpm with-env vinxi start",
     "version": "vinxi version",
     "clean": "git clean -xdf .cache .next .turbo node_modules",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --customConditions disable",
     "with-env": "dotenv -e ../../.env --"
@@ -20,23 +19,16 @@
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.0.10",
     "openapi-fetch": "^0.12.2",
-    "solid-js": "catalog:",
+    "solid-js": "^1.9.2",
     "vinxi": "^0.4.3"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "workspace:*",
-    "@rwx/prettier-config": "workspace:*",
     "@rwx/tailwind-config": "workspace:*",
     "@rwx/tsconfig": "workspace:*",
-    "@tailwindcss/postcss": "catalog:",
-    "dotenv-cli": "^7.4.2",
-    "eslint": "catalog:",
-    "prettier": "catalog:",
-    "tailwindcss": "catalog:",
-    "typescript": "catalog:"
+    "@tailwindcss/postcss": "^4.0.0-beta.5",
+    "dotenv-cli": "^7.4.2"
   },
   "engines": {
     "node": ">=18"
-  },
-  "prettier": "@rwx/prettier-config"
+  }
 }

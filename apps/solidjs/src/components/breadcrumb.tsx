@@ -1,6 +1,6 @@
-import type { Component } from "solid-js";
 import { useLocation } from "@solidjs/router";
-import { createMemo, For, Show } from "solid-js";
+import type { Component } from "solid-js";
+import { For, Show, createMemo } from "solid-js";
 
 import {
   BreadcrumbEllipsis,

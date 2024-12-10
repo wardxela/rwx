@@ -1,5 +1,5 @@
-import type { SessionUser } from "src/auth/auth.service";
 import { ApiProperty } from "@nestjs/swagger";
+import type { SessionUser } from "src/auth/auth.service";
 
 export class User implements SessionUser {
   @ApiProperty()

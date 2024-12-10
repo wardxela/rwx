@@ -3,9 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "exports": {
     "./utils": {
       "@rwx/live-types": "./src/lib/utils.ts",
@@ -23,25 +21,17 @@
     "build": "tsup",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "dev": "tsup --watch",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint",
     "typecheck": "tsc --emitDeclarationOnly false"
   },
   "dependencies": {
     "@kobalte/core": "^0.13.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "solid-js": "catalog:",
+    "solid-js": "^1.9.2",
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
-    "@rwx/eslint-config": "workspace:*",
-    "@rwx/prettier-config": "workspace:*",
     "@rwx/tsconfig": "workspace:*",
-    "eslint": "catalog:",
-    "prettier": "catalog:",
-    "tsup": "catalog:",
-    "typescript": "catalog:"
-  },
-  "prettier": "@rwx/prettier-config"
+    "tsup": "^8.3.5"
+  }
 }
