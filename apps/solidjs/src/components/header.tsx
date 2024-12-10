@@ -22,7 +22,6 @@ export const Header = () => {
 
   createEffect(() => {
     setIsOpen(false);
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     location.pathname;
   });
 

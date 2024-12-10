@@ -8,7 +8,6 @@
     "start": "pnpm with-env vinxi start",
     "version": "vinxi version",
     "clean": "git clean -xdf .cache .next .turbo node_modules",
-    "lint": "eslint",
     "typecheck": "tsc --customConditions disable",
     "with-env": "dotenv -e ../../.env --"
   },

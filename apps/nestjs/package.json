@@ -15,7 +15,6 @@
     "build": "nest build",
     "clean": "git clean -xdf .cache .turbo node_modules dist",
     "dev": "nest start --watch",
-    "lint": "eslint",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
