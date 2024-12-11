@@ -24,6 +24,7 @@
     "typecheck": "tsc --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@corvu/drawer": "^0.2.2",
     "@kobalte/core": "^0.13.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

@@ -3,8 +3,11 @@ import { type Component, For, type JSX } from "solid-js";
 import { Button } from "@rwx/ui/components/button";
 
 import { BlogArticleCardLink } from "~/features/blog/blog-article-card-link";
-import type { CourseCategoryLinkProps } from "~/features/courses";
-import { CourseCategoryLink, CourseRelevantCardLink } from "~/features/courses";
+import { CourseCardLink } from "~/features/courses/course-card-link";
+import {
+  CourseCategoryLink,
+  type CourseCategoryLinkProps,
+} from "~/features/courses/course-category-card-link";
 
 export default function HomePage() {
   return (
@@ -63,7 +66,7 @@ export default function HomePage() {
             }
           />
           <div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4 sm:gap-7">
-            <CourseRelevantCardLink
+            <CourseCardLink
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
@@ -73,7 +76,7 @@ export default function HomePage() {
               oldPrice={19999}
               price={0}
             />
-            <CourseRelevantCardLink
+            <CourseCardLink
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
@@ -83,7 +86,7 @@ export default function HomePage() {
               oldPrice={19999}
               price={11999}
             />
-            <CourseRelevantCardLink
+            <CourseCardLink
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
@@ -92,7 +95,7 @@ export default function HomePage() {
               studentsCount={102}
               price={29999}
             />
-            <CourseRelevantCardLink
+            <CourseCardLink
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
