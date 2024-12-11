@@ -1,4 +1,4 @@
-import { For } from "solid-js";
+import { type Component, For, type JSX } from "solid-js";
 
 import { Button } from "@rwx/ui/components/button";
 
@@ -8,16 +8,16 @@ import { CourseCategoryLink, CourseRelevantCardLink } from "~/features/courses";
 
 export default function HomePage() {
   return (
-    <>
-      <section class="relative mb-24">
+    <div class="[&>*]:mb-16 sm:[&>*]:mb-24">
+      <section class="relative">
         <img
           class="absolute top-0 left-0 -z-10 block h-full w-full object-cover"
           src="/hero-bg.png"
           alt="background"
         />
-        <div class="container flex min-h-[700px] items-center">
-          <div class="max-w-lg">
-            <h1 class="mb-6 text-5xl leading-[60px] font-semibold text-black">
+        <div class="container flex min-h-96 sm:min-h-[500px] md:min-h-[700px] items-center">
+          <div class="max-w-68 sm:max-w-lg">
+            <h1 class="mb-5 sm:mb-6 text-3xl sm:text-5xl leading-10 sm:leading-[60px] font-semibold text-black">
               Улучши свои <br /> навыки
             </h1>
             <p class="mb-5 text-lg leading-7 text-neutral-600">
@@ -28,42 +28,41 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section class="mb-24">
+      <section>
         <div class="container">
-          <div class="mb-16 flex items-center justify-between">
-            <div>
-              <h2 class="mb-3 text-3xl leading-10 font-semibold">Категории</h2>
-              <div class="text-lg leading-[27px] text-neutral-600">
-                Ознакомьтесь с нашими популярными категориями
-              </div>
-            </div>
-            <Button size="lg" variant="outline">
-              Все Категории
-            </Button>
-          </div>
-          <div class="grid grid-cols-[repeat(auto-fill,minmax(234px,1fr))] gap-7">
+          <SectionHeader
+            title="Категории"
+            description="Ознакомьтесь с нашими популярными категориями"
+            aciton={
+              <Button size="lg" variant="outline">
+                Все Категории
+              </Button>
+            }
+          />
+          <div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 sm:gap-7">
             <For each={staticCategories}>
-              {(item) => <CourseCategoryLink {...item} />}
+              {(item, index) => (
+                <CourseCategoryLink
+                  class={index() > 3 ? "max-sm:hidden" : undefined}
+                  {...item}
+                />
+              )}
             </For>
           </div>
         </div>
       </section>
-      <section class="mb-24">
+      <section>
         <div class="container">
-          <div class="mb-16 flex items-center justify-between">
-            <div>
-              <div class="mb-3 text-[32px] leading-10 font-semibold">
-                Рекомендуемые Курсы
-              </div>
-              <div class="text-lg leading-7 text-neutral-600">
-                Ознакомьтесь с нашими популярными курсами
-              </div>
-            </div>
-            <Button size="lg" variant="outline">
-              Все Курсы
-            </Button>
-          </div>
-          <div class="grid grid-cols-[repeat(auto-fill,minmax(410px,1fr))] gap-7">
+          <SectionHeader
+            title="Рекомендуемые Курсы"
+            description="Ознакомьтесь с нашими популярными курсами"
+            aciton={
+              <Button size="lg" variant="outline">
+                Все Курсы
+              </Button>
+            }
+          />
+          <div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4 sm:gap-7">
             <CourseRelevantCardLink
               preview="/course-preview.png"
               author="Артем Неизвестный"
@@ -105,13 +104,13 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <div class="relative mb-24">
+      <div class="relative">
         <div class="container">
-          <div class="relative p-12">
+          <div class="relative md:p-12">
             <img
               src="/add-ons-bg.png"
               alt="background"
-              class="absolute top-0 left-0 -z-10 h-full w-full rounded-3xl object-cover"
+              class="hidden xl:block absolute top-0 left-0 -z-10 h-full w-full rounded-3xl object-cover"
             />
             <div class="max-w-md">
               <div class="mb-3 leading-tight font-semibold text-neutral-600 capitalize">
@@ -129,8 +128,8 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div class="mb-24">
-        <div class="container grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7">
+      <div>
+        <div class="container grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 sm:gap-7">
           <div class="rounded-3xl bg-neutral-100 py-12 text-center">
             <div class="mb-3 text-2xl leading-10 font-semibold text-orange-500 capitalize">
               25K+
@@ -159,15 +158,13 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <section class="mb-24">
+      <section>
         <div class="container flex items-center justify-between gap-10">
-          <img
-            src="/improve-skills.svg"
-            alt="improve your skills"
-            class="max-w-xl"
-          />
-          <div class="max-w-lg">
-            <h2 class="mb-6 text-3xl leading-10 font-semibold capitalize">
+          <div class="hidden md:block">
+            <img src="/improve-skills.svg" alt="improve your skills" />
+          </div>
+          <div class="max-w-sm md:shrink-0">
+            <h2 class="mb-4 sm:mb-6 text-xl sm:text-3xl leading-7 sm:leading-10 font-semibold capitalize">
               Развивайте свои навыки <br /> с помощью ЧИП
             </h2>
             <p class="mb-4 text-lg leading-7 text-neutral-600">
@@ -195,15 +192,15 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section class="mb-24">
+      <section>
         <div class="container">
           <h2 class="mb-3 text-center text-3xl leading-10 font-semibold capitalize">
             Отзывы студентов
           </h2>
-          <div class="font- mb-12 text-center text-lg leading-7 text-neutral-600">
+          <div class="mb-7 md:mb-12 text-center text-lg leading-7 text-neutral-600">
             Что студенты говорят о ЧИП
           </div>
-          <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7">
+          <div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 sm:gap-7">
             <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
               <img src="/quote.svg" alt="quote" class="mb-5 w-10" />
               <div class="mb-7 text-lg leading-7">
@@ -257,47 +254,67 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section class="mb-24">
+      <section>
         <div class="container">
-          <div class="flex items-center rounded-3xl bg-gradient-to-r from-sky-200 to-purple-200 px-12 py-16">
-            <div class="grid size-32 place-items-center rounded-full bg-white">
-              <img src="/student.svg" alt="student" class="w-16" />
+          <div class="flex gap-4 flex-wrap items-center rounded-3xl bg-gradient-to-r from-sky-200 to-purple-200 px-6 py-8 sm:px-12 sm:py-16">
+            <div class="shrink-0 grid size-16 lg:size-32 place-items-center rounded-full bg-white p-4">
+              <img src="/student.svg" alt="student" class="aspect-square" />
             </div>
-            <h2 class="ml-8 text-xl font-semibold">Давайте Начнем Учиться</h2>
-            <Button size="lg" variant="outline-primary" class="ml-auto">
+            <h2 class="sm:ml-8 mx-auto text-xl font-semibold">
+              Давайте Начнем Учиться
+            </h2>
+            <Button
+              size="lg"
+              variant="outline-primary"
+              class="ml-auto w-full sm:w-auto"
+            >
               Я студент
             </Button>
-            <Button size="lg" class="ml-5">
+            <Button size="lg" class="ml-auto w-full sm:w-auto">
               Стать Преподавателем
             </Button>
           </div>
         </div>
       </section>
-      <section class="mb-24">
+      <section>
         <div class="container">
-          <div class="mb-16 flex items-center justify-between">
-            <div>
-              <div class="mb-3 text-[32px] leading-10 font-semibold">
-                Последние Публикации
-              </div>
-              <div class="text-lg leading-7 text-neutral-600">
-                Ознакомьтесь с нашими бесплатными статьями
-              </div>
-            </div>
-            <Button size="lg" variant="outline">
-              Все Статьи
-            </Button>
-          </div>
-          <div class="grid grid-cols-[repeat(auto-fill,minmax(410px,1fr))] gap-7">
+          <SectionHeader
+            title="Последние Публикации"
+            description="Ознакомьтесь с нашими бесплатными статьями"
+            aciton={
+              <Button size="lg" variant="outline">
+                Все Статьи
+              </Button>
+            }
+          />
+          <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7">
             <BlogArticleCardLink />
             <BlogArticleCardLink />
             <BlogArticleCardLink />
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
+
+const SectionHeader: Component<{
+  title: string;
+  description: string;
+  aciton: JSX.Element;
+}> = (props) => {
+  return (
+    <div class="mb-7 md:mb-16 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+      <div class="mb-4 sm:mb-0">
+        <h2 class="mb-3 text-3xl leading-10 font-semibold">{props.title}</h2>
+        <div class="text-lg leading-[27px] text-neutral-600">
+          {props.description}
+        </div>
+      </div>
+      {props.aciton}
+    </div>
+  );
+};
 
 const staticCategories: CourseCategoryLinkProps[] = [
   {

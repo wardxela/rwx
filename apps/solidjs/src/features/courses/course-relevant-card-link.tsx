@@ -40,13 +40,13 @@ export const CourseRelevantCardLink: Component<CourseRelevantCardLinkProps> = (
       <div class="absolute top-5 left-5 grid h-10 place-items-center rounded-lg bg-black px-3 py-2 text-white">
         <div class="font-medium">{props.category}</div>
       </div>
-      <div class="p-5">
+      <div class="p-4 sm:p-5">
         <div class="mb-3">
-          <span class="text-neutral-600">Автор: </span>
+          <span class="text-neutral-600 sm:text-base text-sm">Автор: </span>
           <span>{props.author}</span>
         </div>
-        <h6 class="mb-4 text-xl font-semibold">{props.title}</h6>
-        <div class="mb-4 flex flex-wrap items-center gap-6">
+        <h6 class="mb-4 sm:text-xl font-semibold">{props.title}</h6>
+        <div class="mb-4 flex flex-wrap items-center gap-x-6 gap-y-3">
           <div class="flex items-center gap-2">
             <img src="/duration.svg" alt="duration" class="size-4" />
             <div class="text-sm text-neutral-600">{durationText()}</div>
@@ -60,7 +60,7 @@ export const CourseRelevantCardLink: Component<CourseRelevantCardLinkProps> = (
         </div>
         <hr class="mb-4 h-px border-gray-200" />
         <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 flex-wrap text-sm sm:text-base">
             <Show when={props.oldPrice !== undefined}>
               <div class="text-neutral-400 line-through">{props.oldPrice}₽</div>
             </Show>
