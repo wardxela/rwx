@@ -15,17 +15,17 @@
     "@rwx/api": "workspace:*",
     "@rwx/ui": "workspace:*",
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.15.0",
+    "@solidjs/router": "^0.15.1",
     "@solidjs/start": "^1.0.10",
-    "openapi-fetch": "^0.12.2",
-    "solid-js": "^1.9.2",
-    "vinxi": "^0.4.3"
+    "openapi-fetch": "^0.13.3",
+    "solid-js": "^1.9.3",
+    "vinxi": "^0.5.1"
   },
   "devDependencies": {
     "@rwx/tailwind-config": "workspace:*",
     "@rwx/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "^4.0.0-beta.5",
-    "dotenv-cli": "^7.4.2"
+    "dotenv-cli": "^7.4.4"
   },
   "engines": {
     "node": ">=18"
