@@ -20,9 +20,21 @@
       }
     }
   },
-  "javascript": {
-    "parser": {
-      "unsafeParameterDecoratorsEnabled": true
+  "overrides": [
+    {
+      "include": ["apps/nestjs/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useImportType": "off"
+          }
+        }
+      },
+      "javascript": {
+        "parser": {
+          "unsafeParameterDecoratorsEnabled": true
+        }
+      }
     }
-  }
+  ]
 }

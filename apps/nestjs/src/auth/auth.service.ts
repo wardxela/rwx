@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import type { Selectable } from "kysely";
-import type { ProviderUserInfo, UsersService } from "src/users/users.service";
+import { Selectable } from "kysely";
+import { ProviderUserInfo, UsersService } from "src/users/users.service";
 
-import type { User } from "@rwx/db";
+import { User } from "@rwx/db";
 
 // TODO: augment with Express.User
 export type SessionUser = Selectable<User>;

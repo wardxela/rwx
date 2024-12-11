@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
-import { Strategy, type StrategyOptions } from "passport-oauth2";
-import type { ConfigService } from "src/config/config.service";
+import { Strategy, StrategyOptions } from "passport-oauth2";
+import { ConfigService } from "src/config/config.service";
 
-import type { AuthService, SessionUser } from "../auth.service";
+import { AuthService, SessionUser } from "../auth.service";
 
 interface YandexUser {
   id: string;

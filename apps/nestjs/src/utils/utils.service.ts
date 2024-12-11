@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Pool } from "pg";
-import type { ConfigService } from "src/config/config.service";
+import { ConfigService } from "src/config/config.service";
 
 @Injectable()
 export class UtilsService {

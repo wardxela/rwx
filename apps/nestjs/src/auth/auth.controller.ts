@@ -1,6 +1,6 @@
 import { Controller, Get, Res, UseGuards } from "@nestjs/common";
-import type { Response as ExpressResponse } from "express";
-import type { ConfigService } from "src/config/config.service";
+import { Response as ExpressResponse } from "express";
+import { ConfigService } from "src/config/config.service";
 
 import { YandexAuthGuard } from "./guards/yandex-auth.guard";
 
