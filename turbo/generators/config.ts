@@ -77,7 +77,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           // execSync("pnpm dlx sherif@latest --fix", {
           //   stdio: "inherit",
           // });
-          execSync("pnpm i", { stdio: "inherit" });
+          execSync("npm i", { stdio: "inherit" });
           return "Package scaffolded";
         }
         return "Package not scaffolded";

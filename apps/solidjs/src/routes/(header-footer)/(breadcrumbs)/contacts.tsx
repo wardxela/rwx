@@ -12,7 +12,7 @@ export default function Page() {
       <div class="container mt-15 mb-15">
         <div class="flex flex-col gap-8 lg:flex-row">
           <div>
-            <h1 class="mb-5 text-3xl leading-10 font-semibold sm:mb-7 sm:text-5xl">
+            <h1 class="mb-5 font-semibold text-3xl leading-10 sm:mb-7 sm:text-5xl">
               Нужна встреча?
             </h1>
             <p class="max-w mb-4 max-w-md text-neutral-600 sm:text-lg">
@@ -36,8 +36,8 @@ export default function Page() {
                 </svg>
               </div>
               <div class="flex flex-col justify-between">
-                <div class="leading-7 text-neutral-600">Телефон</div>
-                <div class="leading-tight font-medium">+7 (900) 900 5555</div>
+                <div class="text-neutral-600 leading-7">Телефон</div>
+                <div class="font-medium leading-tight">+7 (900) 900 5555</div>
               </div>
             </div>
             <div class="flex gap-6">
@@ -57,8 +57,8 @@ export default function Page() {
                 </svg>
               </div>
               <div class="flex flex-col justify-between">
-                <div class="leading-7 text-neutral-600">Email</div>
-                <div class="leading-tight font-medium">
+                <div class="text-neutral-600 leading-7">Email</div>
+                <div class="font-medium leading-tight">
                   contact@wardxela.com
                 </div>
               </div>
@@ -99,10 +99,10 @@ export default function Page() {
         </div>
       </div>
       <div class="container mb-24">
-        <h6 class="mb-3 text-2xl leading-10 font-semibold sm:text-3xl">
+        <h6 class="mb-3 font-semibold text-2xl leading-10 sm:text-3xl">
           Напишите нам
         </h6>
-        <div class="mb-5 leading-7 font-normal text-neutral-600">
+        <div class="mb-5 font-normal text-neutral-600 leading-7">
           Ваш адрес электронной почты опубликован не будет. Поля, обязательные
           для заполнения, помечены *
         </div>

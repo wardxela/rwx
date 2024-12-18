@@ -17,6 +17,16 @@
       "recommended": true,
       "style": {
         "noNonNullAssertion": "off"
+      },
+      "nursery": {
+        "useSortedClasses": {
+          "fix": "safe",
+          "level": "error",
+          "options": {
+            "attributes": ["classList"],
+            "functions": ["cn", "clsx", "twMerge"]
+          }
+        }
       }
     }
   },

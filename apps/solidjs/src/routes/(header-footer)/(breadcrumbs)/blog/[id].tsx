@@ -15,7 +15,7 @@ export default function BlogArticle() {
   return (
     <div class="container grid grid-cols-[1fr_270px] gap-7 pt-16 pb-24">
       <div>
-        <h1 class="mb-5 text-4xl leading-10 font-semibold">
+        <h1 class="mb-5 font-semibold text-4xl leading-10">
           Lorem Ipsum is simply dummy text
         </h1>
         <div class="mb-10 flex flex-wrap items-center gap-6">
@@ -89,7 +89,7 @@ export default function BlogArticle() {
           alt="blog preview"
           class="mb-10 w-full rounded-3xl"
         />
-        <div class="mb-10 space-y-4 text-lg leading-7 text-neutral-600">
+        <div class="mb-10 space-y-4 text-lg text-neutral-600 leading-7">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
             facilisis faucibus odio arcu duis dui, adipiscing facilisis. Urna,
@@ -110,22 +110,22 @@ export default function BlogArticle() {
         </div>
         <div class="mb-14 flex flex-wrap items-center gap-2">
           <div class="mr-3 text-lg text-neutral-600">Теги:</div>
-          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 text-neutral-600">
+          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg text-neutral-600 leading-7">
             Бесплатные курсы
           </div>
-          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 text-neutral-600">
+          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg text-neutral-600 leading-7">
             Маркетинг
           </div>
-          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 text-neutral-600">
+          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg text-neutral-600 leading-7">
             Идея
           </div>
-          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 text-neutral-600">
+          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg text-neutral-600 leading-7">
             LMS
           </div>
-          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 text-neutral-600">
+          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg text-neutral-600 leading-7">
             ЧИП
           </div>
-          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 text-neutral-600">
+          <div class="inline-flex gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg text-neutral-600 leading-7">
             Преподаватель
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function BlogArticle() {
             </div>
             <div>
               <div class="mb-3 text-lg text-neutral-600">Назад</div>
-              <div class="text-xl font-semibold">
+              <div class="font-semibold text-xl">
                 Best LearnPress WordPress Theme Collection for 2023
               </div>
             </div>
@@ -164,7 +164,7 @@ export default function BlogArticle() {
           >
             <div>
               <div class="mb-3 text-lg text-neutral-600">Назад</div>
-              <div class="text-xl font-semibold">
+              <div class="font-semibold text-xl">
                 Best LearnPress WordPress Theme Collection for 2023
               </div>
             </div>
@@ -188,9 +188,9 @@ export default function BlogArticle() {
           </a>
         </div>
         <div>
-          <h6 class="mb-3 text-xl font-semibold">Комментарии</h6>
+          <h6 class="mb-3 font-semibold text-xl">Комментарии</h6>
           <div class="mb-10 text-lg text-neutral-600">20 комментариев</div>
-          <div class="mb-7 text-lg font-semibold">Оставить комментарий</div>
+          <div class="mb-7 font-semibold text-lg">Оставить комментарий</div>
           <form class="mb-10 grid grid-cols-2 gap-7">
             <TextField validationState="invalid">
               <TextFieldInput
@@ -265,7 +265,7 @@ interface ArticleCommentProps {
 const ArticleComment: Component<ArticleCommentProps> = (props) => {
   return (
     <div>
-      <div class="grid grid-cols-[56px_1fr] gap-5 border-t border-neutral-200 pt-5">
+      <div class="grid grid-cols-[56px_1fr] gap-5 border-neutral-200 border-t pt-5">
         <img
           src="/person.png"
           alt="person"
@@ -276,7 +276,7 @@ const ArticleComment: Component<ArticleCommentProps> = (props) => {
             <div class="font-semibold">{props.author}</div>
             <div class="text-neutral-600">{props.date}</div>
           </div>
-          <div class="text-lg leading-7 text-neutral-600">{props.text}</div>
+          <div class="text-lg text-neutral-600 leading-7">{props.text}</div>
         </div>
       </div>
       <Show when={props.comments?.length}>

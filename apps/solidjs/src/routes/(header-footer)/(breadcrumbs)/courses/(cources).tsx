@@ -22,20 +22,20 @@ export default function Page() {
   const [isGridView, setIsGridView] = createSignal(true);
 
   return (
-    <div class="container grid gap-7 lg:grid-cols-[1fr_270px] pt-8 pb-12 sm:pt-16 sm:pb-24">
+    <div class="container grid gap-7 pt-8 pb-12 sm:pt-16 sm:pb-24 lg:grid-cols-[1fr_270px]">
       <div>
-        <div class="sm:flex gap-2 mb-8 sm:mb-10 items-center justify-between">
-          <h1 class="text-2xl sm:text-4xl font-semibold leading-10 mb-4">
+        <div class="mb-8 items-center justify-between gap-2 sm:mb-10 sm:flex">
+          <h1 class="mb-4 font-semibold text-2xl leading-10 sm:text-4xl">
             Все курсы
           </h1>
-          <div class="flex gap-2 items-center">
+          <div class="flex items-center gap-2">
             <TextField>
               <TextFieldInput type="search" placeholder="Поиск" />
             </TextField>
             <Toggle
               pressed={isGridView()}
               onChange={setIsGridView}
-              class="cursor-pointer text-primary ml-auto sm:ml-0"
+              class="ml-auto cursor-pointer text-primary sm:ml-0"
             >
               {(state) => (
                 <Show
@@ -102,7 +102,7 @@ export default function Page() {
                 </svg>
               </DrawerTrigger>
               <DrawerContent>
-                <div class="h-full overflow-auto max-h-[70vh] p-5">
+                <div class="h-full max-h-[70vh] overflow-auto p-5">
                   <Sidebar />
                 </div>
               </DrawerContent>
@@ -110,13 +110,12 @@ export default function Page() {
           </div>
         </div>
         <div
+          class="grid gap-4"
           classList={{
-            "grid gap-4": true,
-            "grid-cols-[repeat(auto-fill,minmax(250px,1fr))]": isGridView(),
+            "grid-cols-[repeat(auto-fill,minmax(260px,1fr))]": isGridView(),
           }}
         >
           <CourseCardLink
-            view={isGridView() ? "vertical" : "horizontal"}
             preview="/course-preview.png"
             author="Артем Неизвестный"
             title="Создай веб-сайт с помощью  LMS plugin"
@@ -128,7 +127,6 @@ export default function Page() {
             price={0}
           />
           <CourseCardLink
-            view={isGridView() ? "vertical" : "horizontal"}
             preview="/course-preview.png"
             author="Артем Неизвестный"
             title="Создай веб-сайт с помощью  LMS plugin"
@@ -140,7 +138,6 @@ export default function Page() {
             price={0}
           />
           <CourseCardLink
-            view={isGridView() ? "vertical" : "horizontal"}
             preview="/course-preview.png"
             author="Артем Неизвестный"
             title="Создай веб-сайт с помощью  LMS plugin"
@@ -152,7 +149,6 @@ export default function Page() {
             price={0}
           />
           <CourseCardLink
-            view={isGridView() ? "vertical" : "horizontal"}
             preview="/course-preview.png"
             author="Артем Неизвестный"
             title="Создай веб-сайт с помощью  LMS plugin"
@@ -175,7 +171,7 @@ function Sidebar() {
   return (
     <div class="space-y-7">
       <div>
-        <h6 class="mb-5 text-xl font-semibold">Категории</h6>
+        <h6 class="mb-5 font-semibold text-xl">Категории</h6>
         <div class="space-y-2">
           <TextCheckbox endText="15">Коммерческие</TextCheckbox>
           <TextCheckbox endText="15">Офис</TextCheckbox>
@@ -188,14 +184,14 @@ function Sidebar() {
         </div>
       </div>
       <div>
-        <h6 class="mb-5 text-xl font-semibold">Преподаватели</h6>
+        <h6 class="mb-5 font-semibold text-xl">Преподаватели</h6>
         <div class="space-y-2">
           <TextCheckbox endText="15">Некто Первый</TextCheckbox>
           <TextCheckbox endText="15">Некто Второй</TextCheckbox>
         </div>
       </div>
       <div>
-        <h6 class="mb-5 text-xl font-semibold">Цена</h6>
+        <h6 class="mb-5 font-semibold text-xl">Цена</h6>
         <div class="space-y-2">
           <TextCheckbox endText="15">Все</TextCheckbox>
           <TextCheckbox endText="15">Бесплатные</TextCheckbox>
@@ -203,7 +199,7 @@ function Sidebar() {
         </div>
       </div>
       <div>
-        <h6 class="mb-5 text-xl font-semibold">Отзывы</h6>
+        <h6 class="mb-5 font-semibold text-xl">Отзывы</h6>
         <div class="space-y-2">
           <TextCheckbox endText="15">
             <Stars count={3} />
@@ -217,7 +213,7 @@ function Sidebar() {
         </div>
       </div>
       <div>
-        <h6 class="mb-5 text-xl font-semibold">Уровень</h6>
+        <h6 class="mb-5 font-semibold text-xl">Уровень</h6>
         <div class="space-y-2">
           <TextCheckbox endText="15">Все</TextCheckbox>
           <TextCheckbox endText="15">Начинающий</TextCheckbox>
@@ -236,11 +232,11 @@ interface TextCheckboxProps {
 const TextCheckbox: ParentComponent<TextCheckboxProps> = (props) => {
   const id = createUniqueId();
   return (
-    <div class="flex items-center gap-2 group">
+    <div class="group flex cursor-pointer items-center gap-2">
       <Checkbox id={id} />
       <label
         for={`${id}-input`}
-        class="flex items-center gap-1 justify-between grow text-neutral-400 hover:text-neutral-600 select-none group-has-checked:font-medium group-has-checked:text-black"
+        class="flex grow select-none items-center justify-between gap-1 text-neutral-800 group-has-checked:font-medium group-has-checked:text-black"
       >
         <div>{props.children}</div>
         <div>{props.endText}</div>
@@ -255,7 +251,7 @@ interface StarsProps {
 
 const Stars: Component<StarsProps> = (props) => {
   return (
-    <div class="flex gap-1 items-center">
+    <div class="flex items-center gap-1">
       <For each={Array(5)}>
         {(_, index) => <Star isActive={index() <= (props.count ?? 5) - 1} />}
       </For>

@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm with-env vinxi dev --host",
-    "build": "pnpm with-env vinxi build",
-    "start": "pnpm with-env vinxi start",
+    "dev": "npm run with-env vinxi dev --host",
+    "build": "npm run with-env vinxi build",
+    "start": "npm run with-env vinxi start",
     "version": "vinxi version",
     "clean": "git clean -xdf .cache .next .turbo node_modules",
     "typecheck": "tsc --customConditions disable",

@@ -42,7 +42,7 @@ const HeaderDesktop: Component<HeaderDesktopProps> = (props) => {
     <nav class="container flex h-16 items-center justify-between">
       <A href="/" class="flex items-center gap-2">
         <img src="/icon.svg" alt="Главная" class="max-w-8" />
-        <div class="text-2xl font-bold">ЧИП</div>
+        <div class="font-bold text-2xl">ЧИП</div>
       </A>
       <div class="hidden h-full grow items-center lg:flex">
         <div class="mx-auto flex h-full items-center">
@@ -99,14 +99,14 @@ const HeaderMobile: Component<HeaderMobileProps> = (props) => {
         "block bg-black/30": props.isOpen,
         "hidden bg-transparent": !props.isOpen,
       }}
-      class="absolute top-0 left-0 z-1000 h-full w-full transition-all transition-discrete duration-300 lg:hidden starting:bg-transparent"
+      class="absolute top-0 left-0 z-1000 h-full w-full starting:bg-transparent transition-all transition-discrete duration-300 lg:hidden"
     >
       <div
         classList={{
           "translate-x-0": props.isOpen,
           "translate-x-full": !props.isOpen,
         }}
-        class="mb-2 ml-auto h-full w-full bg-white px-5 transition-all duration-300 sm:max-w-sm starting:translate-x-full"
+        class="mb-2 ml-auto h-full w-full starting:translate-x-full bg-white px-5 transition-all duration-300 sm:max-w-sm"
       >
         <div class="flex h-16 items-center justify-between px-4">
           <A href="/" class="flex items-center gap-2">
@@ -158,7 +158,7 @@ const HeaderLink: ParentComponent<HeaderLinkProps> = (props) => {
   return (
     <A
       href={props.href}
-      class="flex h-full items-center px-5 leading-tight font-medium transition"
+      class="flex h-full items-center px-5 font-medium leading-tight transition"
       inactiveClass="hover:bg-neutral-100 hover:text-orange-500"
       activeClass="bg-neutral-100 text-orange-500"
       end
@@ -176,7 +176,7 @@ const HeaderMobileLink: ParentComponent<HeaderMobileLinkProps> = (props) => {
   return (
     <A
       href={props.href}
-      class="flex h-full items-center rounded-md px-4 py-3 leading-tight font-medium transition"
+      class="flex h-full items-center rounded-md px-4 py-3 font-medium leading-tight transition"
       inactiveClass="hover:bg-neutral-100 hover:text-orange-500"
       activeClass="bg-neutral-100 text-orange-500"
       end

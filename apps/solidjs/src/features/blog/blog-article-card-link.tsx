@@ -7,7 +7,7 @@ export const BlogArticleCardLink: Component<BlogArticleCardLinkProps> = () => {
   return (
     <a
       href="/blog/1"
-      class="block rounded-2xl border border-gray-200 transition hover:-translate-y-2 hover:shadow-lg"
+      class="hover:-translate-y-2 block rounded-2xl border border-gray-200 transition hover:shadow-lg"
     >
       <img
         src="/article-example.png"
@@ -15,7 +15,7 @@ export const BlogArticleCardLink: Component<BlogArticleCardLinkProps> = () => {
         alt="article"
       />
       <div class="p-5">
-        <h6 class="mb-3 text-xl font-semibold">
+        <h6 class="mb-3 font-semibold text-xl">
           Lorem Ipsum is simply dummy text of the printing
         </h6>
         <div class="mb-3 flex items-center gap-2">

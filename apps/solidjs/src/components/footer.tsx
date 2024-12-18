@@ -14,20 +14,20 @@ export const Footer: Component<FooterProps> = (props) => {
           <div class="md:max-w-sm">
             <h6 class="mb-8 flex items-center gap-1">
               <img src="/icon.svg" alt="logo" />
-              <span class="text-2xl leading-8 font-bold">ЧИП</span>
+              <span class="font-bold text-2xl leading-8">ЧИП</span>
             </h6>
-            <div class="text-lg leading-7 text-neutral-600">
+            <div class="text-lg text-neutral-600 leading-7">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </div>
           </div>
           <div class="max-w-48 grow">
-            <h6 class="mb-8 text-xl font-semibold">Помощь</h6>
+            <h6 class="mb-8 font-semibold text-xl">Помощь</h6>
             <ul class="space-y-1">
               <li>
                 <a
                   href="/"
-                  class="hover:text-primary text-lg leading-10 font-medium text-neutral-600 transition"
+                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Контакты
                 </a>
@@ -35,7 +35,7 @@ export const Footer: Component<FooterProps> = (props) => {
               <li>
                 <a
                   href="/"
-                  class="hover:text-primary text-lg leading-10 font-medium text-neutral-600 transition"
+                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Последние записи
                 </a>
@@ -43,7 +43,7 @@ export const Footer: Component<FooterProps> = (props) => {
               <li>
                 <a
                   href="/"
-                  class="hover:text-primary text-lg leading-10 font-medium text-neutral-600 transition"
+                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   FAQ
                 </a>
@@ -51,12 +51,12 @@ export const Footer: Component<FooterProps> = (props) => {
             </ul>
           </div>
           <div class="max-w-48 grow">
-            <h6 class="mb-8 text-xl font-semibold">Программы</h6>
+            <h6 class="mb-8 font-semibold text-xl">Программы</h6>
             <ul class="space-y-1">
               <li>
                 <a
                   href="/"
-                  class="hover:text-primary text-lg leading-10 font-medium text-neutral-600 transition"
+                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Дизайн
                 </a>
@@ -64,7 +64,7 @@ export const Footer: Component<FooterProps> = (props) => {
               <li>
                 <a
                   href="/"
-                  class="hover:text-primary text-lg leading-10 font-medium text-neutral-600 transition"
+                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Бизнес
                 </a>
@@ -72,7 +72,7 @@ export const Footer: Component<FooterProps> = (props) => {
               <li>
                 <a
                   href="/"
-                  class="hover:text-primary text-lg leading-10 font-medium text-neutral-600 transition"
+                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   ПО
                 </a>
@@ -80,7 +80,7 @@ export const Footer: Component<FooterProps> = (props) => {
               <li>
                 <a
                   href="/"
-                  class="hover:text-primary text-lg leading-10 font-medium text-neutral-600 transition"
+                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Языки
                 </a>
@@ -88,7 +88,7 @@ export const Footer: Component<FooterProps> = (props) => {
               <li>
                 <a
                   href="/"
-                  class="hover:text-primary text-lg leading-10 font-medium text-neutral-600 transition"
+                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Программирование
                 </a>
@@ -96,15 +96,15 @@ export const Footer: Component<FooterProps> = (props) => {
             </ul>
           </div>
           <div class="max-w-sm grow">
-            <h6 class="mb-8 text-xl font-semibold">Напишите Нам</h6>
-            <div class="mb-4 text-lg leading-7 text-neutral-600">
+            <h6 class="mb-8 font-semibold text-xl">Напишите Нам</h6>
+            <div class="mb-4 text-lg text-neutral-600 leading-7">
               Адрес: г. Рязань, ул. Высоковольтная, д. 10,
             </div>
-            <div class="mb-4 text-lg leading-7 text-neutral-600">
+            <div class="mb-4 text-lg text-neutral-600 leading-7">
               Телефон:{" "}
               <a
                 href="tel:+7 (800) 555-35-35"
-                class="hover:text-primary transition"
+                class="transition hover:text-primary"
               >
                 +7 (800) 555-35-35
               </a>
@@ -112,7 +112,7 @@ export const Footer: Component<FooterProps> = (props) => {
               Почта:{" "}
               <a
                 href="mailto:supportlms@gmail.com"
-                class="hover:text-primary transition"
+                class="transition hover:text-primary"
               >
                 supportlms@gmail.com
               </a>
@@ -120,7 +120,7 @@ export const Footer: Component<FooterProps> = (props) => {
           </div>
         </div>
         <hr class="border-gray-200" />
-        <div class="py-8 text-center leading-7 text-neutral-600">
+        <div class="py-8 text-center text-neutral-600 leading-7">
           Copyright © 2024 RWX LMS | Powered by wardxela
         </div>
       </div>

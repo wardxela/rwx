@@ -1,6 +1,6 @@
 name: "Setup and install"
 description: "Common setup steps for Actions"
-
+# TODO: remove this and replace with bun
 runs:
   using: composite
   steps:

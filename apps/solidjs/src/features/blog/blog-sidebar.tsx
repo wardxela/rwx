@@ -5,7 +5,7 @@ export const BlogSidebar = () => {
   return (
     <div class="space-y-7">
       <div>
-        <h6 class="mb-5 text-xl font-semibold">Категории</h6>
+        <h6 class="mb-5 font-semibold text-xl">Категории</h6>
         <ul class="space-y-4">
           <li>
             <TextCheckbox endText="15">Коммерческие</TextCheckbox>
@@ -28,7 +28,7 @@ export const BlogSidebar = () => {
         </ul>
       </div>
       <div>
-        <h6 class="mb-5 text-xl font-semibold">Недавние Записи</h6>
+        <h6 class="mb-5 font-semibold text-xl">Недавние Записи</h6>
         <ul class="space-y-4">
           <li>
             <a href="/" class="group flex gap-4">
@@ -37,7 +37,7 @@ export const BlogSidebar = () => {
                 src="/course-preview.png"
                 class="aspect-square max-w-24 shrink-0 rounded-xl object-cover transition group-hover:brightness-90"
               />
-              <div class="group-hover:text-primary grow font-medium transition">
+              <div class="grow font-medium transition group-hover:text-primary">
                 Best LearnPress WordPress Theme Collection for 2023
               </div>
             </a>
@@ -49,7 +49,7 @@ export const BlogSidebar = () => {
                 src="/course-preview.png"
                 class="aspect-square max-w-24 shrink-0 rounded-xl object-cover transition group-hover:brightness-90"
               />
-              <div class="group-hover:text-primary grow font-medium transition">
+              <div class="grow font-medium transition group-hover:text-primary">
                 Best LearnPress WordPress Theme Collection for 2023
               </div>
             </a>
@@ -61,7 +61,7 @@ export const BlogSidebar = () => {
                 src="/course-preview.png"
                 class="aspect-square max-w-24 shrink-0 rounded-xl object-cover transition group-hover:brightness-90"
               />
-              <div class="group-hover:text-primary grow font-medium transition">
+              <div class="grow font-medium transition group-hover:text-primary">
                 Best LearnPress WordPress Theme Collection for 2023
               </div>
             </a>
@@ -69,7 +69,7 @@ export const BlogSidebar = () => {
         </ul>
       </div>
       <div>
-        <h6 class="mb-5 text-xl font-semibold">Теги</h6>
+        <h6 class="mb-5 font-semibold text-xl">Теги</h6>
         <div class="flex flex-wrap gap-2">
           <TagCheckbox>Бесплатные курсы</TagCheckbox>
           <TagCheckbox>Маркетинг</TagCheckbox>
@@ -89,7 +89,7 @@ interface CheckboxTextProps {
 
 const TextCheckbox: ParentComponent<CheckboxTextProps> = (props) => {
   return (
-    <label class="flex cursor-pointer items-center gap-1 leading-none text-neutral-400 hover:text-neutral-600">
+    <label class="flex cursor-pointer items-center gap-1 text-neutral-400 leading-none hover:text-neutral-600">
       <input type="checkbox" class="peer sr-only" />
       <Show when={props.showCheck}>
         <div class="grid size-3 place-items-center rounded-sm border border-neutral-600 text-transparent transition peer-checked:border-black peer-checked:text-black">
@@ -126,7 +126,7 @@ const TagCheckbox: ParentComponent = (props) => {
   return (
     <label>
       <input class="peer sr-only" type="checkbox" />
-      <div class="inline-flex cursor-pointer gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 transition peer-checked:bg-neutral-200! hover:bg-neutral-100">
+      <div class="inline-flex cursor-pointer gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 transition hover:bg-neutral-100 peer-checked:bg-neutral-200!">
         {props.children}
       </div>
     </label>

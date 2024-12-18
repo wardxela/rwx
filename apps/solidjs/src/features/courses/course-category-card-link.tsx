@@ -26,7 +26,7 @@ export const CourseCategoryLink: Component<CourseCategoryLinkProps> = (
     <a
       href={props.href}
       class={cn(
-        "group bg-white p-4 inline-flex aspect-square flex-col items-center justify-center gap-4 sm:gap-6 rounded-3xl border border-gray-200 transition hover:-translate-y-2 sm:hover:-translate-y-4 hover:shadow-lg",
+        "group hover:-translate-y-2 sm:hover:-translate-y-4 inline-flex aspect-square flex-col items-center justify-center gap-4 rounded-3xl border border-gray-200 bg-white p-4 transition hover:shadow-lg sm:gap-6",
         props.class,
       )}
     >
@@ -34,10 +34,10 @@ export const CourseCategoryLink: Component<CourseCategoryLinkProps> = (
         <img src={props.imgSrc} alt="icon" />
       </div>
       <div class="flex flex-col items-center justify-start gap-2 sm:gap-3">
-        <div class="text-lg sm:text-xl font-semibold capitalize transition group-hover:text-orange-500">
+        <div class="font-semibold text-lg capitalize transition group-hover:text-orange-500 sm:text-xl">
           {props.title}
         </div>
-        <div class="sm:text-lg leading-7 text-neutral-600">
+        <div class="text-neutral-600 leading-7 sm:text-lg">
           {props.count} {coursesText()}
         </div>
       </div>
