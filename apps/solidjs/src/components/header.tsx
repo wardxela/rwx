@@ -1,6 +1,7 @@
 import { A, useLocation } from "@solidjs/router";
 import type { Component, ParentComponent } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
+import { Portal } from "solid-js/web";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = createSignal(false);
@@ -94,59 +95,61 @@ interface HeaderMobileProps {
 
 const HeaderMobile: Component<HeaderMobileProps> = (props) => {
   return (
-    <div
-      classList={{
-        "block bg-black/30": props.isOpen,
-        "hidden bg-transparent": !props.isOpen,
-      }}
-      class="absolute top-0 left-0 z-1000 h-full w-full starting:bg-transparent transition-all transition-discrete duration-300 lg:hidden"
-    >
+    <Portal>
       <div
         classList={{
-          "translate-x-0": props.isOpen,
-          "translate-x-full": !props.isOpen,
+          "block bg-black/30": props.isOpen,
+          "hidden bg-transparent": !props.isOpen,
         }}
-        class="mb-2 ml-auto h-full w-full starting:translate-x-full bg-white px-5 transition-all duration-300 sm:max-w-sm"
+        class="absolute top-0 left-0 z-1000 size-full overflow-hidden starting:bg-transparent transition-all transition-discrete duration-300 lg:hidden"
       >
-        <div class="flex h-16 items-center justify-between px-4">
-          <A href="/" class="flex items-center gap-2">
-            <img src="/icon.svg" alt="Главная" class="max-w-8" />
-          </A>
-          <button
-            type="button"
-            class="grid cursor-pointer place-items-center p-2.5"
-            onClick={() => props.toggleMenu(false)}
-          >
-            <span class="sr-only">Close menu</span>
-            <svg
-              class="size-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-              data-slot="icon"
+        <div
+          classList={{
+            "translate-x-0": props.isOpen,
+            "translate-x-full": !props.isOpen,
+          }}
+          class="ml-auto h-full w-full starting:translate-x-full overflow-y-auto bg-white px-5 transition-all duration-300 sm:max-w-sm"
+        >
+          <div class="flex h-16 items-center justify-between px-4">
+            <A href="/" class="flex items-center gap-2">
+              <img src="/icon.svg" alt="Главная" class="max-w-8" />
+            </A>
+            <button
+              type="button"
+              class="grid cursor-pointer place-items-center p-2.5"
+              onClick={() => props.toggleMenu(false)}
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-        <div class="space-y-2.5">
-          <HeaderMobileLink href="/">Главная</HeaderMobileLink>
-          <HeaderMobileLink href="/courses">Курсы</HeaderMobileLink>
-          <HeaderMobileLink href="/blog">Блог</HeaderMobileLink>
-          <HeaderMobileLink href="/contacts">Контакты</HeaderMobileLink>
-          <hr class="mx-4 border-neutral-500/10" />
-          <HeaderMobileLink href="/login">
-            Войти / Зарегистрироваться
-          </HeaderMobileLink>
+              <span class="sr-only">Close menu</span>
+              <svg
+                class="size-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+                data-slot="icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="space-y-2.5 pb-2.5">
+            <HeaderMobileLink href="/">Главная</HeaderMobileLink>
+            <HeaderMobileLink href="/courses">Курсы</HeaderMobileLink>
+            <HeaderMobileLink href="/blog">Блог</HeaderMobileLink>
+            <HeaderMobileLink href="/contacts">Контакты</HeaderMobileLink>
+            <hr class="mx-4 border-neutral-500/10" />
+            <HeaderMobileLink href="/login">
+              Войти / Зарегистрироваться
+            </HeaderMobileLink>
+          </div>
         </div>
       </div>
-    </div>
+    </Portal>
   );
 };
 
@@ -176,7 +179,7 @@ const HeaderMobileLink: ParentComponent<HeaderMobileLinkProps> = (props) => {
   return (
     <A
       href={props.href}
-      class="flex h-full items-center rounded-md px-4 py-3 font-medium leading-tight transition"
+      class="flex items-center rounded-md px-4 py-3 font-medium leading-tight transition"
       inactiveClass="hover:bg-neutral-100 hover:text-orange-500"
       activeClass="bg-neutral-100 text-orange-500"
       end

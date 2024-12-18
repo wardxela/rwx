@@ -273,7 +273,7 @@ export default function HomePage() {
             >
               Я студент
             </Button>
-            <Button size="lg" class="ml-auto w-full sm:w-auto">
+            <Button size="lg" class="ml-auto w-full sm:w-auto lg:ml-0">
               Стать Преподавателем
             </Button>
           </div>

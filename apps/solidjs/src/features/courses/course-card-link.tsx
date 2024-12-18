@@ -16,6 +16,7 @@ export interface CourseCardLinkProps {
   price: number;
   oldPrice?: number;
   lessonsCount?: number;
+  level?: string;
 }
 
 export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
@@ -54,38 +55,89 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
             <span>{props.author}</span>
           </div>
           <h6 class="mb-4 font-semibold @xl:text-xl text-lg">{props.title}</h6>
-          <div class="mb-4 flex flex-wrap items-center gap-x-4 gap-y-3">
-            <div class="flex items-center gap-2">
-              <img src="/duration.svg" alt="duration" class="size-4" />
+          <div class="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2.5">
+            <div class="flex items-center gap-1.5">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 15 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="text-primary"
+              >
+                <title>Duration</title>
+                <path
+                  d="M7.50009 0.877014C3.84241 0.877014 0.877258 3.84216 0.877258 7.49984C0.877258 11.1575 3.8424 14.1227 7.50009 14.1227C11.1578 14.1227 14.1229 11.1575 14.1229 7.49984C14.1229 3.84216 11.1577 0.877014 7.50009 0.877014ZM1.82726 7.49984C1.82726 4.36683 4.36708 1.82701 7.50009 1.82701C10.6331 1.82701 13.1729 4.36683 13.1729 7.49984C13.1729 10.6328 10.6331 13.1727 7.50009 13.1727C4.36708 13.1727 1.82726 10.6328 1.82726 7.49984ZM8 4.50001C8 4.22387 7.77614 4.00001 7.5 4.00001C7.22386 4.00001 7 4.22387 7 4.50001V7.50001C7 7.63262 7.05268 7.7598 7.14645 7.85357L9.14645 9.85357C9.34171 10.0488 9.65829 10.0488 9.85355 9.85357C10.0488 9.65831 10.0488 9.34172 9.85355 9.14646L8 7.29291V4.50001Z"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                />
+              </svg>
               <div class="text-neutral-600 text-sm">{durationText()}</div>
             </div>
-            <div class="flex items-center gap-2">
-              <img src="/students.svg" alt="students" class="size-4" />
+            <div class="flex items-center gap-1.5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-primary"
+              >
+                <title>Students</title>
+                <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+                <path d="M22 10v6" />
+                <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+              </svg>
               <div class="text-neutral-600 text-sm">
                 {props.studentsCount} {studentsText()}
               </div>
             </div>
-            <Show when={props.lessonsCount !== undefined}>
-              <div class="flex items-center gap-2">
+            <Show when={props.level !== undefined}>
+              <div class="flex items-center gap-1.5">
                 <svg
+                  xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
-                  viewBox="0 0 16 16"
+                  viewBox="0 0 24 24"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-primary"
                 >
-                  <title>Количество занятий</title>
-                  <g clip-path="url(#clip0_3288_1511)">
-                    <path
-                      d="M10.6666 0.666626H2.66659C1.93325 0.666626 1.33325 1.26663 1.33325 1.99996V11.3333H2.66659V1.99996H10.6666V0.666626ZM9.99992 3.33329L13.9999 7.33329V14C13.9999 14.7333 13.3999 15.3333 12.6666 15.3333H5.32659C4.59325 15.3333 3.99992 14.7333 3.99992 14L4.00659 4.66663C4.00659 3.93329 4.59992 3.33329 5.33325 3.33329H9.99992ZM9.33325 7.99996H12.9999L9.33325 4.33329V7.99996Z"
-                      fill="#FF782D"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_3288_1511">
-                      <rect width="16" height="16" fill="white" />
-                    </clipPath>
-                  </defs>
+                  <title>Difficutly</title>
+                  <line x1="12" x2="12" y1="20" y2="10" />
+                  <line x1="18" x2="18" y1="20" y2="4" />
+                  <line x1="6" x2="6" y1="20" y2="16" />
+                </svg>
+                <div class="text-neutral-600 text-sm">{props.level}</div>
+              </div>
+            </Show>
+            <Show when={props.lessonsCount !== undefined}>
+              <div class="flex items-center gap-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-primary"
+                >
+                  <title>Lessons</title>
+                  <path d="m16 6 4 14" />
+                  <path d="M12 6v14" />
+                  <path d="M8 8v12" />
+                  <path d="M4 4v16" />
                 </svg>
                 <div class="text-neutral-600 text-sm">
                   {props.lessonsCount} {lessontsText()}
@@ -110,7 +162,7 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
                 </Match>
               </Switch>
             </div>
-            <a href="/" class="font-medium @xl:text-base text-sm">
+            <a href="/courses/1" class="font-medium @xl:text-base text-sm">
               Подробнее
             </a>
           </div>
