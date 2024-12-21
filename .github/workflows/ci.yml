@@ -32,7 +32,7 @@ jobs:
         run: cp .env.example .env
 
       - name: Lint
-        run: npm run lint && npm run lint:ws
+        run: npm run biome
 
   format:
     runs-on: ubuntu-latest
