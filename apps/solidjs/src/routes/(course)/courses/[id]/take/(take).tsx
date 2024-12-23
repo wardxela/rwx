@@ -44,11 +44,7 @@ export default function CourseTake() {
         </Button>
         <Button class="ml-10">Отметить как выполненное</Button>
         <div class="ml-15 flex items-center gap-3">
-          <img
-            src="/public/person.png"
-            alt="Avatar"
-            class="size-9 object-cover"
-          />
+          <img src="/person.png" alt="Avatar" class="size-9 object-cover" />
           <span class="text-neutral-700 text-sm">Настя Федорова</span>
         </div>
       </header>

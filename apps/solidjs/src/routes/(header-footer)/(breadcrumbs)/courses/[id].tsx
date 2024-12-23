@@ -297,7 +297,7 @@ export default function CoursePreview() {
         </div>
         <div class="-top-50 right-0 rounded-2xl border border-gray-200 bg-white lg:w-full lg:max-w-100 xl:absolute">
           <img
-            src="/public/blog-article.png"
+            src="/blog-article.png"
             class="aspect-[1.64] w-full rounded-t-2xl"
             alt="course"
           />
