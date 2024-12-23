@@ -25,6 +25,7 @@
     "@rwx/tailwind-config": "workspace:*",
     "@rwx/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "^4.0.0-beta.5",
+    "@tailwindcss/typography": "^0.5.15",
     "dotenv-cli": "^7.4.4"
   },
   "engines": {

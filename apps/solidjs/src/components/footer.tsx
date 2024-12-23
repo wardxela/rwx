@@ -26,7 +26,15 @@ export const Footer: Component<FooterProps> = (props) => {
             <ul class="space-y-1">
               <li>
                 <a
-                  href="/"
+                  href="/courses"
+                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
+                >
+                  Курсы
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/contacts"
                   class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Контакты
@@ -34,18 +42,10 @@ export const Footer: Component<FooterProps> = (props) => {
               </li>
               <li>
                 <a
-                  href="/"
+                  href="/blog"
                   class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Последние записи
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/"
-                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
-                >
-                  FAQ
                 </a>
               </li>
             </ul>
@@ -55,7 +55,7 @@ export const Footer: Component<FooterProps> = (props) => {
             <ul class="space-y-1">
               <li>
                 <a
-                  href="/"
+                  href="/courses"
                   class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Дизайн
@@ -63,7 +63,7 @@ export const Footer: Component<FooterProps> = (props) => {
               </li>
               <li>
                 <a
-                  href="/"
+                  href="/courses"
                   class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Бизнес
@@ -71,7 +71,7 @@ export const Footer: Component<FooterProps> = (props) => {
               </li>
               <li>
                 <a
-                  href="/"
+                  href="/courses"
                   class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   ПО
@@ -79,7 +79,7 @@ export const Footer: Component<FooterProps> = (props) => {
               </li>
               <li>
                 <a
-                  href="/"
+                  href="/courses"
                   class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Языки
@@ -87,7 +87,7 @@ export const Footer: Component<FooterProps> = (props) => {
               </li>
               <li>
                 <a
-                  href="/"
+                  href="/courses"
                   class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
                 >
                   Программирование

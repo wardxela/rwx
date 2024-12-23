@@ -1,5 +1,8 @@
 @import "@rwx/tailwind-config/style.css";
+
 @source '../../../packages/ui/src';
+
+@plugin "@tailwindcss/typography";
 
 @font-face {
   font-family: "Jost";

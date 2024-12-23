@@ -38,7 +38,7 @@ export const BlogSidebar = () => {
         <h6 class="mb-5 font-semibold text-xl">Недавние Записи</h6>
         <ul class="space-y-4">
           <li>
-            <a href="/" class="group flex gap-4">
+            <a href="/blog/1" class="group flex gap-4">
               <img
                 alt="DYNAMIC_DATA"
                 src="/course-preview.png"
@@ -50,7 +50,7 @@ export const BlogSidebar = () => {
             </a>
           </li>
           <li>
-            <a href="/" class="group flex gap-4">
+            <a href="/blog/1" class="group flex gap-4">
               <img
                 alt="DYNAMIC_DATA"
                 src="/course-preview.png"
@@ -62,7 +62,7 @@ export const BlogSidebar = () => {
             </a>
           </li>
           <li>
-            <a href="/" class="group flex gap-4">
+            <a href="/blog/1" class="group flex gap-4">
               <img
                 alt="DYNAMIC_DATA"
                 src="/course-preview.png"
