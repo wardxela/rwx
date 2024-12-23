@@ -7,7 +7,12 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".cache/tsbuildinfo.json", "dist/**"]
+      "outputs": [
+        ".cache/tsbuildinfo.json",
+        "dist/**",
+        ".vercel/**",
+        ".vinxi/**"
+      ]
     },
     "build:openapi": {
       "cache": false

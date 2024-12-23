@@ -7,7 +7,7 @@
     "build": "bun run with-env vinxi build",
     "start": "bun run with-env vinxi start",
     "version": "vinxi version",
-    "clean": "git clean -xdf .cache .next .turbo node_modules",
+    "clean": "git clean -xdf .cache .turbo node_modules .vercel .vinxi",
     "typecheck": "tsc --customConditions disable",
     "with-env": "dotenv -e ../../.env --"
   },
