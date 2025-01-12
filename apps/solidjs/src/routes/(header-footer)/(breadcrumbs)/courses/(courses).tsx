@@ -1,9 +1,14 @@
+import { Button } from "@rwx/ui/components/button";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+} from "@rwx/ui/components/drawer";
 import { TextField, TextFieldInput } from "@rwx/ui/components/text-field";
 import { Toggle } from "@rwx/ui/components/toggle";
 import { Show, createSignal } from "solid-js";
-import { BlogSidebarMobile } from "~/features/blog";
-import { CourseCardLink } from "~/features/courses/course-card-link";
-import { CoursesSidebar } from "~/features/courses/courses-sidebar";
+import { CourseCardLink } from "~/entities/course/course-card-link";
+import { CoursesSidebar } from "~/entities/course/courses-sidebar";
 
 const [isGridView, setIsGridView] = createSignal(true);
 
@@ -65,7 +70,35 @@ export default function Page() {
                 </Show>
               )}
             </Toggle>
-            <BlogSidebarMobile />
+            <Drawer>
+              <DrawerTrigger
+                as={Button<"button">}
+                variant="ghost"
+                size="icon"
+                class="lg:hidden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-primary"
+                >
+                  <title>Filters</title>
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                </svg>
+              </DrawerTrigger>
+              <DrawerContent>
+                <div class="h-full max-h-[70vh] overflow-auto p-5">
+                  <CoursesSidebar />
+                </div>
+              </DrawerContent>
+            </Drawer>
           </div>
         </div>
         <div
@@ -75,6 +108,7 @@ export default function Page() {
           }}
         >
           <CourseCardLink
+            href="/courses/1"
             preview="/course-preview.png"
             author="Артем Неизвестный"
             title="Создай веб-сайт с помощью  LMS plugin"
@@ -87,6 +121,7 @@ export default function Page() {
             level="Эксперт"
           />
           <CourseCardLink
+            href="/courses/1"
             preview="/course-preview.png"
             author="Артем Неизвестный"
             title="Создай веб-сайт с помощью  LMS plugin"
@@ -98,6 +133,7 @@ export default function Page() {
             price={0}
           />
           <CourseCardLink
+            href="/courses/1"
             preview="/course-preview.png"
             author="Артем Неизвестный"
             title="Создай веб-сайт с помощью  LMS plugin"
@@ -109,6 +145,7 @@ export default function Page() {
             price={0}
           />
           <CourseCardLink
+            href="/courses/1"
             preview="/course-preview.png"
             author="Артем Неизвестный"
             title="Создай веб-сайт с помощью  LMS plugin"

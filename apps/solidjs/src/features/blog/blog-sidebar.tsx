@@ -1,12 +1,5 @@
-import { Button } from "@rwx/ui/components/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTrigger,
-} from "@rwx/ui/components/drawer";
 import type { JSX, ParentComponent } from "solid-js";
 import { Show } from "solid-js";
-import { CoursesSidebar } from "../courses/courses-sidebar";
 
 export const BlogSidebar = () => {
   return (
@@ -86,40 +79,6 @@ export const BlogSidebar = () => {
         </div>
       </div>
     </div>
-  );
-};
-
-export const BlogSidebarMobile = () => {
-  return (
-    <Drawer>
-      <DrawerTrigger
-        as={Button<"button">}
-        variant="ghost"
-        size="icon"
-        class="lg:hidden"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="text-primary"
-        >
-          <title>Filters</title>
-          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-        </svg>
-      </DrawerTrigger>
-      <DrawerContent>
-        <div class="h-full max-h-[70vh] overflow-auto p-5">
-          <CoursesSidebar />
-        </div>
-      </DrawerContent>
-    </Drawer>
   );
 };
 

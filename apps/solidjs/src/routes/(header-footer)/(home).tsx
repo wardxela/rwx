@@ -2,12 +2,12 @@ import { type Component, For, type JSX } from "solid-js";
 
 import { Button } from "@rwx/ui/components/button";
 
-import { BlogArticleCardLink } from "~/features/blog/blog-article-card-link";
-import { CourseCardLink } from "~/features/courses/course-card-link";
+import { CourseCardLink } from "~/entities/course/course-card-link";
 import {
   CourseCategoryLink,
   type CourseCategoryLinkProps,
-} from "~/features/courses/course-category-card-link";
+} from "~/entities/course/course-category-card-link";
+import { BlogArticleCardLink } from "~/features/blog/blog-article-card-link";
 
 export default function Page() {
   return (
@@ -67,6 +67,7 @@ export default function Page() {
           />
           <div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 sm:gap-7 md:grid-cols-[repeat(auto-fill,minmax(350px,1fr))]">
             <CourseCardLink
+              href="/courses/1"
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
@@ -77,6 +78,7 @@ export default function Page() {
               price={0}
             />
             <CourseCardLink
+              href="/courses/1"
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
@@ -87,6 +89,7 @@ export default function Page() {
               price={11999}
             />
             <CourseCardLink
+              href="/courses/1"
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"
@@ -96,6 +99,7 @@ export default function Page() {
               price={29999}
             />
             <CourseCardLink
+              href="/courses/1"
               preview="/course-preview.png"
               author="Артем Неизвестный"
               title="Создай веб-сайт с помощью  LMS plugin"

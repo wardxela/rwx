@@ -7,6 +7,7 @@ import {
 } from "~/shared/utils/intl";
 
 export interface CourseCardLinkProps {
+  href: string;
   preview: string;
   title: string;
   author: string;
@@ -162,7 +163,7 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
                 </Match>
               </Switch>
             </div>
-            <a href="/courses/1" class="font-medium @xl:text-base text-sm">
+            <a href={props.href} class="font-medium @xl:text-base text-sm">
               Подробнее
             </a>
           </div>
