@@ -9,7 +9,7 @@ import {
   TextFieldTextArea,
 } from "@rwx/ui/components/text-field";
 
-export default function BlogArticle() {
+export default function Page() {
   return (
     <>
       <h1 class="mb-4 font-semibold text-xl leading-7 sm:mb-5 sm:text-4xl sm:leading-10">

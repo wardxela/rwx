@@ -7,7 +7,7 @@ import { CoursesSidebar } from "~/features/courses/courses-sidebar";
 
 const [isGridView, setIsGridView] = createSignal(true);
 
-export default function CoursesPage() {
+export default function Page() {
   return (
     <div class="container grid gap-7 pt-8 pb-12 sm:pt-16 sm:pb-24 lg:grid-cols-[1fr_270px]">
       <div>

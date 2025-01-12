@@ -10,7 +10,7 @@ import { BlogArticleCardLink, BlogSidebar } from "~/features/blog";
 
 const [isGridView, setIsGridView] = createSignal(true);
 
-export default function Blog() {
+export default function Page() {
   return (
     <>
       <div class="mb-8 flex items-center justify-between gap-2 sm:mb-10">

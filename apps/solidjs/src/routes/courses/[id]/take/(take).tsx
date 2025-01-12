@@ -6,7 +6,7 @@ import {
 } from "@rwx/ui/components/accordion";
 import { Button } from "@rwx/ui/components/button";
 
-export default function CourseTake() {
+export default function Page() {
   return (
     <div class="bg-neutral-100">
       <div class="fixed top-0 left-0 flex h-18 w-100 items-center border-neutral-100 border-r border-b bg-white px-10">

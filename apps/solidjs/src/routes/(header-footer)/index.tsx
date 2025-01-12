@@ -9,7 +9,7 @@ import {
   type CourseCategoryLinkProps,
 } from "~/features/courses/course-category-card-link";
 
-export default function HomePage() {
+export default function Page() {
   return (
     <div class="[&>*]:mb-16 sm:[&>*]:mb-24">
       <section class="relative">

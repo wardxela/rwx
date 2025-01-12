@@ -13,7 +13,7 @@ import {
 } from "@rwx/ui/components/text-field";
 import { A } from "@solidjs/router";
 
-export default function CoursePreview() {
+export default function Page() {
   return (
     <>
       <div class="mb-12 bg-black py-12.5">
