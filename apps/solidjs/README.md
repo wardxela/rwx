@@ -25,7 +25,7 @@ bun run dev -- --open
 
 ## Building
 
-Solid apps are built with _presets_, which optimise your project for deployment to different environments.
+Solid apps are built with _presets_, which optimize your project for deployment to different environments.
 
 By default, `bun run build` will generate a Node app that you can run with `npm start`. To use a different preset, add it to the `devDependencies` in `package.json` and specify in your `app.config.js`.
 

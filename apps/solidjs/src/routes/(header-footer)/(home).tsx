@@ -36,7 +36,7 @@ export default function Page() {
           <SectionHeader
             title="Категории"
             description="Ознакомьтесь с нашими популярными категориями"
-            aciton={
+            action={
               <Button size="lg" variant="outline">
                 Все Категории
               </Button>
@@ -59,7 +59,7 @@ export default function Page() {
           <SectionHeader
             title="Рекомендуемые Курсы"
             description="Ознакомьтесь с нашими популярными курсами"
-            aciton={
+            action={
               <Button size="lg" variant="outline">
                 Все Курсы
               </Button>
@@ -288,7 +288,7 @@ export default function Page() {
           <SectionHeader
             title="Последние Публикации"
             description="Ознакомьтесь с нашими бесплатными статьями"
-            aciton={
+            action={
               <Button size="lg" variant="outline">
                 Все Статьи
               </Button>
@@ -308,7 +308,7 @@ export default function Page() {
 const SectionHeader: Component<{
   title: string;
   description: string;
-  aciton: JSX.Element;
+  action: JSX.Element;
 }> = (props) => {
   return (
     <div class="mb-7 flex flex-col sm:flex-row sm:items-center sm:justify-between md:mb-16">
@@ -318,7 +318,7 @@ const SectionHeader: Component<{
           {props.description}
         </div>
       </div>
-      {props.aciton}
+      {props.action}
     </div>
   );
 };
