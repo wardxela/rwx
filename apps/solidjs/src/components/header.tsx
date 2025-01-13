@@ -101,7 +101,7 @@ const HeaderMobile: Component<HeaderMobileProps> = (props) => {
           "block bg-black/30": props.isOpen,
           "hidden bg-transparent": !props.isOpen,
         }}
-        class="absolute top-0 left-0 z-1000 size-full overflow-hidden starting:bg-transparent transition-all transition-discrete duration-300 lg:hidden"
+        class="fixed top-0 left-0 z-1000 size-full overflow-hidden starting:bg-transparent transition-all transition-discrete duration-300 lg:hidden"
       >
         <div
           classList={{
