@@ -1,9 +1,0 @@
-{
-  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-  "version": "0.2",
-  "language": "en,ru",
-  "words": ["solidjs", "kobalte", "corvu", "kysely", "vinxi"],
-  "allowCompoundWords": true,
-  "import": ["@cspell/dict-ru_ru/cspell-ext.json"],
-  "useGitignore": true
-}

@@ -10,8 +10,8 @@
     "typecheck": "turbo run typecheck",
     "clean": "git clean -xdf node_modules .turbo",
     "clean:workspaces": "turbo run clean",
-    "check-updates": "ncu -ws",
-    "update-deps": "ncu -ws -i",
+    "list-updates": "ncu -ws",
+    "update": "ncu -ws -i",
     "migrate": "bun -C packages/db migrate",
     "migrate:dev": "bun -C packages/db migrate:dev",
     "ui-add": "turbo run ui-add",
@@ -19,18 +19,14 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@cspell/dict-ru_ru": "^2.2.4",
     "@rwx/api": "workspace:*",
-    "@turbo/gen": "^2.3.3",
-    "@types/node": "^22.10.2",
+    "@turbo/gen": "^2.4.4",
+    "@types/node": "^22.13.14",
     "husky": "^9.1.7",
-    "turbo": "^2.3.3",
-    "typescript": "^5.7.2"
+    "npm-check-updates": "^17.1.16",
+    "turbo": "^2.4.4",
+    "typescript": "^5.8.2"
   },
-  "packageManager": "bun@1.1.34",
-  "workspaces": ["apps/*", "packages/*", "tooling/*"],
-  "dependencies": {
-    "cspell": "^8.17.1",
-    "npm-check-updates": "^17.1.11"
-  }
+  "packageManager": "bun@1.2.7",
+  "workspaces": ["apps/*", "packages/*", "tooling/*"]
 }
