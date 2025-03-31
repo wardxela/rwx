@@ -1,9 +1,13 @@
+import { Button } from "@rwx/ui/components/button";
 import { CourseCardLink } from "~/entities/course/course-card-link";
 
 export default function Page() {
   return (
-    <div class="p-6">
-      <h1 class="mb-4 font-bold text-2xl">Курсы</h1>
+    <div class="px-10 py-8">
+      <div class="mb-6 flex items-center justify-between">
+        <h1 class="font-bold text-2xl">Курсы</h1>
+        <Button>Создать</Button>
+      </div>
       <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4">
         <CourseCardLink
           href="/author/courses/1"
