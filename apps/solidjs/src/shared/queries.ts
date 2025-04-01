@@ -1,7 +1,15 @@
 import { query } from "@solidjs/router";
+import { getCookie } from "vinxi/http";
 import api from "./api";
 
 export const getProfile = query(async () => {
-  const response = await api.GET("/users/me");
+  "use server";
+  const cookie = getCookie("connect.sid");
+  const response = await api.GET("/users/me", {
+    headers: {
+      Cookie: `connect.sid=${cookie}`,
+    },
+  });
+  console.log("here", Math.random());
   return response.data;
 }, "profile");

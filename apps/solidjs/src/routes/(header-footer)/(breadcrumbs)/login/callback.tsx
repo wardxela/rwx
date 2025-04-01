@@ -4,8 +4,8 @@ import { getProfile } from "~/shared/queries";
 
 export default function Page() {
   const navigate = useNavigate();
-  // TODO: revalidate the cache of getProfile
-  createEffect(() => {
+  createEffect(async () => {
+    await revalidate(getProfile.key);
     navigate("/profile");
   });
 }
