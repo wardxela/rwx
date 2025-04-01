@@ -1,10 +1,15 @@
 import type { RouteSectionProps } from "@solidjs/router";
 import { clientOnly } from "@solidjs/start";
-import { AuthorSidebar } from "~/widgets/author/sidebar";
 
 const SidebarProvider = clientOnly(() =>
   import("@rwx/ui/components/sidebar").then((module) => ({
     default: module.SidebarProvider,
+  })),
+);
+
+const AuthorSidebar = clientOnly(() =>
+  import("~/widgets/author/sidebar").then((module) => ({
+    default: module.AuthorSidebar,
   })),
 );
 

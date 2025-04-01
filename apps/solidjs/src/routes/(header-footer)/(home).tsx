@@ -1,3 +1,4 @@
+import { A } from "@solidjs/router";
 import { type Component, For, type JSX } from "solid-js";
 
 import { Button } from "@rwx/ui/components/button";
@@ -27,7 +28,9 @@ export default function Page() {
               Учись онлайн, развивай навыки, достигай целей – с нами обучение
               просто и доступно.
             </p>
-            <Button size="lg">Список Курсов</Button>
+            <Button as={A} href="/courses" size="lg">
+              Список Курсов
+            </Button>
           </div>
         </div>
       </section>
@@ -37,7 +40,7 @@ export default function Page() {
             title="Категории"
             description="Ознакомьтесь с нашими популярными категориями"
             action={
-              <Button size="lg" variant="outline">
+              <Button as={A} href="/courses" size="lg" variant="outline">
                 Все Категории
               </Button>
             }

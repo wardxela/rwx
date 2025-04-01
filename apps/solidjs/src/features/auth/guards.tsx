@@ -8,7 +8,7 @@ import {
   createEffect,
 } from "solid-js";
 import { getProfile } from "~/shared/queries";
-import { Loader } from "./loader";
+import { Loader } from "../../components/loader";
 
 export const Protected: ParentComponent = (props) => {
   return (

@@ -2,6 +2,7 @@ import { A, useLocation } from "@solidjs/router";
 import type { Component, ParentComponent } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { Portal } from "solid-js/web";
+import { AuthSwitch } from "~/features/auth/guards";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = createSignal(false);
@@ -52,7 +53,19 @@ const HeaderDesktop: Component<HeaderDesktopProps> = (props) => {
           <HeaderLink href="/blog">Блог</HeaderLink>
           <HeaderLink href="/contacts">Контакты</HeaderLink>
         </div>
-        <HeaderLink href="/login">Войти / Зарегистрироваться</HeaderLink>
+        <AuthSwitch
+          unauth={
+            <HeaderLink href="/login">Войти / Зарегистрироваться</HeaderLink>
+          }
+        >
+          <A href="/profile" class="flex items-center">
+            <img
+              src="/profile.jpg"
+              alt="Profile"
+              class="size-10 rounded-full object-cover transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+            />
+          </A>
+        </AuthSwitch>
       </div>
       <button
         type="button"
@@ -143,9 +156,22 @@ const HeaderMobile: Component<HeaderMobileProps> = (props) => {
             <HeaderMobileLink href="/blog">Блог</HeaderMobileLink>
             <HeaderMobileLink href="/contacts">Контакты</HeaderMobileLink>
             <hr class="mx-4 border-neutral-500/10" />
-            <HeaderMobileLink href="/login">
-              Войти / Зарегистрироваться
-            </HeaderMobileLink>
+            <AuthSwitch
+              unauth={
+                <HeaderMobileLink href="/login">
+                  Войти / Зарегистрироваться
+                </HeaderMobileLink>
+              }
+            >
+              <HeaderMobileLink href="/profile">
+                <img
+                  src="/profile.jpg"
+                  alt="Profile"
+                  class="size-8 rounded-full object-cover transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+                />
+                <span class="ml-4">Профиль</span>
+              </HeaderMobileLink>
+            </AuthSwitch>
           </div>
         </div>
       </div>

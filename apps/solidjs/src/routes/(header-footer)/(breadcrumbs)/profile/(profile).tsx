@@ -1,5 +1,5 @@
 import { Button } from "@rwx/ui/components/button";
-import { Protected } from "~/components/guards";
+import { Protected } from "~/features/auth/guards";
 
 export default function Page() {
   return (

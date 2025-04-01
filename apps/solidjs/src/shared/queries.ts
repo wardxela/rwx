@@ -10,6 +10,5 @@ export const getProfile = query(async () => {
       Cookie: `connect.sid=${cookie}`,
     },
   });
-  console.log("here", Math.random());
   return response.data;
 }, "profile");
