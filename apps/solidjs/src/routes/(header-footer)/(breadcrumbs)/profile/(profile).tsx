@@ -1,12 +1,15 @@
 import { Button } from "@rwx/ui/components/button";
+import { Protected } from "~/components/guards";
 
 export default function Page() {
   return (
-    <div>
-      <div class="font-bold">User info:</div>
+    <Protected>
       <div>
-        <Button variant="secondary">Hello world</Button>
+        <div class="font-bold">User info:</div>
+        <div>
+          <Button variant="secondary">Hello world</Button>
+        </div>
       </div>
-    </div>
+    </Protected>
   );
 }

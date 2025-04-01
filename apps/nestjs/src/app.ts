@@ -33,7 +33,7 @@ export async function createApp() {
   app.use(passport.session());
 
   app.enableCors({
-    origin: configService.get("NEXTJS_URL"),
+    origin: configService.get("NESTJS_CLIENT_URL"),
   });
 
   return app;

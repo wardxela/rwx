@@ -12,8 +12,8 @@
     "clean:workspaces": "turbo run clean",
     "list-updates": "ncu -ws",
     "update": "ncu -ws -i",
-    "migrate": "bun -C packages/db migrate",
-    "migrate:dev": "bun -C packages/db migrate:dev",
+    "migrate": "bun --cwd packages/db migrate",
+    "migrate:dev": "bun --cwd packages/db migrate:dev",
     "ui-add": "turbo run ui-add",
     "prepare": "husky"
   },

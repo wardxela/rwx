@@ -3,13 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun run with-env vinxi dev --host",
-    "build": "bun run with-env vinxi build",
-    "start": "bun run with-env vinxi start",
+    "dev": "vinxi dev --host",
+    "build": "vinxi build",
+    "start": "vinxi start",
     "version": "vinxi version",
     "clean": "git clean -xdf .cache .turbo node_modules .vercel .vinxi",
-    "typecheck": "tsc --customConditions disable",
-    "with-env": "dotenv -e ../../.env --"
+    "typecheck": "tsc --customConditions disable"
   },
   "dependencies": {
     "@rwx/api": "workspace:*",
@@ -25,8 +24,7 @@
     "@rwx/tailwind-config": "workspace:*",
     "@rwx/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "^4.0.17",
-    "@tailwindcss/typography": "^0.5.16",
-    "dotenv-cli": "^8.0.0"
+    "@tailwindcss/typography": "^0.5.16"
   },
   "engines": {
     "node": ">=18"

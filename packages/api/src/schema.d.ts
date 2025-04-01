@@ -66,15 +66,7 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    User: {
-      id: string;
-      firstName: string;
-      lastName: string;
-      email: string;
-      image: string;
-    };
-  };
+  schemas: never;
   responses: never;
   parameters: never;
   requestBodies: never;
@@ -93,8 +85,12 @@ export interface operations {
     requestBody?: never;
     responses: {
       200: {
-        headers: Record<string, unknown>;
-        content?: never;
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": string;
+        };
       };
     };
   };
@@ -108,7 +104,9 @@ export interface operations {
     requestBody?: never;
     responses: {
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content?: never;
       };
     };
@@ -123,7 +121,9 @@ export interface operations {
     requestBody?: never;
     responses: {
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content?: never;
       };
     };
@@ -137,12 +137,11 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description User profile */
       200: {
-        headers: Record<string, unknown>;
-        content: {
-          "application/json": components["schemas"]["User"];
+        headers: {
+          [name: string]: unknown;
         };
+        content?: never;
       };
     };
   };

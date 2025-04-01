@@ -24,8 +24,7 @@ export class YandexStrategy extends PassportStrategy(Strategy, "yandex") {
       tokenURL: "https://oauth.yandex.ru/token",
       clientID: configService.get("YANDEX_CLIENT_ID"),
       clientSecret: configService.get("YANDEX_CLIENT_SECRET"),
-      // TODO: move host to .env. Path should be the same i guess.
-      callbackURL: "http://localhost:3001/auth/yandex/callback",
+      callbackURL: `${configService.get("NESTJS_URL")}/auth/yandex/callback`,
     } satisfies StrategyOptions);
   }
 

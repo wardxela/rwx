@@ -57,10 +57,12 @@ export class UsersService {
       const user = await trx
         .insertInto("User")
         .values({
+          roles: ["STUDENT"],
           firstName: data.user.firstName,
           lastName: data.user.lastName,
           email: data.user.email,
           image: data.user.avatar,
+          updatedAt: new Date(),
         })
         .returningAll()
         .executeTakeFirstOrThrow();

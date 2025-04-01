@@ -8,19 +8,15 @@ import { YandexAuthGuard } from "./guards/yandex-auth.guard";
 export class AuthController {
   constructor(private readonly configService: ConfigService) {}
 
-  @UseGuards(YandexAuthGuard)
   @Get("yandex")
+  @UseGuards(YandexAuthGuard)
   loginYandex() {
     // Redirect to Yandex
   }
 
-  @UseGuards(YandexAuthGuard)
   @Get("yandex/callback")
+  @UseGuards(YandexAuthGuard)
   callbackYandex(@Res() res: ExpressResponse) {
-    const nextUrl = this.configService.get("NEXTJS_URL");
-    res.redirect(`${nextUrl}/profile`);
+    res.redirect(this.configService.get("NESTJS_CLIENT_AUTH_CALLBACK_URL"));
   }
-
-  // TODO
-  // verify() {}
 }

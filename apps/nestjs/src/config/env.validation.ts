@@ -4,7 +4,9 @@ const envSchema = z.object({
   DATABASE_URL: z.string(),
   YANDEX_CLIENT_ID: z.string(),
   YANDEX_CLIENT_SECRET: z.string(),
-  NEXTJS_URL: z.string().url(),
+  NESTJS_URL: z.string().url(),
+  NESTJS_CLIENT_URL: z.string().url(),
+  NESTJS_CLIENT_AUTH_CALLBACK_URL: z.string().url(),
   NESTJS_SESSION_SECRET: z.string(),
 });
 
