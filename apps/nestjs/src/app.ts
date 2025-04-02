@@ -25,7 +25,7 @@ export async function createApp() {
       cookie: {
         sameSite: false,
         httpOnly: true,
-        maxAge: 600000,
+        maxAge: 6_000_000,
       },
     }),
   );

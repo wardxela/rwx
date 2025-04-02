@@ -3,12 +3,12 @@ import { type Component, For, type JSX } from "solid-js";
 
 import { Button } from "@rwx/ui/components/button";
 
-import { CourseCardLink } from "~/entities/course/course-card-link";
+import { BlogArticleCardLink } from "~/features/blog/blog-article-card-link";
+import { CourseCardLink } from "~/features/course/course-card-link";
 import {
   CourseCategoryLink,
   type CourseCategoryLinkProps,
-} from "~/entities/course/course-category-card-link";
-import { BlogArticleCardLink } from "~/features/blog/blog-article-card-link";
+} from "~/features/course/course-category-card-link";
 
 export default function Page() {
   return (

@@ -41,8 +41,7 @@ export class YandexStrategy extends PassportStrategy(Strategy, "yandex") {
         firstName: user.first_name,
         lastName: user.last_name,
         email: user.default_email,
-        // TODO: Consider to download avatar and serve it yourself instead
-        avatar: `https://avatars.yandex.net/get-yapic/${user.default_avatar_id}/islands-middle`,
+        avatar: `https://avatars.yandex.net/get-yapic/${user.default_avatar_id}/islands-200`,
       },
     });
   }

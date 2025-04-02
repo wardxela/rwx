@@ -7,8 +7,8 @@ import {
 import { TextField, TextFieldInput } from "@rwx/ui/components/text-field";
 import { Toggle } from "@rwx/ui/components/toggle";
 import { Show, createSignal } from "solid-js";
-import { CourseCardLink } from "~/entities/course/course-card-link";
-import { CoursesSidebar } from "~/entities/course/courses-sidebar";
+import { CourseCardLink } from "~/features/course/course-card-link";
+import { CoursesSidebar } from "~/features/course/courses-sidebar";
 
 const [isGridView, setIsGridView] = createSignal(true);
 

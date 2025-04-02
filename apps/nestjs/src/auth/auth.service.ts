@@ -40,16 +40,16 @@ export class AuthService {
     if (user) {
       return user;
     }
-    if (providerUser.user.email) {
-      const user = await this.usersService.findByEmail(providerUser.user.email);
-      if (user) {
-        await this.usersService.connectAccount({
-          userId: user.id,
-          provider: providerUser.provider,
-          providerId: providerUser.user.id,
-        });
-        return user;
-      }
+    const userWithTheSameEmail = await this.usersService.findByEmail(
+      providerUser.user.email,
+    );
+    if (userWithTheSameEmail) {
+      await this.usersService.connectAccount({
+        userId: userWithTheSameEmail.id,
+        provider: providerUser.provider,
+        providerId: providerUser.user.id,
+      });
+      return userWithTheSameEmail;
     }
     return this.usersService.createByProvider(providerUser);
   }

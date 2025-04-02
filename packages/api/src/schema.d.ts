@@ -66,7 +66,21 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: never;
+  schemas: {
+    GetProfileDto: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      image: string | null;
+      bio: string | null;
+      roles: Record<string, never>[];
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+    };
+  };
   responses: never;
   parameters: never;
   requestBodies: never;
@@ -141,7 +155,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": components["schemas"]["GetProfileDto"];
+        };
       };
     };
   };

@@ -3,6 +3,7 @@ import type { Component, ParentComponent } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { Portal } from "solid-js/web";
 import { AuthSwitch } from "~/features/auth/guards";
+import { UserAvatar } from "~/features/user/avatar";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = createSignal(false);
@@ -58,12 +59,8 @@ const HeaderDesktop: Component<HeaderDesktopProps> = (props) => {
             <HeaderLink href="/login">Войти / Зарегистрироваться</HeaderLink>
           }
         >
-          <A href="/profile" class="flex items-center">
-            <img
-              src="/profile.jpg"
-              alt="Profile"
-              class="size-10 rounded-full object-cover transition-transform duration-200 hover:scale-105 hover:shadow-lg"
-            />
+          <A href="/profile">
+            <UserAvatar />
           </A>
         </AuthSwitch>
       </div>
@@ -164,11 +161,7 @@ const HeaderMobile: Component<HeaderMobileProps> = (props) => {
               }
             >
               <HeaderMobileLink href="/profile">
-                <img
-                  src="/profile.jpg"
-                  alt="Profile"
-                  class="size-8 rounded-full object-cover transition-transform duration-200 hover:scale-105 hover:shadow-lg"
-                />
+                <UserAvatar class="size-8" />
                 <span class="ml-4">Профиль</span>
               </HeaderMobileLink>
             </AuthSwitch>

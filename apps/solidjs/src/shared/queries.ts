@@ -2,7 +2,7 @@ import { query } from "@solidjs/router";
 import { getCookie } from "vinxi/http";
 import api from "./api";
 
-export const getProfile = query(async () => {
+export const getMe = query(async () => {
   "use server";
   const cookie = getCookie("connect.sid");
   const response = await api.GET("/users/me", {

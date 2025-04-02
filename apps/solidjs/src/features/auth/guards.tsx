@@ -1,3 +1,4 @@
+import { Skeleton } from "@rwx/ui/components/skeleton";
 import { createAsync, useNavigate } from "@solidjs/router";
 import {
   type Component,
@@ -7,10 +8,9 @@ import {
   Suspense,
   createEffect,
 } from "solid-js";
-import { getProfile } from "~/shared/queries";
-import { Loader } from "../../components/loader";
+import { getMe } from "~/shared/queries";
 
-export const Protected: ParentComponent = (props) => {
+export const Authenticated: ParentComponent = (props) => {
   return (
     <AuthSwitch unauth={<Redirect link="/login" />}>
       {props.children}
@@ -29,9 +29,9 @@ export const GuestOnly: ParentComponent = (props) => {
 export const AuthSwitch: ParentComponent<{
   unauth?: JSX.Element;
 }> = (props) => {
-  const profile = createAsync(() => getProfile());
+  const profile = createAsync(() => getMe());
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Skeleton />}>
       <Show when={profile()} fallback={props.unauth}>
         {props.children}
       </Show>

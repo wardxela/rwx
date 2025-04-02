@@ -9,8 +9,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@rwx/ui/components/sidebar";
-import { A, useMatch } from "@solidjs/router";
-import { For } from "solid-js";
+import { A, createAsync, useMatch } from "@solidjs/router";
+import { For, Suspense } from "solid-js";
+import { UserAvatar } from "~/features/user/avatar";
 
 const links = [
   {
@@ -45,11 +46,7 @@ export function UserSidebar() {
     <Sidebar collapsible="none">
       <SidebarHeader>
         <div class="my-6 grid place-items-center">
-          <img
-            alt="User"
-            src="/profile.jpg"
-            class="size-40 rounded-full object-cover"
-          />
+          <UserAvatar class="size-40" />
         </div>
       </SidebarHeader>
       <SidebarContent>
