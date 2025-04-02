@@ -3,7 +3,7 @@ import { PassportStrategy } from "@nestjs/passport";
 import { Strategy, StrategyOptions } from "passport-oauth2";
 import { ConfigService } from "src/config/config.service";
 
-import { AuthService, SessionUser } from "../auth.service";
+import { AuthService } from "../auth.service";
 
 interface YandexUser {
   id: string;
@@ -28,7 +28,7 @@ export class YandexStrategy extends PassportStrategy(Strategy, "yandex") {
     } satisfies StrategyOptions);
   }
 
-  async validate(accessToken: string): Promise<SessionUser> {
+  async validate(accessToken: string): Promise<Express.User> {
     const user = await fetch("https://login.yandex.ru/info?", {
       headers: {
         Authorization: `OAuth ${accessToken}`,

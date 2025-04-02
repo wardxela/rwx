@@ -1,7 +1,7 @@
 import { User, UserRole } from "@rwx/db";
 import { Selectable } from "kysely";
 
-export class GetProfileDto implements Selectable<User> {
+export class GetUserDto implements Selectable<User> {
   id: string;
   firstName: string;
   lastName: string;

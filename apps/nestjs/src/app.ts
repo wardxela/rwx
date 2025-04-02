@@ -3,6 +3,7 @@ import * as connectPGSimple from "connect-pg-simple";
 import * as session from "express-session";
 import * as passport from "passport";
 
+import { ValidationPipe } from "@nestjs/common";
 import { AppModule } from "./app.module";
 import { ConfigService } from "./config/config.service";
 import { UtilsService } from "./utils/utils.service";
@@ -12,6 +13,8 @@ export async function createApp() {
 
   const configService = app.get(ConfigService);
   const utilsService = app.get(UtilsService);
+
+  app.useGlobalPipes(new ValidationPipe());
 
   app.use(
     session({

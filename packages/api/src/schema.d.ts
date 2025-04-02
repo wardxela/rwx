@@ -56,7 +56,7 @@ export interface paths {
     };
     get: operations["UsersController_findMe"];
     put?: never;
-    post?: never;
+    post: operations["UsersController_updateMe"];
     delete?: never;
     options?: never;
     head?: never;
@@ -67,7 +67,7 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
-    GetProfileDto: {
+    GetUserDto: {
       id: string;
       firstName: string;
       lastName: string;
@@ -79,6 +79,13 @@ export interface components {
       createdAt: string;
       /** Format: date-time */
       updatedAt: string;
+    };
+    UpdateUserDto: {
+      firstName?: string;
+      lastName?: string;
+      /** Format: uri */
+      image?: string;
+      bio?: string;
     };
   };
   responses: never;
@@ -156,7 +163,30 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["GetProfileDto"];
+          "application/json": components["schemas"]["GetUserDto"];
+        };
+      };
+    };
+  };
+  UsersController_updateMe: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpdateUserDto"];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["GetUserDto"];
         };
       };
     };

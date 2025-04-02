@@ -1,11 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Selectable } from "kysely";
 import { ProviderUserInfo, UsersService } from "src/users/users.service";
-
-import { User } from "@rwx/db";
-
-// TODO: augment with Express.User
-export type SessionUser = Selectable<User>;
 
 @Injectable()
 export class AuthService {
@@ -32,7 +26,7 @@ export class AuthService {
    * If existing user logs in via another provider with the same email,
    * we return existing user instead of creating a new one.
    */
-  async oauth2Login(providerUser: ProviderUserInfo): Promise<SessionUser> {
+  async oauth2Login(providerUser: ProviderUserInfo): Promise<Express.User> {
     const user = await this.usersService.findByProviderId(
       providerUser.provider,
       providerUser.user.id,

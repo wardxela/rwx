@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Account, DB, User } from "@rwx/db";
 import { Kysely, Selectable } from "kysely";
 import { InjectKysely } from "nestjs-kysely";
+import { UpdateUserDto } from "./dto/update-user.dto";
 
 export interface ProviderUserInfo {
   provider: string;
@@ -92,5 +93,20 @@ export class UsersService {
       })
       .returningAll()
       .executeTakeFirst();
+  }
+
+  async updateById(id: string, data: UpdateUserDto): Promise<Selectable<User>> {
+    return this.db
+      .updateTable("User")
+      .set({
+        ...(data.firstName !== undefined && { firstName: data.firstName }),
+        ...(data.lastName !== undefined && { lastName: data.lastName }),
+        ...(data.image !== undefined && { image: data.image }),
+        ...(data.bio !== undefined && { bio: data.bio }),
+        updatedAt: new Date(),
+      })
+      .where("id", "=", id)
+      .returningAll()
+      .executeTakeFirstOrThrow();
   }
 }
