@@ -1,5 +1,6 @@
 import type { RouteSectionProps } from "@solidjs/router";
 import { clientOnly } from "@solidjs/start";
+import { Authenticated } from "~/features/auth/guards";
 
 const SidebarProvider = clientOnly(() =>
   import("@rwx/ui/components/sidebar").then((module) => ({
@@ -15,9 +16,11 @@ const AuthorSidebar = clientOnly(() =>
 
 export default function Layout(props: RouteSectionProps) {
   return (
-    <SidebarProvider>
-      <AuthorSidebar />
-      <div class="grow">{props.children}</div>
-    </SidebarProvider>
+    <Authenticated roles={["INSTRUCTOR"]}>
+      <SidebarProvider>
+        <AuthorSidebar />
+        <div class="grow">{props.children}</div>
+      </SidebarProvider>
+    </Authenticated>
   );
 }

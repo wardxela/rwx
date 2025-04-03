@@ -74,7 +74,7 @@ export interface components {
       email: string;
       image: string | null;
       bio: string | null;
-      roles: Record<string, never>[];
+      roles: string[];
       /** Format: date-time */
       createdAt: string;
       /** Format: date-time */

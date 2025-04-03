@@ -120,7 +120,7 @@ export default function Page() {
                 {lastNameError()?.message}
               </TextFieldErrorMessage>
             </TextField>
-            <TextField validationState={bioError() ? "invalid" : "valid"}>
+            <TextField>
               <TextFieldLabel>Email</TextFieldLabel>
               <TextFieldInput
                 disabled
@@ -129,12 +129,9 @@ export default function Page() {
                 placeholder="Email"
                 value={profile()?.email}
               />
-              <TextFieldErrorMessage>
-                {bioError()?.message}
-              </TextFieldErrorMessage>
             </TextField>
           </div>
-          <TextField>
+          <TextField validationState={bioError() ? "invalid" : "valid"}>
             <TextFieldLabel>Обо мне</TextFieldLabel>
             <TextFieldTextArea
               ref={bioRef}
@@ -143,6 +140,7 @@ export default function Page() {
               value={profile()?.bio ?? ""}
               class="resize-none"
             />
+            <TextFieldErrorMessage>{bioError()?.message}</TextFieldErrorMessage>
           </TextField>
         </div>
         <div class="flex justify-end gap-x-4">

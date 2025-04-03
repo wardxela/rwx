@@ -1,14 +1,11 @@
-import { User, UserRole } from "@rwx/db";
-import { Selectable } from "kysely";
-
-export class GetUserDto implements Selectable<User> {
+export class GetUserDto {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
   image: string | null;
   bio: string | null;
-  roles: UserRole[];
+  roles: string[];
   createdAt: Date;
   updatedAt: Date;
 }

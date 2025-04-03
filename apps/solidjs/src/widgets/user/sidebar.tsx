@@ -9,8 +9,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@rwx/ui/components/sidebar";
-import { A, createAsync, useMatch } from "@solidjs/router";
-import { For, Suspense } from "solid-js";
+import { A, useMatch } from "@solidjs/router";
+import { For } from "solid-js";
+import { AuthShow } from "~/features/auth/guards";
 import { UserAvatar } from "~/features/user/avatar";
 
 const links = [
@@ -32,11 +33,6 @@ const links = [
   {
     title: "Отзывы",
     url: "/profile/reviews",
-    icon: null,
-  },
-  {
-    title: "Студия",
-    url: "/author",
     icon: null,
   },
 ];
@@ -67,6 +63,17 @@ export function UserSidebar() {
                   </SidebarMenuItem>
                 )}
               </For>
+              <AuthShow roles={["INSTRUCTOR"]}>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    as={A}
+                    href="/author"
+                    isActive={Boolean(useMatch(() => "/author")())}
+                  >
+                    <span>Студия</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </AuthShow>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

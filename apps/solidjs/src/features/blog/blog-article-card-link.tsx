@@ -1,11 +1,17 @@
 import type { Component } from "solid-js";
 
-// biome-ignore lint/complexity/noBannedTypes: <explanation>
-export type BlogArticleCardLinkProps = {};
+export type BlogArticleCardLinkProps = {
+  link: string;
+};
 
-export const BlogArticleCardLink: Component<BlogArticleCardLinkProps> = () => {
+export const BlogArticleCardLink: Component<BlogArticleCardLinkProps> = (
+  props,
+) => {
   return (
-    <a href="/blog/1" class="@container rounded-2xl transition hover:shadow-lg">
+    <a
+      href={props.link}
+      class="@container rounded-2xl transition hover:shadow-lg"
+    >
       <div class="flex h-full @lg:flex-row flex-col rounded-2xl border border-gray-200">
         <img
           src="/article-example.png"

@@ -63,10 +63,12 @@ model BlogPost {
   id          String    @id @default(dbgenerated("gen_random_uuid()"))
   title       String
   slug        String    @unique
-  content     String    @db.Text
+  content     Json
   excerpt     String?   @db.Text
+  image       String?
   published   Boolean   @default(false)
   publishedAt DateTime?
+  isDraft     Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
@@ -90,6 +92,10 @@ model BlogPostComment {
   author   User     @relation(fields: [authorId], references: [id])
   postId   String
   post     BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  parentId String?
+  parent   BlogPostComment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies  BlogPostComment[] @relation("CommentReplies")
 }
 
 model Category {

@@ -121,7 +121,7 @@ export const Footer: Component<FooterProps> = (props) => {
         </div>
         <hr class="border-gray-200" />
         <div class="py-8 text-center text-neutral-600 leading-7">
-          Copyright © 2024 RWX LMS | Powered by wardxela
+          Copyright © 2025 RWX LMS | Powered by wardxela
         </div>
       </div>
     </footer>

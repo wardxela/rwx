@@ -10,29 +10,40 @@ import {
 } from "solid-js";
 import { getMe } from "~/shared/queries";
 
-export const Authenticated: ParentComponent = (props) => {
+export const Authenticated: ParentComponent<Pick<AuthShowProps, "roles">> = (
+  props,
+) => {
   return (
-    <AuthSwitch unauth={<Redirect link="/login" />}>
+    <AuthShow unauth={<Redirect link="/login" />} roles={props.roles}>
       {props.children}
-    </AuthSwitch>
+    </AuthShow>
   );
 };
 
 export const GuestOnly: ParentComponent = (props) => {
   return (
-    <AuthSwitch unauth={props.children}>
-      {<Redirect link="/profile" />}
-    </AuthSwitch>
+    <AuthShow unauth={props.children}>{<Redirect link="/profile" />}</AuthShow>
   );
 };
 
-export const AuthSwitch: ParentComponent<{
+export interface AuthShowProps {
   unauth?: JSX.Element;
-}> = (props) => {
+  roles?: string[];
+}
+
+export const AuthShow: ParentComponent<AuthShowProps> = (props) => {
   const profile = createAsync(() => getMe());
   return (
     <Suspense fallback={<Skeleton />}>
-      <Show when={profile()} fallback={props.unauth}>
+      <Show
+        when={
+          profile() &&
+          (props.roles
+            ? props.roles.every((role) => profile()?.roles.includes(role))
+            : true)
+        }
+        fallback={props.unauth}
+      >
         {props.children}
       </Show>
     </Suspense>

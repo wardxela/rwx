@@ -1,8 +1,9 @@
+@import "tw-animate-css";
 @import "@rwx/tailwind-config/style.css";
 
-@source '../../../packages/ui/src';
-
 @plugin "@tailwindcss/typography";
+
+@source '../../../packages/ui/src';
 
 @font-face {
   font-family: "Jost";
@@ -138,4 +139,8 @@ body,
 
 body {
   @apply font-['Jost'];
+}
+
+.ce-block__content {
+  @apply prose;
 }

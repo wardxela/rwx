@@ -2,7 +2,7 @@ import { A, useLocation } from "@solidjs/router";
 import type { Component, ParentComponent } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { Portal } from "solid-js/web";
-import { AuthSwitch } from "~/features/auth/guards";
+import { AuthShow } from "~/features/auth/guards";
 import { UserAvatar } from "~/features/user/avatar";
 
 export const Header = () => {
@@ -54,7 +54,7 @@ const HeaderDesktop: Component<HeaderDesktopProps> = (props) => {
           <HeaderLink href="/blog">Блог</HeaderLink>
           <HeaderLink href="/contacts">Контакты</HeaderLink>
         </div>
-        <AuthSwitch
+        <AuthShow
           unauth={
             <HeaderLink href="/login">Войти / Зарегистрироваться</HeaderLink>
           }
@@ -62,7 +62,7 @@ const HeaderDesktop: Component<HeaderDesktopProps> = (props) => {
           <A href="/profile">
             <UserAvatar />
           </A>
-        </AuthSwitch>
+        </AuthShow>
       </div>
       <button
         type="button"
@@ -153,7 +153,7 @@ const HeaderMobile: Component<HeaderMobileProps> = (props) => {
             <HeaderMobileLink href="/blog">Блог</HeaderMobileLink>
             <HeaderMobileLink href="/contacts">Контакты</HeaderMobileLink>
             <hr class="mx-4 border-neutral-500/10" />
-            <AuthSwitch
+            <AuthShow
               unauth={
                 <HeaderMobileLink href="/login">
                   Войти / Зарегистрироваться
@@ -164,7 +164,7 @@ const HeaderMobile: Component<HeaderMobileProps> = (props) => {
                 <UserAvatar class="size-8" />
                 <span class="ml-4">Профиль</span>
               </HeaderMobileLink>
-            </AuthSwitch>
+            </AuthShow>
           </div>
         </div>
       </div>

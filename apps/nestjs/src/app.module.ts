@@ -6,6 +6,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { AuthController } from "./auth/auth.controller";
 import { AuthModule } from "./auth/auth.module";
+import { BlogModule } from "./blog/blog.module";
 import { ConfigModule } from "./config/config.module";
 import { UsersModule } from "./users/users.module";
 import { UtilsModule } from "./utils/utils.module";
@@ -25,6 +26,7 @@ import { UtilsService } from "./utils/utils.service";
     }),
     AuthModule,
     UsersModule,
+    BlogModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService],

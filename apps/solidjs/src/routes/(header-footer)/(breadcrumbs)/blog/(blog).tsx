@@ -101,10 +101,10 @@ export default function Page() {
           "grid-cols-[repeat(auto-fill,minmax(260px,1fr))]": isGridView(),
         }}
       >
-        <BlogArticleCardLink />
-        <BlogArticleCardLink />
-        <BlogArticleCardLink />
-        <BlogArticleCardLink />
+        <BlogArticleCardLink link="/blog/1" />
+        <BlogArticleCardLink link="/blog/1" />
+        <BlogArticleCardLink link="/blog/1" />
+        <BlogArticleCardLink link="/blog/1" />
       </div>
     </>
   );

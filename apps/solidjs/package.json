@@ -11,6 +11,11 @@
     "typecheck": "tsc --customConditions disable"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.30.8",
+    "@editorjs/header": "^2.8.8",
+    "@editorjs/image": "^2.10.2",
+    "@editorjs/link": "^2.6.2",
+    "@editorjs/list": "^2.0.6",
     "@rwx/api": "workspace:*",
     "@rwx/ui": "workspace:*",
     "@solidjs/meta": "^0.29.4",
@@ -25,7 +30,8 @@
     "@rwx/tailwind-config": "workspace:*",
     "@rwx/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "^4.0.17",
-    "@tailwindcss/typography": "^0.5.16"
+    "@tailwindcss/typography": "^0.5.16",
+    "tw-animate-css": "^1.2.5"
   },
   "engines": {
     "node": ">=18"

@@ -298,9 +298,9 @@ export default function Page() {
             }
           />
           <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7">
-            <BlogArticleCardLink />
-            <BlogArticleCardLink />
-            <BlogArticleCardLink />
+            <BlogArticleCardLink link="/blog/1" />
+            <BlogArticleCardLink link="/blog/1" />
+            <BlogArticleCardLink link="/blog/1" />
           </div>
         </div>
       </section>
