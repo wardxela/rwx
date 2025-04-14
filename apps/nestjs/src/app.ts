@@ -4,15 +4,14 @@ import * as session from "express-session";
 import * as passport from "passport";
 
 import { ValidationPipe } from "@nestjs/common";
+import { Pool } from "pg";
 import { AppModule } from "./app.module";
 import { ConfigService } from "./config/config.service";
-import { UtilsService } from "./utils/utils.service";
 
 export async function createApp() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
-  const utilsService = app.get(UtilsService);
 
   app.useGlobalPipes(new ValidationPipe());
 
@@ -22,7 +21,9 @@ export async function createApp() {
       resave: false,
       saveUninitialized: false,
       store: new (connectPGSimple(session))({
-        pool: utilsService.databasePool,
+        pool: new Pool({
+          connectionString: configService.get("DATABASE_URL"),
+        }),
         tableName: "Session",
       }),
       cookie: {

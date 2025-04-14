@@ -1,15 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  NotFoundException,
-  Post,
-  Req,
-  UseGuards,
-} from "@nestjs/common";
+import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
 import { Request } from "express";
 import { SessionGuard } from "src/auth/guards/session.guard";
-import { GetUserDto } from "./dto/get-user.dto";
+import { UserDto } from "./dto/get-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { UsersService } from "./users.service";
 
@@ -19,7 +11,7 @@ export class UsersController {
 
   @UseGuards(SessionGuard)
   @Get("me")
-  findMe(@Req() req: Request): GetUserDto {
+  findMe(@Req() req: Request): UserDto {
     return req.user!;
   }
 
@@ -28,7 +20,7 @@ export class UsersController {
   async updateMe(
     @Req() req: Request,
     @Body() body: UpdateUserDto,
-  ): Promise<GetUserDto> {
+  ): Promise<UserDto> {
     return this.userService.updateById(req.user!.id, body);
   }
 }

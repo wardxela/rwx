@@ -60,23 +60,20 @@ model Session {
 }
 
 model BlogPost {
-  id          String    @id @default(dbgenerated("gen_random_uuid()"))
-  title       String
-  slug        String    @unique
-  content     Json
-  excerpt     String?   @db.Text
-  image       String?
-  published   Boolean   @default(false)
-  publishedAt DateTime?
-  isDraft     Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id        String   @id @default(dbgenerated("gen_random_uuid()"))
+  title     String
+  content   Json
+  excerpt   String?  @db.Text
+  image     String?
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
   authorId   String
   author     User              @relation(fields: [authorId], references: [id])
-  category   Category          @relation(fields: [categoryId], references: [id])
-  categoryId String
+  category   Category?         @relation(fields: [categoryId], references: [id])
+  categoryId String?
   tags       Tag[]
   comments   BlogPostComment[]
 }
@@ -101,7 +98,6 @@ model BlogPostComment {
 model Category {
   id          String     @id @default(dbgenerated("gen_random_uuid()"))
   name        String     @unique
-  slug        String     @unique
   description String?    @db.Text
   posts       BlogPost[]
   courses     Course[]
@@ -110,7 +106,6 @@ model Category {
 model Tag {
   id    String     @id @default(dbgenerated("gen_random_uuid()"))
   name  String     @unique
-  slug  String     @unique
   posts BlogPost[]
 }
 

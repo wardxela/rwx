@@ -2,33 +2,36 @@ import { Module } from "@nestjs/common";
 import { PostgresDialect } from "kysely";
 import { KyselyModule } from "nestjs-kysely";
 
-import { AppController } from "./app.controller";
+import { Pool } from "pg";
 import { AppService } from "./app.service";
-import { AuthController } from "./auth/auth.controller";
 import { AuthModule } from "./auth/auth.module";
 import { BlogModule } from "./blog/blog.module";
+import { CategoriesModule } from "./categories/categories.module";
 import { ConfigModule } from "./config/config.module";
+import { ConfigService } from "./config/config.service";
+import { TagsModule } from "./tags/tags.module";
 import { UsersModule } from "./users/users.module";
-import { UtilsModule } from "./utils/utils.module";
-import { UtilsService } from "./utils/utils.service";
 
 @Module({
   imports: [
     ConfigModule,
     KyselyModule.forRootAsync({
-      useFactory: (utilsService: UtilsService) => ({
+      useFactory: (configService: ConfigService) => ({
         dialect: new PostgresDialect({
-          pool: utilsService.databasePool,
+          pool: new Pool({
+            connectionString: configService.get("DATABASE_URL"),
+          }),
         }),
       }),
-      inject: [UtilsService],
-      imports: [UtilsModule],
+      inject: [ConfigService],
+      imports: [ConfigModule],
     }),
     AuthModule,
     UsersModule,
     BlogModule,
+    CategoriesModule,
+    TagsModule,
   ],
-  controllers: [AppController, AuthController],
   providers: [AppService],
 })
 export class AppModule {}

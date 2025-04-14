@@ -1,4 +1,4 @@
-export class GetUserDto {
+export class UserDto {
   id: string;
   firstName: string;
   lastName: string;
