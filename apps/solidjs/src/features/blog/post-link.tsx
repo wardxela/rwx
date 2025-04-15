@@ -4,7 +4,8 @@ import { type Component, Show } from "solid-js";
 export type PostLinkProps = {
   link: string;
   title: string;
-  excerpt: string | null;
+  excerpt?: string | null;
+  image?: string | null;
   updatedAt: string;
 };
 
@@ -16,9 +17,9 @@ export const PostLink: Component<PostLinkProps> = (props) => {
     >
       <div class="flex h-full @lg:flex-row flex-col rounded-2xl border border-gray-200">
         <img
-          src="/article-example.png"
+          src={props.image ?? "/article-example.png"}
           class="@lg:h-auto h-52 @lg:min-h-62 @lg:max-w-1/3 rounded-t-2xl @lg:rounded-l-2xl @lg:rounded-tr-none object-cover"
-          alt="article"
+          alt={props.title}
         />
         <div class="@sm:p-5 p-4">
           <h6 class="mb-3 font-semibold @sm:text-xl">{props.title}</h6>

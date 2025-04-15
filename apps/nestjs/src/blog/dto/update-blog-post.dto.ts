@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsString,
   IsUUID,
+  IsUrl,
   MaxLength,
   MinLength,
 } from "class-validator";
@@ -28,6 +29,7 @@ export class UpdateBlogPostDto {
   excerpt?: string;
 
   @IsString()
+  @IsUrl({ require_host: false })
   @IsOptional()
   image?: string;
 

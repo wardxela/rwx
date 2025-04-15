@@ -121,6 +121,7 @@ export default function Page() {
                 title={post.title}
                 excerpt={post.excerpt}
                 updatedAt={post.updatedAt}
+                image={post.image}
               />
             )}
           </For>

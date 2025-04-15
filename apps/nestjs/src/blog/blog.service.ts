@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { DB } from "@rwx/db";
 import { Kysely } from "kysely";
 import { InjectKysely } from "nestjs-kysely";
+import { FilesService } from "src/files/files.service";
 import { CreatePostDto } from "./dto/create-post.dto";
 import { PostFiltersDto } from "./dto/post-filters.dto";
 import { PostDto } from "./dto/post.dto";
@@ -9,7 +10,10 @@ import { UpdateBlogPostDto } from "./dto/update-blog-post.dto";
 
 @Injectable()
 export class BlogService {
-  constructor(@InjectKysely() private readonly db: Kysely<DB>) {}
+  constructor(
+    @InjectKysely() private readonly db: Kysely<DB>,
+    private filesService: FilesService,
+  ) {}
 
   async createPost(authorId: string, data: CreatePostDto): Promise<PostDto> {
     const { id: postId } = await this.db
@@ -104,7 +108,7 @@ export class BlogService {
           title: row.title,
           content: row.content,
           excerpt: row.excerpt,
-          image: row.image,
+          image: row.image ? this.filesService.resolve(row.image) : null,
           published: row.published,
           createdAt: row.createdAt,
           updatedAt: row.updatedAt,
@@ -112,7 +116,9 @@ export class BlogService {
             id: row.authorId!,
             firstName: row.authorFirstName!,
             lastName: row.authorLastName!,
-            image: row.authorImage,
+            image: row.authorImage
+              ? this.filesService.resolve(row.authorImage)
+              : null,
             bio: row.authorBio,
           },
           category: row.categoryId
@@ -174,7 +180,7 @@ export class BlogService {
           title: row.title,
           content: row.content,
           excerpt: row.excerpt,
-          image: row.image,
+          image: row.image ? this.filesService.resolve(row.image) : null,
           published: row.published,
           createdAt: row.createdAt,
           updatedAt: row.updatedAt,
@@ -182,7 +188,9 @@ export class BlogService {
             id: row.authorId!,
             firstName: row.authorFirstName!,
             lastName: row.authorLastName!,
-            image: row.authorImage,
+            image: row.authorImage
+              ? this.filesService.resolve(row.authorImage)
+              : null,
             bio: row.authorBio,
           },
           category: row.categoryId
@@ -246,7 +254,7 @@ export class BlogService {
       title: post.title,
       content: post.content,
       excerpt: post.excerpt,
-      image: post.image,
+      image: post.image ? this.filesService.resolve(post.image) : null,
       published: post.published,
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
@@ -254,7 +262,9 @@ export class BlogService {
         id: post.authorId!,
         firstName: post.authorFirstName!,
         lastName: post.authorLastName!,
-        image: post.authorImage,
+        image: post.authorImage
+          ? this.filesService.resolve(post.authorImage)
+          : null,
         bio: post.authorBio,
       },
       category: post.categoryId

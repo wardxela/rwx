@@ -9,6 +9,7 @@ import { createAsync } from "@solidjs/router";
 import { For, Show, Suspense, createSignal } from "solid-js";
 import { BlogSidebar } from "~/features/blog/blog-sidebar";
 import { PostLink, PostLinkSkeleton } from "~/features/blog/post-link";
+import { SiteTitle } from "~/shared/components/site-title";
 import { getPosts } from "~/shared/queries";
 
 const [isGridView, setIsGridView] = createSignal(true);
@@ -18,6 +19,7 @@ export default function Page() {
 
   return (
     <>
+      <SiteTitle>Блог</SiteTitle>
       <div class="mb-8 flex items-center justify-between gap-2 sm:mb-10">
         <h1 class="font-semibold text-2xl leading-10 sm:text-4xl">
           Все статьи
@@ -123,6 +125,7 @@ export default function Page() {
                 title={post.title}
                 excerpt={post.excerpt}
                 updatedAt={post.updatedAt}
+                image={post.image}
               />
             )}
           </For>

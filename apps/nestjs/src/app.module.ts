@@ -9,6 +9,7 @@ import { BlogModule } from "./blog/blog.module";
 import { CategoriesModule } from "./categories/categories.module";
 import { ConfigModule } from "./config/config.module";
 import { ConfigService } from "./config/config.service";
+import { FilesModule } from "./files/files.module";
 import { TagsModule } from "./tags/tags.module";
 import { UsersModule } from "./users/users.module";
 
@@ -31,6 +32,7 @@ import { UsersModule } from "./users/users.module";
     BlogModule,
     CategoriesModule,
     TagsModule,
+    FilesModule,
   ],
   providers: [AppService],
 })

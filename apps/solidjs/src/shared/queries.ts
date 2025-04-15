@@ -21,7 +21,7 @@ export const getPost = query(async (id: string) => {
     params: { path: { id } },
   });
   if (!response.data) {
-    throw new Error("Post not found");
+    throw new Error("Запись не найдена");
   }
   return response.data;
 }, "/blog/posts/{id}");

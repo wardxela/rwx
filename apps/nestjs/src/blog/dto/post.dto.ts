@@ -11,7 +11,17 @@ export class PostDto {
   published: boolean;
   createdAt: Date;
   updatedAt: Date;
-  author: Pick<UserDto, "id" | "firstName" | "lastName" | "image" | "bio">;
+  author: PostAuthorDto;
   category?: CategoryDto;
   tags: TagDto[];
+}
+
+export class PostAuthorDto
+  implements Pick<UserDto, "id" | "firstName" | "lastName" | "image" | "bio">
+{
+  id: string;
+  firstName: string;
+  lastName: string;
+  image: string | null;
+  bio: string | null;
 }
