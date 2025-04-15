@@ -8,7 +8,8 @@ import { type Component, createUniqueId, onCleanup, onMount } from "solid-js";
 
 export interface EditorProps {
   initialData: unknown;
-  onSave?: (data: OutputData) => void;
+  onInit?: (editor: EditorJS) => void;
+  onDestroy?: (editor: EditorJS) => void;
 }
 
 export const Editor: Component<EditorProps> = (props) => {
@@ -27,12 +28,15 @@ export const Editor: Component<EditorProps> = (props) => {
         list: List,
       },
       onChange() {
-        editor.save().then((content) => props.onSave?.(content));
+        // IDEA: SAVE IN LOCAL STORAGE
+        // editor.save().then((content) => props.onSave?.(content));
       },
     });
+    props.onInit?.(editor);
   });
 
   onCleanup(() => {
+    props.onDestroy?.(editor);
     editor.destroy();
   });
 
