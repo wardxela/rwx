@@ -42,7 +42,7 @@ const updateProfile = action(async (formData: FormData) => {
       revalidate: getMe.key,
     },
   );
-}, "/users/me:post");
+});
 
 export default function Page() {
   const profile = createAsync(() => getMe());

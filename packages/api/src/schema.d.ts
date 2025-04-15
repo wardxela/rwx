@@ -103,7 +103,7 @@ export interface paths {
       cookie?: never;
     };
     get: operations["BlogController_getPost"];
-    put?: never;
+    put: operations["BlogController_updatePost"];
     post?: never;
     delete: operations["BlogController_deletePost"];
     options?: never;
@@ -170,6 +170,11 @@ export interface components {
     CreatePostDto: {
       title: string;
     };
+    CategoryDto: {
+      id: string;
+      name: string;
+      description?: string | null;
+    };
     TagDto: {
       id: string;
       name: string;
@@ -186,13 +191,18 @@ export interface components {
       /** Format: date-time */
       updatedAt: string;
       author: Record<string, never>;
-      category?: Record<string, never>;
+      category?: components["schemas"]["CategoryDto"];
       tags: components["schemas"]["TagDto"][];
     };
-    CategoryDto: {
-      id: string;
-      name: string;
-      description?: string | null;
+    UpdateBlogPostDto: {
+      title?: string;
+      content?: Record<string, never>;
+      excerpt?: string;
+      image?: string;
+      published?: boolean;
+      /** Format: uuid */
+      categoryId?: string;
+      tags?: string[];
     };
   };
   responses: never;
@@ -357,6 +367,31 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["PostDto"];
+        };
+      };
+    };
+  };
+  BlogController_updatePost: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpdateBlogPostDto"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": boolean;
         };
       };
     };

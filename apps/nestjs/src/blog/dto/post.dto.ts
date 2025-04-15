@@ -12,6 +12,6 @@ export class PostDto {
   createdAt: Date;
   updatedAt: Date;
   author: Pick<UserDto, "id" | "firstName" | "lastName" | "image" | "bio">;
-  category?: Pick<CategoryDto, "id" | "name">;
+  category?: CategoryDto;
   tags: TagDto[];
 }

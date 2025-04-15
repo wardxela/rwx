@@ -1,6 +1,8 @@
 import {
   IsArray,
   IsBoolean,
+  IsJSON,
+  IsObject,
   IsOptional,
   IsString,
   IsUUID,
@@ -15,9 +17,9 @@ export class UpdateBlogPostDto {
   @IsOptional()
   title?: string;
 
-  @IsString()
+  @IsObject()
   @IsOptional()
-  content?: string;
+  content?: unknown;
 
   @IsString()
   @MaxLength(1000)

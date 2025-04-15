@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  ForbiddenException,
   Get,
   NotFoundException,
   Param,
@@ -62,17 +63,32 @@ export class BlogController {
     @Req() req: Request,
     @Param("id") id: string,
   ): Promise<boolean> {
-    return this.service.deletePost(id, req.user!.id);
+    const post = await this.service.getPost(id);
+    if (!post) {
+      throw new NotFoundException(`Post with id ${id} not found`);
+    }
+    if (post.author.id !== req.user!.id) {
+      throw new ForbiddenException("You are not the author of this post");
+    }
+    return this.service.deletePost(id);
   }
 
-  // @Put(":id")
-  // @Roles(["INSTRUCTOR"])
-  // @UseGuards(SessionGuard)
-  // async updatePost(
-  //   @Param("id") id: string,
-  //   @Body() updateData: UpdateBlogPostDto,
-  //   @Req() req: Request,
-  // ): Promise<PostDto> {
-  //   return this.service.updatePost(id, req.user!.id, updateData);
-  // }
+  @Put("posts/:id")
+  @Roles(["INSTRUCTOR"])
+  @UseGuards(SessionGuard)
+  async updatePost(
+    @Param("id") id: string,
+    @Body() updateData: UpdateBlogPostDto,
+    @Req() req: Request,
+  ): Promise<boolean> {
+    const post = await this.service.getPost(id);
+    if (!post) {
+      throw new NotFoundException(`Post with id ${id} not found`);
+    }
+    if (post.author.id !== req.user!.id) {
+      throw new ForbiddenException("You are not the author of this post");
+    }
+    await this.service.updatePost(id, updateData);
+    return true;
+  }
 }

@@ -116,10 +116,7 @@ export class UsersService {
     const user = await this.db
       .updateTable("User")
       .set({
-        ...(data.firstName !== undefined && { firstName: data.firstName }),
-        ...(data.lastName !== undefined && { lastName: data.lastName }),
-        ...(data.image !== undefined && { image: data.image }),
-        ...(data.bio !== undefined && { bio: data.bio }),
+        ...data,
         updatedAt: new Date(),
       })
       .where("id", "=", id)

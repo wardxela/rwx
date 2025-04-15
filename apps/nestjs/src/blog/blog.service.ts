@@ -25,18 +25,42 @@ export class BlogService {
     return (await this.getPost(postId))!;
   }
 
-  // async updatePost(
-  //   id: string,
-  //   authorId: string,
-  //   data: UpdateBlogPostDto,
-  // ): Promise<PostDto> {}
-  //
+  async updatePost(id: string, data: UpdateBlogPostDto): Promise<void> {
+    const { tags, ...dto } = data;
+    return this.db.transaction().execute(async (trx) => {
+      await trx
+        .updateTable("BlogPost")
+        .set({
+          ...dto,
+          updatedAt: new Date(),
+        })
+        .where("BlogPost.id", "=", id)
+        .execute();
 
-  async deletePost(id: string, authorId: string): Promise<boolean> {
+      if (tags !== undefined) {
+        await trx
+          .deleteFrom("_BlogPostToTag")
+          .where("_BlogPostToTag.A", "=", id)
+          .execute();
+        if (tags.length > 0) {
+          await trx
+            .insertInto("_BlogPostToTag")
+            .values(
+              tags.map((tagId) => ({
+                A: id,
+                B: tagId,
+              })),
+            )
+            .execute();
+        }
+      }
+    });
+  }
+
+  async deletePost(id: string): Promise<boolean> {
     const result = await this.db
       .deleteFrom("BlogPost")
       .where("id", "=", id)
-      .where("authorId", "=", authorId)
       .executeTakeFirst();
     return result.numDeletedRows > 0;
   }

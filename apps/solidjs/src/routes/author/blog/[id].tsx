@@ -1,14 +1,9 @@
-import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/header";
-import Image from "@editorjs/image";
-// @ts-expect-error
-import Link from "@editorjs/link";
-import List from "@editorjs/list";
 import { Badge } from "@rwx/ui/components/badge";
 import { Button } from "@rwx/ui/components/button";
 import { Label } from "@rwx/ui/components/label";
 import {
   TextField,
+  TextFieldErrorMessage,
   TextFieldInput,
   TextFieldLabel,
   TextFieldTextArea,
@@ -17,16 +12,27 @@ import {
   type RouteSectionProps,
   action,
   createAsync,
+  json,
   redirect,
+  useAction,
+  useSubmission,
 } from "@solidjs/router";
+import { clientOnly } from "@solidjs/start";
 import { ErrorBoundary, Show, Suspense } from "solid-js";
+import { z } from "zod";
 import { SelectCategory } from "~/features/categories/select-category";
 import { SelectTags } from "~/features/tags/select-tags";
 import api from "~/shared/api";
 import { NotFound } from "~/shared/components/not-found";
 import { getMyPosts, getPost, getPosts } from "~/shared/queries";
 
-const deletePost = action(async (id: string) => {
+const Editor = clientOnly(() =>
+  import("~/features/blog/editor").then((module) => ({
+    default: module.Editor,
+  })),
+);
+
+const deletePostAction = action(async (id: string) => {
   await api.DELETE("/blog/posts/{id}", {
     params: { path: { id } },
   });
@@ -35,20 +41,42 @@ const deletePost = action(async (id: string) => {
   });
 });
 
-export default function Page(props: RouteSectionProps) {
-  const post = createAsync(() => getPost(props.params.id!));
+const UpdatePostSchema = z.object({
+  title: z.string().min(3).max(100).optional(),
+  content: z.unknown(),
+  excerpt: z.string().max(1000).optional(),
+  image: z.string().optional(),
+  published: z.boolean().optional(),
+  categoryId: z.string().uuid().nullable().optional(),
+  tags: z.array(z.string()).optional(),
+});
 
-  const setupEditor = (el: HTMLDivElement) => {
-    new EditorJS({
-      holder: el,
-      tools: {
-        header: Header,
-        link: Link,
-        image: Image,
-        list: List,
-      },
-    });
-  };
+const updatePostAction = action(async (id: string, data: unknown) => {
+  const validated = UpdatePostSchema.safeParse(data);
+  if (!validated.success) {
+    return json(
+      { errors: validated.error.formErrors.fieldErrors },
+      { revalidate: "nothing" },
+    );
+  }
+  await api.PUT("/blog/posts/{id}", {
+    params: { path: { id } },
+    // @ts-expect-error Content is treated as Record<string, never>
+    body: validated.data,
+  });
+  return json(
+    { errors: null },
+    {
+      revalidate: [getPosts.key, getMyPosts.key, getPost.keyFor(id)],
+    },
+  );
+});
+
+export default function Page(props: RouteSectionProps) {
+  const updatePost = useAction(updatePostAction);
+  const postSubmission = useSubmission(updatePostAction);
+  const postId = () => props.params.id!;
+  const post = createAsync(() => getPost(postId()));
 
   return (
     <ErrorBoundary fallback={<NotFound />}>
@@ -65,13 +93,26 @@ export default function Page(props: RouteSectionProps) {
                 </Show>
               </div>
               <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-6">
-                <TextField class="col-span-2">
+                <TextField
+                  class="col-span-2"
+                  validationState={
+                    postSubmission.result?.errors?.title ? "invalid" : "valid"
+                  }
+                >
                   <TextFieldLabel>Название</TextFieldLabel>
                   <TextFieldInput
                     type="text"
                     placeholder="Lorem ipsum..."
                     value={post()?.title}
+                    onBlur={(e) =>
+                      updatePost(postId(), {
+                        title: e.currentTarget.value,
+                      })
+                    }
                   />
+                  <TextFieldErrorMessage>
+                    {postSubmission.result?.errors?.title?.join(", ")}
+                  </TextFieldErrorMessage>
                 </TextField>
                 <TextField class="col-span-2">
                   <TextFieldLabel>Изображение</TextFieldLabel>
@@ -82,6 +123,11 @@ export default function Page(props: RouteSectionProps) {
                   <TextFieldTextArea
                     placeholder="Lorem ipsum dolor sit amet..."
                     value={post()?.excerpt ?? ""}
+                    onBlur={(e) =>
+                      updatePost(postId(), {
+                        excerpt: e.currentTarget.value,
+                      })
+                    }
                   />
                 </TextField>
               </div>
@@ -90,7 +136,10 @@ export default function Page(props: RouteSectionProps) {
                   Редактор
                 </div>
                 <div class="rounded-xl border border-input p-16">
-                  <div ref={setupEditor} />
+                  <Editor
+                    initialData={post()?.content}
+                    onSave={(data) => updatePost(postId(), { content: data })}
+                  />
                 </div>
               </div>
             </div>
@@ -102,24 +151,59 @@ export default function Page(props: RouteSectionProps) {
                 <div class="space-y-4 px-4 py-6">
                   <div class="flex flex-col gap-2">
                     <Label>Категория</Label>
-                    <SelectCategory />
+                    <SelectCategory
+                      selected={post()?.category ?? null}
+                      onChange={(value) => {
+                        updatePost(postId(), { categoryId: value?.id ?? null });
+                      }}
+                    />
                   </div>
                   <div class="flex flex-col gap-2">
                     <Label>Теги</Label>
-                    <SelectTags />
+                    <SelectTags
+                      selected={post()?.tags ?? []}
+                      onChange={(value) => {
+                        updatePost(postId(), {
+                          tags: value.map((tag) => tag.id),
+                        });
+                      }}
+                    />
                   </div>
                 </div>
                 <div class="flex gap-2 border-input border-t p-4">
                   <form
                     class="ml-auto"
                     method="post"
-                    action={deletePost.with(props.params.id!)}
+                    action={deletePostAction.with(postId())}
                   >
                     <Button type="submit" variant="secondary">
                       Удалить
                     </Button>
                   </form>
-                  <Button>Опубликовать</Button>
+                  <form>
+                    <Show
+                      when={post()?.published}
+                      fallback={
+                        <Button
+                          type="button"
+                          onClick={() => {
+                            updatePost(postId(), { published: true });
+                          }}
+                        >
+                          Опубликовать
+                        </Button>
+                      }
+                    >
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          updatePost(postId(), { published: false });
+                        }}
+                      >
+                        Скрыть
+                      </Button>
+                    </Show>
+                  </form>
                 </div>
               </div>
             </div>

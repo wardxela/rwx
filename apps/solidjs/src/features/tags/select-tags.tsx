@@ -6,14 +6,26 @@ import {
   SelectValue,
 } from "@rwx/ui/components/select";
 import { createAsync } from "@solidjs/router";
-import { Suspense } from "solid-js";
+import { type Component, Suspense } from "solid-js";
 import { getTags } from "~/shared/queries";
 
-export const SelectTags = () => {
+export interface TagOption {
+  id: string;
+  name: string;
+}
+
+export interface SelectTagsProps {
+  selected?: TagOption[];
+  onChange?: (value: TagOption[]) => void;
+}
+
+export const SelectTags: Component<SelectTagsProps> = (props) => {
   const categories = createAsync(() => getTags());
   return (
     <Suspense>
-      <Select
+      <Select<TagOption>
+        value={props.selected}
+        onChange={props.onChange}
         options={categories() ?? []}
         multiple
         optionValue="name"
@@ -24,7 +36,7 @@ export const SelectTags = () => {
         )}
       >
         <SelectTrigger aria-label="Теги">
-          <SelectValue<{ name: string }>>
+          <SelectValue<TagOption>>
             {(state) =>
               state
                 .selectedOptions()

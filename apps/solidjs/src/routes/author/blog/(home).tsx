@@ -55,7 +55,7 @@ const createPost = action(async (formData: FormData) => {
   return redirect(`/author/blog/${response.data.id}`, {
     revalidate: [getPosts.key, getMyPosts.key],
   });
-}, "/blog:post");
+});
 
 export default function Page() {
   const posts = createAsync(() => getMyPosts());

@@ -69,6 +69,7 @@
         "@editorjs/list": "^2.0.6",
         "@rwx/api": "workspace:*",
         "@rwx/ui": "workspace:*",
+        "@solid-primitives/scheduled": "^1.5.0",
         "@solidjs/meta": "^0.29.4",
         "@solidjs/router": "^0.15.3",
         "@solidjs/start": "^1.1.3",
@@ -102,13 +103,11 @@
     "packages/db": {
       "name": "@rwx/db",
       "version": "0.1.0",
-      "dependencies": {
-        "kysely": "^0.28.0",
-        "tsx": "^4.19.3",
-      },
       "devDependencies": {
+        "kysely": "^0.28.0",
         "prisma": "^6.5.0",
         "prisma-kysely": "^1.8.0",
+        "tsx": "^4.19.3",
       },
     },
     "packages/ui": {
