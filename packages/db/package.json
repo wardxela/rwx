@@ -7,7 +7,7 @@
   "scripts": {
     "build": "prisma generate",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "seed": "tsx --env-file=.env ./seeds/seed.ts",
+    "seed": "prisma migrate reset && tsx --env-file=.env ./seeds/seed.ts",
     "dev": "prisma studio --browser none",
     "migrate": "prisma db push",
     "migrate:dev": "prisma migrate dev"
