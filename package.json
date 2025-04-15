@@ -21,13 +21,13 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@rwx/api": "workspace:*",
-    "@turbo/gen": "^2.4.4",
-    "@types/node": "^22.13.14",
+    "@turbo/gen": "^2.5.0",
+    "@types/node": "^22.14.1",
     "husky": "^9.1.7",
-    "npm-check-updates": "^17.1.16",
-    "turbo": "^2.4.4",
-    "typescript": "^5.8.2"
+    "npm-check-updates": "^17.1.18",
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.3"
   },
-  "packageManager": "bun@1.2.7",
+  "packageManager": "bun@1.2.9",
   "workspaces": ["apps/*", "packages/*", "tooling/*"]
 }
