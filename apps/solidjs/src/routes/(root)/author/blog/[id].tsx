@@ -26,7 +26,12 @@ import { SelectCategory } from "~/features/categories/select-category";
 import { SelectTags } from "~/features/tags/select-tags";
 import api from "~/shared/api";
 import { NotFound } from "~/shared/components/not-found";
-import { getMyPosts, getPost, getPosts } from "~/shared/queries";
+import {
+  getMyPosts,
+  getPost,
+  getPosts,
+  uploadFileAction,
+} from "~/shared/queries";
 
 const Editor = clientOnly(() =>
   import("~/features/blog/editor").then((module) => ({
@@ -41,17 +46,6 @@ const deletePostAction = action(async (id: string) => {
   return redirect("/author/blog", {
     revalidate: [getPosts.key, getMyPosts.key],
   });
-});
-
-const uploadFileAction = action(async (formData: FormData) => {
-  const image = await api.POST("/files/upload", {
-    // @ts-expect-error
-    body: formData,
-  });
-  if (image.data) {
-    image.data.url;
-  }
-  return json(image.data?.url, { revalidate: "nothing" });
 });
 
 const updatePostSchema = z.object({

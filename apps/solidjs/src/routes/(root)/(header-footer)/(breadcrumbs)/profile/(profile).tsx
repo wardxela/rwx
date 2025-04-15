@@ -1,4 +1,5 @@
 import { Button } from "@rwx/ui/components/button";
+import { Label } from "@rwx/ui/components/label";
 import {
   TextField,
   TextFieldErrorMessage,
@@ -6,16 +7,24 @@ import {
   TextFieldLabel,
   TextFieldTextArea,
 } from "@rwx/ui/components/text-field";
-import { action, createAsync, json, useSubmission } from "@solidjs/router";
+import {
+  action,
+  createAsync,
+  json,
+  useAction,
+  useSubmission,
+} from "@solidjs/router";
 import { Suspense } from "solid-js";
 import { z } from "zod";
+import { UserAvatar } from "~/features/user/avatar";
 import api from "~/shared/api";
-import { getMe } from "~/shared/queries";
+import { getMe, uploadFileAction } from "~/shared/queries";
 
 const UpdateUserSchema = z.object({
   firstName: z.string().min(1).max(50).optional(),
   lastName: z.string().min(1).max(50).optional(),
   bio: z.string().max(500).optional(),
+  image: z.string().optional(),
 });
 
 const updateProfile = action(async (formData: FormData) => {
@@ -23,7 +32,9 @@ const updateProfile = action(async (formData: FormData) => {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
     bio: formData.get("bio"),
+    image: formData.get("image"),
   });
+  console.log(data.error);
   if (!data.success) {
     return json({
       data: null,
@@ -47,7 +58,10 @@ const updateProfile = action(async (formData: FormData) => {
 export default function Page() {
   const profile = createAsync(() => getMe());
   const submission = useSubmission(updateProfile);
+  const uploadFile = useAction(uploadFileAction);
 
+  let fileInputRef!: HTMLInputElement;
+  let inputImageHiddenRef!: HTMLInputElement;
   let firstNameRef!: HTMLInputElement;
   let lastNameRef!: HTMLInputElement;
   let bioRef!: HTMLTextAreaElement;
@@ -61,6 +75,21 @@ export default function Page() {
     firstNameRef.value = p.firstName;
     lastNameRef.value = p.lastName;
     bioRef.value = p.bio ? p.bio : "";
+  };
+
+  const handleFileChange = async (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    const file = target.files?.[0];
+    if (!file) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("file", file);
+    const url = await uploadFile(formData);
+    if (!url) {
+      return;
+    }
+    inputImageHiddenRef.value = url;
   };
 
   const firstNameError = () => {
@@ -92,8 +121,24 @@ export default function Page() {
         method="post"
       >
         <div class="space-y-6">
-          <h2 class="font-semibold text-xl">Профиль</h2>
+          <h2 class="font-semibold text-xl">Данные</h2>
           <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div class="col-span-full">
+              <Label for="photo">Аватар</Label>
+              <div class="mt-2 flex items-center gap-x-3">
+                <UserAvatar class="size-12" />
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  onChange={handleFileChange}
+                  class="hidden"
+                />
+                <input ref={inputImageHiddenRef} type="hidden" />
+                <Button variant="outline" onClick={() => fileInputRef.click()}>
+                  Изменить
+                </Button>
+              </div>
+            </div>
             <TextField validationState={firstNameError() ? "invalid" : "valid"}>
               <TextFieldLabel>Имя</TextFieldLabel>
               <TextFieldInput

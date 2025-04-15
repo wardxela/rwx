@@ -1,4 +1,4 @@
-import { query } from "@solidjs/router";
+import { action, json, query } from "@solidjs/router";
 import api from "./api";
 
 export const getMe = query(async () => {
@@ -35,3 +35,14 @@ export const getTags = query(async () => {
   const response = await api.GET("/tags");
   return response.data ?? [];
 }, "/tags");
+
+export const uploadFileAction = action(async (formData: FormData) => {
+  const image = await api.POST("/files/upload", {
+    // @ts-expect-error
+    body: formData,
+  });
+  if (image.data) {
+    image.data.url;
+  }
+  return json(image.data?.url, { revalidate: "nothing" });
+});

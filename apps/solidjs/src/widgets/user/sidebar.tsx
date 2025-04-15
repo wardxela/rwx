@@ -1,10 +1,9 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarHeader,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -12,22 +11,16 @@ import {
 import { A, useMatch } from "@solidjs/router";
 import { For } from "solid-js";
 import { AuthShow } from "~/features/auth/guards";
-import { UserAvatar } from "~/features/user/avatar";
 
 const links = [
   {
-    title: "Профиль",
+    title: "Данные",
     url: "/profile",
     icon: null,
   },
   {
     title: "Курсы",
     url: "/profile/courses",
-    icon: null,
-  },
-  {
-    title: "Сообщения (в разработке)",
-    url: "/profile/messages",
     icon: null,
   },
   {
@@ -40,13 +33,9 @@ const links = [
 export function UserSidebar() {
   return (
     <Sidebar collapsible="none">
-      <SidebarHeader>
-        <div class="my-6 grid place-items-center">
-          <UserAvatar class="size-40" />
-        </div>
-      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
+          <SidebarGroupLabel>Профиль</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <For each={links}>
@@ -78,7 +67,6 @@ export function UserSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
     </Sidebar>
   );
 }
