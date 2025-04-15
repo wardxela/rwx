@@ -7,7 +7,7 @@ import { getMe } from "~/shared/queries";
 export const UserAvatar: Component<ComponentProps<typeof Avatar>> = (props) => {
   const user = createAsync(() => getMe());
   return (
-    <Suspense fallback={<Skeleton class="size-full!" circle />}>
+    <Suspense fallback={<Skeleton class="size-full rounded-full" />}>
       <Avatar {...props}>
         <AvatarImage src={user()?.image ?? "/profile.jpg"} />
         <AvatarFallback>{`${user()?.firstName.at(0)}${user()?.lastName.at(0)}`}</AvatarFallback>

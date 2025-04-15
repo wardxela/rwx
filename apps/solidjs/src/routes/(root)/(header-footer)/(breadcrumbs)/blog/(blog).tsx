@@ -5,12 +5,17 @@ import {
   DrawerTrigger,
 } from "@rwx/ui/components/drawer";
 import { Toggle } from "@rwx/ui/components/toggle";
-import { Show, createSignal } from "solid-js";
-import { BlogArticleCardLink, BlogSidebar } from "~/features/blog";
+import { createAsync } from "@solidjs/router";
+import { For, Show, Suspense, createSignal } from "solid-js";
+import { BlogSidebar } from "~/features/blog/blog-sidebar";
+import { PostLink, PostLinkSkeleton } from "~/features/blog/post-link";
+import { getPosts } from "~/shared/queries";
 
 const [isGridView, setIsGridView] = createSignal(true);
 
 export default function Page() {
+  const posts = createAsync(() => getPosts());
+
   return (
     <>
       <div class="mb-8 flex items-center justify-between gap-2 sm:mb-10">
@@ -101,10 +106,27 @@ export default function Page() {
           "grid-cols-[repeat(auto-fill,minmax(260px,1fr))]": isGridView(),
         }}
       >
-        <BlogArticleCardLink link="/blog/1" />
-        <BlogArticleCardLink link="/blog/1" />
-        <BlogArticleCardLink link="/blog/1" />
-        <BlogArticleCardLink link="/blog/1" />
+        <Suspense
+          fallback={
+            <>
+              <PostLinkSkeleton />
+              <PostLinkSkeleton />
+              <PostLinkSkeleton />
+              <PostLinkSkeleton />
+            </>
+          }
+        >
+          <For each={posts()}>
+            {(post) => (
+              <PostLink
+                link={`/blog/${post.id}`}
+                title={post.title}
+                excerpt={post.excerpt}
+                updatedAt={post.updatedAt}
+              />
+            )}
+          </For>
+        </Suspense>
       </div>
     </>
   );

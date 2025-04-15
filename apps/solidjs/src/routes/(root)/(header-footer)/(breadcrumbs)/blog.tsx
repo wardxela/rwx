@@ -1,6 +1,5 @@
 import type { RouteSectionProps } from "@solidjs/router";
-
-import { BlogSidebar } from "~/features/blog";
+import { BlogSidebar } from "~/features/blog/blog-sidebar";
 
 export default function Layout(props: RouteSectionProps) {
   return (

@@ -10,7 +10,7 @@ import { type Component, Suspense } from "solid-js";
 import { getCategories } from "~/shared/queries";
 
 export interface CategoryOption {
-  id: string;
+  id: number;
   name: string;
 }
 

@@ -171,12 +171,12 @@ export interface components {
       title: string;
     };
     CategoryDto: {
-      id: string;
+      id: number;
       name: string;
       description?: string | null;
     };
     TagDto: {
-      id: string;
+      id: number;
       name: string;
     };
     PostDto: {
@@ -200,9 +200,8 @@ export interface components {
       excerpt?: string;
       image?: string;
       published?: boolean;
-      /** Format: uuid */
-      categoryId?: string;
-      tags?: string[];
+      categoryId?: number;
+      tags?: number[];
     };
   };
   responses: never;

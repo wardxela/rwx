@@ -10,7 +10,7 @@ import { type Component, Suspense } from "solid-js";
 import { getTags } from "~/shared/queries";
 
 export interface TagOption {
-  id: string;
+  id: number;
   name: string;
 }
 

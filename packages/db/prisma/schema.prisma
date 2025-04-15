@@ -73,7 +73,7 @@ model BlogPost {
   authorId   String
   author     User              @relation(fields: [authorId], references: [id])
   category   Category?         @relation(fields: [categoryId], references: [id])
-  categoryId String?
+  categoryId Int?
   tags       Tag[]
   comments   BlogPostComment[]
 }
@@ -96,7 +96,7 @@ model BlogPostComment {
 }
 
 model Category {
-  id          String     @id @default(dbgenerated("gen_random_uuid()"))
+  id          Int        @id @default(autoincrement())
   name        String     @unique
   description String?    @db.Text
   posts       BlogPost[]
@@ -104,7 +104,7 @@ model Category {
 }
 
 model Tag {
-  id    String     @id @default(dbgenerated("gen_random_uuid()"))
+  id    Int        @id @default(autoincrement())
   name  String     @unique
   posts BlogPost[]
 }
@@ -127,7 +127,7 @@ model Course {
   // Relations
   authorId    String
   author      User               @relation(fields: [authorId], references: [id])
-  categoryId  String
+  categoryId  Int
   category    Category           @relation(fields: [categoryId], references: [id])
   modules     Module[]
   enrollments CourseEnrollment[]

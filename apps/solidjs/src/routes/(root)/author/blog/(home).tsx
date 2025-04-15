@@ -25,7 +25,7 @@ import {
 } from "@solidjs/router";
 import { For, Suspense } from "solid-js";
 import { z } from "zod";
-import { BlogArticleCardLink } from "~/features/blog/blog-article-card-link";
+import { PostLink, PostLinkSkeleton } from "~/features/blog/post-link";
 import api from "~/shared/api";
 import { getMyPosts, getPosts } from "~/shared/queries";
 
@@ -103,10 +103,26 @@ export default function Page() {
           </DialogContent>
         </Dialog>
       </div>
-      <Suspense fallback={<Skeleton />}>
+      <Suspense
+        fallback={
+          <>
+            <PostLinkSkeleton />
+            <PostLinkSkeleton />
+            <PostLinkSkeleton />
+            <PostLinkSkeleton />
+          </>
+        }
+      >
         <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
           <For each={posts()}>
-            {(item) => <BlogArticleCardLink link={`/author/blog/${item.id}`} />}
+            {(post) => (
+              <PostLink
+                link={`/author/blog/${post.id}`}
+                title={post.title}
+                excerpt={post.excerpt}
+                updatedAt={post.updatedAt}
+              />
+            )}
           </For>
         </div>
       </Suspense>

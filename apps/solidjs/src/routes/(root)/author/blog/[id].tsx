@@ -49,8 +49,8 @@ const updatePostSchema = z.object({
   excerpt: z.string().max(1000).optional(),
   image: z.string().optional(),
   published: z.boolean().optional(),
-  categoryId: z.string().uuid().nullable().optional(),
-  tags: z.array(z.string()).optional(),
+  categoryId: z.number().nullable().optional(),
+  tags: z.array(z.number()).optional(),
 });
 
 type UpdatePostSchema = z.infer<typeof updatePostSchema>;

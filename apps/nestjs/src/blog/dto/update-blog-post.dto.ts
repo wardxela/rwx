@@ -2,6 +2,7 @@ import {
   IsArray,
   IsBoolean,
   IsJSON,
+  IsNumber,
   IsObject,
   IsOptional,
   IsString,
@@ -34,11 +35,11 @@ export class UpdateBlogPostDto {
   @IsOptional()
   published?: boolean;
 
-  @IsUUID()
+  @IsNumber()
   @IsOptional()
-  categoryId?: string;
+  categoryId?: number;
 
   @IsArray()
   @IsOptional()
-  tags?: string[];
+  tags?: number[];
 }

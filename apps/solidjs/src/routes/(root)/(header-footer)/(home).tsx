@@ -3,7 +3,7 @@ import { type Component, For, type JSX } from "solid-js";
 
 import { Button } from "@rwx/ui/components/button";
 
-import { BlogArticleCardLink } from "~/features/blog/blog-article-card-link";
+import { PostLink } from "~/features/blog/post-link";
 import { CourseCardLink } from "~/features/course/course-card-link";
 import {
   CourseCategoryLink,
@@ -292,15 +292,30 @@ export default function Page() {
             title="Последние Публикации"
             description="Ознакомьтесь с нашими бесплатными статьями"
             action={
-              <Button size="lg" variant="outline">
+              <Button as="a" href="/blog" size="lg" variant="outline">
                 Все Статьи
               </Button>
             }
           />
           <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7">
-            <BlogArticleCardLink link="/blog/1" />
-            <BlogArticleCardLink link="/blog/1" />
-            <BlogArticleCardLink link="/blog/1" />
+            <PostLink
+              link="/blog/1"
+              title="TODO"
+              excerpt={null}
+              updatedAt={new Date().toString()}
+            />
+            <PostLink
+              link="/blog/1"
+              title="TODO"
+              excerpt={null}
+              updatedAt={new Date().toString()}
+            />
+            <PostLink
+              link="/blog/1"
+              title="TODO"
+              excerpt={null}
+              updatedAt={new Date().toString()}
+            />
           </div>
         </div>
       </section>
