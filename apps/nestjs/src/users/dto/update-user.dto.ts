@@ -20,7 +20,7 @@ export class UpdateUserDto {
   lastName?: string;
 
   @IsString()
-  @IsUrl()
+  @IsUrl({ require_host: false })
   @IsOptional()
   image?: string;
 

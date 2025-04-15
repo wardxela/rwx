@@ -27,12 +27,12 @@ const UpdateUserSchema = z.object({
   image: z.string().optional(),
 });
 
-const updateProfile = action(async (formData: FormData) => {
+const updateProfileAction = action(async (formData: FormData) => {
   const data = UpdateUserSchema.safeParse({
-    firstName: formData.get("firstName"),
-    lastName: formData.get("lastName"),
-    bio: formData.get("bio"),
-    image: formData.get("image"),
+    firstName: formData.get("firstName") ?? undefined,
+    lastName: formData.get("lastName") ?? undefined,
+    bio: formData.get("bio") ?? undefined,
+    image: formData.get("image") ?? undefined,
   });
   console.log(data.error);
   if (!data.success) {
@@ -57,11 +57,11 @@ const updateProfile = action(async (formData: FormData) => {
 
 export default function Page() {
   const profile = createAsync(() => getMe());
-  const submission = useSubmission(updateProfile);
+  const submission = useSubmission(updateProfileAction);
+  const updateProfile = useAction(updateProfileAction);
   const uploadFile = useAction(uploadFileAction);
 
   let fileInputRef!: HTMLInputElement;
-  let inputImageHiddenRef!: HTMLInputElement;
   let firstNameRef!: HTMLInputElement;
   let lastNameRef!: HTMLInputElement;
   let bioRef!: HTMLTextAreaElement;
@@ -89,7 +89,9 @@ export default function Page() {
     if (!url) {
       return;
     }
-    inputImageHiddenRef.value = url;
+    const anotherFormData = new FormData();
+    anotherFormData.append("image", url);
+    await updateProfile(anotherFormData);
   };
 
   const firstNameError = () => {
@@ -117,7 +119,7 @@ export default function Page() {
     <Suspense>
       <form
         class="mx-auto max-w-2xl space-y-8"
-        action={updateProfile}
+        action={updateProfileAction}
         method="post"
       >
         <div class="space-y-6">
@@ -133,7 +135,6 @@ export default function Page() {
                   onChange={handleFileChange}
                   class="hidden"
                 />
-                <input ref={inputImageHiddenRef} type="hidden" />
                 <Button variant="outline" onClick={() => fileInputRef.click()}>
                   Изменить
                 </Button>

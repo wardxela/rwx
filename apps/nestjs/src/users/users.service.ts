@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Account, DB, User, UserRole } from "@rwx/db";
 import { Kysely, Selectable } from "kysely";
 import { InjectKysely } from "nestjs-kysely";
+import { FilesService } from "src/files/files.service";
 import { UpdateUserDto } from "./dto/update-user.dto";
 
 export interface ProviderUserInfo {
@@ -23,7 +24,10 @@ export interface ConnectAccountParams {
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectKysely() private readonly db: Kysely<DB>) {}
+  constructor(
+    @InjectKysely() private readonly db: Kysely<DB>,
+    private filesService: FilesService,
+  ) {}
 
   private transformUser<T extends Selectable<User> | undefined>(user: T): T {
     if (!user) {
@@ -31,6 +35,7 @@ export class UsersService {
     }
     return {
       ...user,
+      image: user.image ? this.filesService.resolve(user.image) : null,
       // @ts-expect-error It's actually a string
       roles: parseRoles(user.roles),
     };
