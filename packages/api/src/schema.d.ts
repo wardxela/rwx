@@ -47,6 +47,38 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/files/upload": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["FilesController_uploadFile"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/files/{fileName}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["FilesController_getFile"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/blog": {
     parameters: {
       query?: never;
@@ -111,38 +143,6 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/files/upload": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post: operations["FilesController_uploadFile"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/files/{fileName}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations["FilesController_getFile"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   "/categories": {
     parameters: {
       query?: never;
@@ -199,6 +199,9 @@ export interface components {
       image?: string;
       bio?: string;
     };
+    FileDto: {
+      url: string;
+    };
     CreatePostDto: {
       title: string;
     };
@@ -237,13 +240,11 @@ export interface components {
       title?: string;
       content?: Record<string, never>;
       excerpt?: string;
+      /** Format: uri */
       image?: string;
       published?: boolean;
       categoryId?: number;
       tags?: number[];
-    };
-    FileDto: {
-      url: string;
     };
   };
   responses: never;
@@ -330,6 +331,44 @@ export interface operations {
       };
     };
   };
+  FilesController_uploadFile: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["FileDto"];
+        };
+      };
+    };
+  };
+  FilesController_getFile: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        fileName: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
   BlogController_createPost: {
     parameters: {
       query?: never;
@@ -374,7 +413,12 @@ export interface operations {
   };
   BlogController_getAllPosts: {
     parameters: {
-      query?: never;
+      query?: {
+        search?: string;
+        tags?: number[];
+        categories?: number[];
+        limit?: number;
+      };
       header?: never;
       path?: never;
       cookie?: never;
@@ -455,44 +499,6 @@ export interface operations {
         content: {
           "application/json": boolean;
         };
-      };
-    };
-  };
-  FilesController_uploadFile: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["FileDto"];
-        };
-      };
-    };
-  };
-  FilesController_getFile: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        fileName: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
       };
     };
   };

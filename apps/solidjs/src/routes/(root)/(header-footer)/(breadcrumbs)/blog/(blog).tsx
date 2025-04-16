@@ -4,9 +4,12 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from "@rwx/ui/components/drawer";
+import { TextField, TextFieldInput } from "@rwx/ui/components/text-field";
 import { Toggle } from "@rwx/ui/components/toggle";
-import { createAsync } from "@solidjs/router";
+import { debounce } from "@solid-primitives/scheduled";
+import { createAsync, useSearchParams } from "@solidjs/router";
 import { For, Show, Suspense, createSignal } from "solid-js";
+import { z } from "zod";
 import { BlogSidebar } from "~/features/blog/blog-sidebar";
 import { PostLink, PostLinkSkeleton } from "~/features/blog/post-link";
 import { SiteTitle } from "~/shared/components/site-title";
@@ -14,8 +17,41 @@ import { getPosts } from "~/shared/queries";
 
 const [isGridView, setIsGridView] = createSignal(true);
 
+const querySchema = z.object({
+  search: z.string().optional().catch(undefined),
+  categories: z.array(z.coerce.number()).optional().catch(undefined),
+  tags: z.array(z.coerce.number()).optional().catch(undefined),
+});
+
 export default function Page() {
-  const posts = createAsync(() => getPosts());
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const validatedSearchParams = () => {
+    const result = querySchema.safeParse({
+      search: searchParams.search?.toString(),
+      categories: Array.isArray(searchParams.categories)
+        ? searchParams.categories
+        : searchParams.categories
+          ? [searchParams.categories]
+          : undefined,
+      tags: Array.isArray(searchParams.tags)
+        ? searchParams.tags
+        : searchParams.tags
+          ? [searchParams.tags]
+          : undefined,
+    });
+    if (!result.success) {
+      return undefined;
+    }
+    return result.data;
+  };
+
+  const posts = createAsync(() => getPosts(validatedSearchParams()));
+
+  const setSearch = debounce(
+    (message: string) => setSearchParams({ search: message }),
+    300,
+  );
 
   return (
     <>
@@ -25,6 +61,16 @@ export default function Page() {
           Все статьи
         </h1>
         <div class="flex items-center gap-2">
+          <TextField>
+            <TextFieldInput
+              ref={(el) => {
+                el.value = searchParams.search?.toString() ?? "";
+              }}
+              type="search"
+              placeholder="Поиск"
+              onInput={(e) => setSearch(e.currentTarget.value)}
+            />
+          </TextField>
           <Toggle
             pressed={isGridView()}
             onChange={setIsGridView}

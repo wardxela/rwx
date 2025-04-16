@@ -1,3 +1,4 @@
+import type { paths } from "@rwx/api";
 import { action, json, query } from "@solidjs/router";
 import api from "./api";
 
@@ -6,10 +7,15 @@ export const getMe = query(async () => {
   return response.data;
 }, "/users/me");
 
-export const getPosts = query(async () => {
-  const response = await api.GET("/blog/posts");
-  return response.data;
-}, "/blog/posts");
+export const getPosts = query(
+  async (query?: paths["/blog/posts"]["get"]["parameters"]["query"]) => {
+    const response = await api.GET("/blog/posts", {
+      params: { query },
+    });
+    return response.data;
+  },
+  "/blog/posts",
+);
 
 export const getMyPosts = query(async () => {
   const response = await api.GET("/blog/my-posts");

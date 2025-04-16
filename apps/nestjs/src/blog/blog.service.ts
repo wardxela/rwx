@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { DB } from "@rwx/db";
 import { Kysely } from "kysely";
 import { InjectKysely } from "nestjs-kysely";
+import { filter } from "rxjs";
 import { FilesService } from "src/files/files.service";
 import { CreatePostDto } from "./dto/create-post.dto";
 import { PostFiltersDto } from "./dto/post-filters.dto";
@@ -142,9 +143,72 @@ export class BlogService {
   }
 
   async getAllPosts(filters: PostFiltersDto): Promise<PostDto[]> {
+    let postIdsQuery = this.db
+      .selectFrom("BlogPost")
+      .select("BlogPost.id")
+      .where("BlogPost.published", "=", true)
+      .leftJoin("Category", "BlogPost.categoryId", "Category.id");
+
+    if (filters.search) {
+      postIdsQuery = postIdsQuery.where((eb) =>
+        eb.or([
+          eb(
+            "BlogPost.title",
+            "ilike",
+            `%${filters.search?.split("").join("%")}%`,
+          ),
+          eb(
+            "BlogPost.excerpt",
+            "ilike",
+            `%${filters.search?.split("").join("%")}%`,
+          ),
+        ]),
+      );
+    }
+
+    const categories = filters.categories
+      ? Array.isArray(filters.categories)
+        ? filters.categories
+        : [filters.categories]
+      : [];
+
+    if (categories.length > 0) {
+      postIdsQuery = postIdsQuery.where("Category.id", "in", categories);
+    }
+
+    const tags = filters.tags
+      ? Array.isArray(filters.tags)
+        ? filters.tags
+        : [filters.tags]
+      : [];
+
+    if (tags.length > 0) {
+      postIdsQuery = postIdsQuery.where((eb) =>
+        eb.exists(
+          eb
+            .selectFrom("_BlogPostToTag")
+            .whereRef("_BlogPostToTag.A", "=", "BlogPost.id")
+            .where("_BlogPostToTag.B", "in", tags),
+        ),
+      );
+    }
+
+    const postIds = await postIdsQuery
+      .orderBy("BlogPost.updatedAt", "desc")
+      .limit(filters.limit ?? 20)
+      .execute();
+
+    if (postIds.length === 0) {
+      return [];
+    }
+
     const rows = await this.db
       .selectFrom("BlogPost")
-      .where("BlogPost.published", "=", true)
+      .where(
+        "BlogPost.id",
+        "in",
+        postIds.map((p) => p.id),
+      )
       .leftJoin("User", "User.id", "BlogPost.authorId")
       .leftJoin("Category", "BlogPost.categoryId", "Category.id")
       .leftJoin("_BlogPostToTag", "_BlogPostToTag.A", "BlogPost.id")
@@ -169,6 +233,7 @@ export class BlogService {
         "Tag.id as tagId",
         "Tag.name as tagName",
       ])
+      .orderBy("BlogPost.updatedAt", "desc")
       .execute();
 
     const postsMap = new Map<string, PostDto>();

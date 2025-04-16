@@ -1,12 +1,10 @@
 import {
   IsArray,
   IsBoolean,
-  IsJSON,
   IsNumber,
   IsObject,
   IsOptional,
   IsString,
-  IsUUID,
   IsUrl,
   MaxLength,
   MinLength,

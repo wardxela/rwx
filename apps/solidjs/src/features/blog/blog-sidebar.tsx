@@ -1,63 +1,86 @@
 import { Button } from "@rwx/ui/components/button";
 import { Skeleton } from "@rwx/ui/components/skeleton";
-import { createAsync } from "@solidjs/router";
+import { debounce } from "@solid-primitives/scheduled";
+import { createAsync, useSearchParams } from "@solidjs/router";
 import type { JSX, ParentComponent } from "solid-js";
-import { For, Show, Suspense, createSignal } from "solid-js";
-import { getCategories, getTags } from "~/shared/queries";
+import { For, Show, Suspense, createEffect, createSignal } from "solid-js";
+import { getCategories, getPosts, getTags } from "~/shared/queries";
 
 export const BlogSidebar = () => {
   return (
     <div class="space-y-7">
       <Categories />
-      <div>
-        <h6 class="mb-5 font-semibold text-xl">Недавние Записи</h6>
-        <ul class="space-y-4">
-          <li>
-            <a href="/blog/1" class="group flex gap-4">
-              <img
-                alt="DYNAMIC_DATA"
-                src="/course-preview.png"
-                class="aspect-square max-w-24 shrink-0 rounded-xl object-cover transition group-hover:brightness-90"
-              />
-              <div class="grow font-medium transition group-hover:text-primary">
-                Best LearnPress WordPress Theme Collection for 2023
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="/blog/1" class="group flex gap-4">
-              <img
-                alt="DYNAMIC_DATA"
-                src="/course-preview.png"
-                class="aspect-square max-w-24 shrink-0 rounded-xl object-cover transition group-hover:brightness-90"
-              />
-              <div class="grow font-medium transition group-hover:text-primary">
-                Best LearnPress WordPress Theme Collection for 2023
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="/blog/1" class="group flex gap-4">
-              <img
-                alt="DYNAMIC_DATA"
-                src="/course-preview.png"
-                class="aspect-square max-w-24 shrink-0 rounded-xl object-cover transition group-hover:brightness-90"
-              />
-              <div class="grow font-medium transition group-hover:text-primary">
-                Best LearnPress WordPress Theme Collection for 2023
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <RecentPosts />
       <Tags />
     </div>
   );
 };
 
+function RecentPosts() {
+  const posts = createAsync(() => getPosts({ limit: 3 }));
+
+  return (
+    <div>
+      <h6 class="mb-5 font-semibold text-xl">Недавние Записи</h6>
+      <ul class="space-y-4">
+        <Suspense
+          fallback={
+            <For each={Array.from({ length: 3 })}>
+              {() => (
+                <li class="flex gap-4">
+                  <Skeleton class="size-24 rounded-xl" />
+                  <div class="grow space-y-2 py-2">
+                    <Skeleton class="h-4" />
+                    <Skeleton class="h-4 w-2/3" />
+                    <Skeleton class="h-4 w-3/4" />
+                  </div>
+                </li>
+              )}
+            </For>
+          }
+        >
+          <For each={posts()}>
+            {(post) => (
+              <li>
+                <a href={`/blog/${post.id}`} class="group flex gap-4">
+                  <img
+                    alt={post.title}
+                    src={post.image ?? "/placeholder.jpg"}
+                    class="aspect-square max-w-24 shrink-0 rounded-xl object-cover transition group-hover:brightness-90"
+                  />
+                  <div class="grow font-medium transition group-hover:text-primary">
+                    {post.title}
+                  </div>
+                </a>
+              </li>
+            )}
+          </For>
+        </Suspense>
+      </ul>
+    </div>
+  );
+}
+
 function Categories() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const categories = createAsync(() => getCategories());
+  const [selectedCategories, setSelectedCategories] = createSignal<number[]>(
+    Array.isArray(searchParams.categories)
+      ? searchParams.categories.map(Number)
+      : searchParams.categories
+        ? [Number(searchParams.categories)]
+        : [],
+  );
   const [showAll, setShowAll] = createSignal(false);
+
+  const setCategories = debounce(
+    (categories: number[]) => setSearchParams({ categories }),
+    300,
+  );
+
+  createEffect(() => {
+    setCategories(selectedCategories());
+  });
 
   return (
     <div>
@@ -96,7 +119,19 @@ function Categories() {
           <For each={showAll() ? categories() : categories()?.slice(0, 6)}>
             {(category) => (
               <li>
-                <TextCheckbox endText="?">{category.name}</TextCheckbox>
+                <CategoryCheckbox
+                  value={selectedCategories().includes(category.id)}
+                  onChange={(checked) => {
+                    setSelectedCategories((prev) =>
+                      checked
+                        ? [...prev, category.id]
+                        : prev.filter((id) => id !== category.id),
+                    );
+                  }}
+                  endText="?"
+                >
+                  {category.name}
+                </CategoryCheckbox>
               </li>
             )}
           </For>
@@ -115,10 +150,50 @@ function Categories() {
   );
 }
 
+interface TagCheckboxProps {
+  endText?: JSX.Element;
+  showCheck?: boolean;
+  value?: boolean;
+  onChange?: (checked: boolean) => void;
+}
+
+const CategoryCheckbox: ParentComponent<TagCheckboxProps> = (props) => {
+  return (
+    <label class="group">
+      <input
+        type="checkbox"
+        class="sr-only"
+        checked={props.value}
+        onInput={(e) => props.onChange?.(e.currentTarget.checked)}
+      />
+      <div class="flex grow cursor-pointer select-none items-center justify-between gap-1 text-neutral-800 group-has-checked:font-medium group-has-checked:text-black">
+        <div>{props.children}</div>
+        <Show when={props.endText}>
+          <div>{props.endText}</div>
+        </Show>
+      </div>
+    </label>
+  );
+};
+
 function Tags() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const tags = createAsync(() => getTags());
 
+  const [selectedTags, setSelectedTags] = createSignal<number[]>(
+    Array.isArray(searchParams.tags)
+      ? searchParams.tags.map(Number)
+      : searchParams.tags
+        ? [Number(searchParams.tags)]
+        : [],
+  );
   const [showAll, setShowAll] = createSignal(false);
+
+  const setTags = debounce((tags: number[]) => setSearchParams({ tags }), 300);
+
+  createEffect(() => {
+    setTags(selectedTags());
+  });
 
   return (
     <div>
@@ -136,7 +211,21 @@ function Tags() {
           }
         >
           <For each={showAll() ? tags() : tags()?.slice(0, 6)}>
-            {(tag) => <TagCheckbox>{tag.name}</TagCheckbox>}
+            {(tag) => (
+              <TagCheckbox
+                value={selectedTags().includes(tag.id)}
+                onChange={(checked) => {
+                  setSelectedTags((prev) =>
+                    checked
+                      ? [...prev, tag.id]
+                      : prev.filter((id) => id !== tag.id),
+                  );
+                }}
+                endText="?"
+              >
+                {tag.name}
+              </TagCheckbox>
+            )}
           </For>
           <Show when={!showAll()}>
             <Button variant="ghost" onClick={() => setShowAll(!showAll())}>
@@ -149,29 +238,20 @@ function Tags() {
   );
 }
 
-interface CheckboxTextProps {
-  endText?: JSX.Element;
-  showCheck?: boolean;
+interface TagCheckboxProps {
+  value?: boolean;
+  onChange?: (checked: boolean) => void;
 }
 
-const TextCheckbox: ParentComponent<CheckboxTextProps> = (props) => {
-  return (
-    <label class="group">
-      <input type="checkbox" class="sr-only" />
-      <div class="flex grow cursor-pointer select-none items-center justify-between gap-1 text-neutral-800 group-has-checked:font-medium group-has-checked:text-black">
-        <div>{props.children}</div>
-        <Show when={props.endText}>
-          <div>{props.endText}</div>
-        </Show>
-      </div>
-    </label>
-  );
-};
-
-const TagCheckbox: ParentComponent = (props) => {
+const TagCheckbox: ParentComponent<TagCheckboxProps> = (props) => {
   return (
     <label>
-      <input class="peer sr-only" type="checkbox" />
+      <input
+        class="peer sr-only"
+        type="checkbox"
+        checked={props.value}
+        onInput={(e) => props.onChange?.(e.currentTarget.checked)}
+      />
       <div class="inline-flex cursor-pointer gap-2.5 rounded-lg border border-gray-200 px-5 py-2 text-lg leading-7 transition hover:bg-neutral-100 peer-checked:bg-neutral-200!">
         {props.children}
       </div>

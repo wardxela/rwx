@@ -1,14 +1,32 @@
+import { Type } from "class-transformer";
+import {
+  IsArray,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from "class-validator";
+
 export class PostFiltersDto {
-  // page: number = 1;
-  // limit: number = 10;
-  // searchTerm?: string;
-  // category?: string;
-  // tags?: string[];
-  // authorId?: string;
-  // startDate?: Date;
-  // endDate?: Date;
-  // sortBy?: 'date' | 'title' | 'views';
-  // sortOrder?: 'asc' | 'desc';
-  // status?: 'draft' | 'published' | 'archived';
-  // featured?: boolean;
+  @IsString()
+  @IsOptional()
+  search?: string;
+
+  @Type(() => Number)
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  tags?: number | number[];
+
+  @Type(() => Number)
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  categories?: number | number[];
+
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1)
+  @Max(20)
+  @IsOptional()
+  limit?: number = 20;
 }

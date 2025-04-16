@@ -1,15 +1,16 @@
-import { A } from "@solidjs/router";
-import { type Component, For, type JSX } from "solid-js";
+import { A, createAsync } from "@solidjs/router";
+import { type Component, For, type JSX, Suspense } from "solid-js";
 
 import { Button } from "@rwx/ui/components/button";
 
-import { PostLink } from "~/features/blog/post-link";
+import { PostLink, PostLinkSkeleton } from "~/features/blog/post-link";
 import { CourseCardLink } from "~/features/course/course-card-link";
 import {
   CourseCategoryLink,
   type CourseCategoryLinkProps,
 } from "~/features/course/course-category-card-link";
 import { SiteTitle } from "~/shared/components/site-title";
+import { getPosts } from "~/shared/queries";
 
 export default function Page() {
   return (
@@ -303,32 +304,41 @@ export default function Page() {
                 </Button>
               }
             />
-            <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7">
-              <PostLink
-                link="/blog/1"
-                title="TODO"
-                excerpt={null}
-                updatedAt={new Date().toString()}
-              />
-              <PostLink
-                link="/blog/1"
-                title="TODO"
-                excerpt={null}
-                updatedAt={new Date().toString()}
-              />
-              <PostLink
-                link="/blog/1"
-                title="TODO"
-                excerpt={null}
-                updatedAt={new Date().toString()}
-              />
-            </div>
+            <RecentPosts />
           </div>
         </section>
       </div>
     </>
   );
 }
+
+const RecentPosts = () => {
+  const posts = createAsync(() => getPosts({ limit: 4 }));
+
+  return (
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7">
+      <Suspense
+        fallback={
+          <For each={Array.from({ length: 3 })}>
+            {() => <PostLinkSkeleton />}
+          </For>
+        }
+      >
+        <For each={posts()}>
+          {(post) => (
+            <PostLink
+              link={`/blog/${post.id}`}
+              title={post.title}
+              excerpt={post.excerpt}
+              image={post.image}
+              updatedAt={post.updatedAt}
+            />
+          )}
+        </For>
+      </Suspense>
+    </div>
+  );
+};
 
 const SectionHeader: Component<{
   title: string;
