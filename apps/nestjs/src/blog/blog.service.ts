@@ -5,8 +5,8 @@ import { InjectKysely } from "nestjs-kysely";
 import { filter } from "rxjs";
 import { FilesService } from "src/files/files.service";
 import { CreatePostDto } from "./dto/create-post.dto";
-import { PostFiltersDto } from "./dto/post-filters.dto";
-import { PostDto } from "./dto/post.dto";
+import { PostFiltersDto, PostHiddenFilters } from "./dto/post-filters.dto";
+import { PostDto, PostsDto } from "./dto/post.dto";
 import { UpdateBlogPostDto } from "./dto/update-blog-post.dto";
 
 @Injectable()
@@ -70,84 +70,18 @@ export class BlogService {
     return result.numDeletedRows > 0;
   }
 
-  async getPostsByAuthor(authorId: string): Promise<PostDto[]> {
-    const rows = await this.db
-      .selectFrom("BlogPost")
-      .where("authorId", "=", authorId)
-      .leftJoin("User", "User.id", "BlogPost.authorId")
-      .leftJoin("Category", "BlogPost.categoryId", "Category.id")
-      .leftJoin("_BlogPostToTag", "_BlogPostToTag.A", "BlogPost.id")
-      .leftJoin("Tag", "Tag.id", "_BlogPostToTag.B")
-      .select([
-        "BlogPost.id",
-        "BlogPost.title",
-        "BlogPost.content",
-        "BlogPost.excerpt",
-        "BlogPost.image",
+  async getPosts(
+    filters: PostFiltersDto & PostHiddenFilters,
+  ): Promise<PostsDto> {
+    let postIdsQuery = this.db.selectFrom("BlogPost");
+
+    if (filters.published !== undefined) {
+      postIdsQuery = postIdsQuery.where(
         "BlogPost.published",
-        "BlogPost.createdAt",
-        "BlogPost.updatedAt",
-        "User.id as authorId",
-        "User.firstName as authorFirstName",
-        "User.lastName as authorLastName",
-        "User.image as authorImage",
-        "User.bio as authorBio",
-        "Category.id as categoryId",
-        "Category.name as categoryName",
-        "Category.description as categoryDescription",
-        "Tag.id as tagId",
-        "Tag.name as tagName",
-      ])
-      .execute();
-
-    const postsMap = new Map<string, PostDto>();
-
-    for (const row of rows) {
-      if (!postsMap.has(row.id)) {
-        postsMap.set(row.id, {
-          id: row.id,
-          title: row.title,
-          content: row.content,
-          excerpt: row.excerpt,
-          image: row.image ? this.filesService.resolve(row.image) : null,
-          published: row.published,
-          createdAt: row.createdAt,
-          updatedAt: row.updatedAt,
-          author: {
-            id: row.authorId!,
-            firstName: row.authorFirstName!,
-            lastName: row.authorLastName!,
-            image: row.authorImage
-              ? this.filesService.resolve(row.authorImage)
-              : null,
-            bio: row.authorBio,
-          },
-          category: row.categoryId
-            ? {
-                id: row.categoryId!,
-                name: row.categoryName!,
-              }
-            : undefined,
-          tags: [],
-        });
-      }
-      if (row.tagId) {
-        postsMap.get(row.id)?.tags.push({
-          id: row.tagId,
-          name: row.tagName!,
-        });
-      }
+        "=",
+        filters.published,
+      );
     }
-
-    return Array.from(postsMap.values());
-  }
-
-  async getAllPosts(filters: PostFiltersDto): Promise<PostDto[]> {
-    let postIdsQuery = this.db
-      .selectFrom("BlogPost")
-      .select("BlogPost.id")
-      .where("BlogPost.published", "=", true)
-      .leftJoin("Category", "BlogPost.categoryId", "Category.id");
 
     if (filters.search) {
       postIdsQuery = postIdsQuery.where((eb) =>
@@ -166,6 +100,10 @@ export class BlogService {
       );
     }
 
+    if (filters.authorId) {
+      postIdsQuery = postIdsQuery.where("authorId", "=", filters.authorId);
+    }
+
     const categories = filters.categories
       ? Array.isArray(filters.categories)
         ? filters.categories
@@ -173,7 +111,11 @@ export class BlogService {
       : [];
 
     if (categories.length > 0) {
-      postIdsQuery = postIdsQuery.where("Category.id", "in", categories);
+      postIdsQuery = postIdsQuery.where(
+        "BlogPost.categoryId",
+        "in",
+        categories,
+      );
     }
 
     const tags = filters.tags
@@ -193,13 +135,25 @@ export class BlogService {
       );
     }
 
+    const total = await postIdsQuery
+      .select(({ fn }) => [fn.count("BlogPost.id").as("count")])
+      .executeTakeFirstOrThrow();
+
+    const pageSize = filters.limit ?? 20;
+    const offset = filters.offset ?? 20;
+
     const postIds = await postIdsQuery
+      .select("BlogPost.id")
       .orderBy("BlogPost.updatedAt", "desc")
-      .limit(filters.limit ?? 20)
+      .limit(pageSize)
+      .offset(offset)
       .execute();
 
     if (postIds.length === 0) {
-      return [];
+      return {
+        page: [],
+        total: Number(total.count),
+      };
     }
 
     const rows = await this.db
@@ -275,7 +229,10 @@ export class BlogService {
       }
     }
 
-    return Array.from(postsMap.values());
+    return {
+      page: Array.from(postsMap.values()),
+      total: Number(total.count),
+    };
   }
 
   async getPost(id: string): Promise<PostDto | null> {

@@ -236,6 +236,10 @@ export interface components {
       category?: components["schemas"]["CategoryDto"];
       tags: components["schemas"]["TagDto"][];
     };
+    PostsDto: {
+      page: components["schemas"]["PostDto"][];
+      total: number;
+    };
     UpdateBlogPostDto: {
       title?: string;
       content?: Record<string, never>;
@@ -406,7 +410,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["PostDto"][];
+          "application/json": components["schemas"]["PostsDto"];
         };
       };
     };
@@ -418,6 +422,7 @@ export interface operations {
         tags?: number[];
         categories?: number[];
         limit?: number;
+        offset?: number;
       };
       header?: never;
       path?: never;
@@ -430,7 +435,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["PostDto"][];
+          "application/json": components["schemas"]["PostsDto"];
         };
       };
     };

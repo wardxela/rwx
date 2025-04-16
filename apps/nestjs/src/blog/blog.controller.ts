@@ -18,7 +18,7 @@ import { SessionGuard } from "src/auth/guards/session.guard";
 import { BlogService } from "./blog.service";
 import { CreatePostDto } from "./dto/create-post.dto";
 import { PostFiltersDto } from "./dto/post-filters.dto";
-import { PostDto } from "./dto/post.dto";
+import { PostDto, PostsDto } from "./dto/post.dto";
 import { UpdateBlogPostDto } from "./dto/update-blog-post.dto";
 
 @Controller("blog")
@@ -38,20 +38,31 @@ export class BlogController {
   @Get("my-posts")
   @Roles(["INSTRUCTOR"])
   @UseGuards(SessionGuard)
-  async getMyPosts(@Req() req: Request): Promise<PostDto[]> {
-    return this.service.getPostsByAuthor(req.user!.id);
+  async getMyPosts(@Req() req: Request): Promise<PostsDto> {
+    return this.service.getPosts({
+      authorId: req.user!.id,
+    });
   }
 
   @Get("posts")
-  async getAllPosts(@Query() filters: PostFiltersDto): Promise<PostDto[]> {
-    return this.service.getAllPosts(filters);
+  async getAllPosts(@Query() filters: PostFiltersDto): Promise<PostsDto> {
+    return this.service.getPosts({
+      ...filters,
+      published: true,
+    });
   }
 
   @Get("posts/:id")
-  async getPost(@Param("id") id: string): Promise<PostDto> {
+  async getPost(
+    @Req() req: Request,
+    @Param("id") id: string,
+  ): Promise<PostDto> {
     const post = await this.service.getPost(id);
     if (!post) {
       throw new NotFoundException(`Post with id ${id} not found`);
+    }
+    if (!post.published && post.author.id !== req?.user?.id) {
+      throw new ForbiddenException("The post is not available yet");
     }
     return post;
   }

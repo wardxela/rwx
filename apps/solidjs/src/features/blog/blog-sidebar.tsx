@@ -46,6 +46,7 @@ export const BlogSidebar = () => {
       setSearchParams({
         categories: selectedCategories(),
         tags: selectedTags(),
+        offset: 0,
       });
     }
   }, 300);
@@ -94,7 +95,7 @@ function RecentPosts() {
             </For>
           }
         >
-          <For each={posts()}>
+          <For each={posts()?.page}>
             {(post) => (
               <li>
                 <a href={`/blog/${post.id}`} class="group flex gap-4">

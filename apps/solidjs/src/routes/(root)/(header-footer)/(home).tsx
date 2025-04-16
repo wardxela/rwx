@@ -324,7 +324,7 @@ const RecentPosts = () => {
           </For>
         }
       >
-        <For each={posts()}>
+        <For each={posts()?.page}>
           {(post) => (
             <PostLink
               link={`/blog/${post.id}`}

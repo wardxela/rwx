@@ -7,6 +7,7 @@ import { AppService } from "./app.service";
 import { AuthModule } from "./auth/auth.module";
 import { BlogModule } from "./blog/blog.module";
 import { CategoriesModule } from "./categories/categories.module";
+import { CommonModule } from "./common/common.module";
 import { ConfigModule } from "./config/config.module";
 import { ConfigService } from "./config/config.service";
 import { FilesModule } from "./files/files.module";
@@ -33,6 +34,7 @@ import { UsersModule } from "./users/users.module";
     CategoriesModule,
     TagsModule,
     FilesModule,
+    CommonModule,
   ],
   providers: [AppService],
 })

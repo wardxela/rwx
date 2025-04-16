@@ -8,12 +8,19 @@ import { TextField, TextFieldInput } from "@rwx/ui/components/text-field";
 import { Toggle } from "@rwx/ui/components/toggle";
 import { debounce } from "@solid-primitives/scheduled";
 import { createAsync, useSearchParams } from "@solidjs/router";
-import { For, Show, Suspense, createSignal } from "solid-js";
+import { clientOnly } from "@solidjs/start";
+import { For, Show, Suspense, createEffect, createSignal } from "solid-js";
 import { z } from "zod";
 import { BlogSidebar } from "~/features/blog/blog-sidebar";
 import { PostLink, PostLinkSkeleton } from "~/features/blog/post-link";
 import { SiteTitle } from "~/shared/components/site-title";
 import { getPosts } from "~/shared/queries";
+
+const BlogPagination = clientOnly(() =>
+  import("~/features/blog/pagination").then((module) => ({
+    default: module.BlogPagination,
+  })),
+);
 
 const [isGridView, setIsGridView] = createSignal(true);
 
@@ -21,10 +28,26 @@ const querySchema = z.object({
   search: z.string().optional().catch(undefined),
   categories: z.array(z.coerce.number()).optional().catch(undefined),
   tags: z.array(z.coerce.number()).optional().catch(undefined),
+  offset: z.coerce.number().optional().catch(undefined),
 });
+
+const offsetSchema = z.coerce
+  .number()
+  .transform((value) => Math.floor(value / pageSize) + 1);
+
+const pageSize = 8;
 
 export default function Page() {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const updateFilters = debounce(
+    (...args: Parameters<typeof setSearchParams>) => setSearchParams(...args),
+    300,
+  );
+
+  const [currentPage, setCurrentPage] = createSignal<number>(
+    offsetSchema.safeParse(searchParams.offset)?.data ?? 0,
+  );
 
   const validatedSearchParams = () => {
     const result = querySchema.safeParse({
@@ -39,6 +62,7 @@ export default function Page() {
         : searchParams.tags
           ? [searchParams.tags]
           : undefined,
+      offset: searchParams.offset,
     });
     if (!result.success) {
       return undefined;
@@ -46,12 +70,18 @@ export default function Page() {
     return result.data;
   };
 
-  const posts = createAsync(() => getPosts(validatedSearchParams()));
-
-  const setSearch = debounce(
-    (message: string) => setSearchParams({ search: message }),
-    300,
+  const posts = createAsync(() =>
+    getPosts({
+      ...validatedSearchParams(),
+      limit: pageSize,
+    }),
   );
+
+  const pagesCount = () => Math.ceil((posts()?.total ?? 0) / pageSize);
+
+  createEffect(() => {
+    setCurrentPage(offsetSchema.safeParse(searchParams.offset)?.data ?? 0);
+  });
 
   return (
     <>
@@ -68,7 +98,9 @@ export default function Page() {
               }}
               type="search"
               placeholder="Поиск"
-              onInput={(e) => setSearch(e.currentTarget.value)}
+              onInput={(e) =>
+                updateFilters({ offset: 0, search: e.currentTarget.value })
+              }
             />
           </TextField>
           <Toggle
@@ -149,22 +181,19 @@ export default function Page() {
         </div>
       </div>
       <div
-        class="grid gap-4"
+        class="mb-10 grid gap-4"
         classList={{
           "grid-cols-[repeat(auto-fill,minmax(260px,1fr))]": isGridView(),
         }}
       >
         <Suspense
           fallback={
-            <>
-              <PostLinkSkeleton />
-              <PostLinkSkeleton />
-              <PostLinkSkeleton />
-              <PostLinkSkeleton />
-            </>
+            <For each={Array.from({ length: 4 })}>
+              {() => <PostLinkSkeleton />}
+            </For>
           }
         >
-          <For each={posts()}>
+          <For each={posts()?.page}>
             {(post) => (
               <PostLink
                 link={`/blog/${post.id}`}
@@ -177,6 +206,20 @@ export default function Page() {
           </For>
         </Suspense>
       </div>
+      <Suspense>
+        <Show when={pagesCount() > 1}>
+          <div class="mt-auto flex justify-center">
+            <BlogPagination
+              count={pagesCount()}
+              page={currentPage()}
+              onPageChange={(page) => {
+                setCurrentPage(page);
+                updateFilters({ offset: (page - 1) * pageSize });
+              }}
+            />
+          </div>
+        </Show>
+      </Suspense>
     </>
   );
 }

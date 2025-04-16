@@ -114,7 +114,7 @@ export default function Page() {
         }
       >
         <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
-          <For each={posts()}>
+          <For each={posts()?.page}>
             {(post) => (
               <PostLink
                 link={`/author/blog/${post.id}`}

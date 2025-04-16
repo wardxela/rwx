@@ -16,12 +16,12 @@ export class PostFiltersDto {
   @Type(() => Number)
   @IsNumber({}, { each: true })
   @IsOptional()
-  tags?: number | number[];
+  tags?: number[];
 
   @Type(() => Number)
   @IsNumber({}, { each: true })
   @IsOptional()
-  categories?: number | number[];
+  categories?: number[];
 
   @Type(() => Number)
   @IsNumber()
@@ -29,4 +29,15 @@ export class PostFiltersDto {
   @Max(20)
   @IsOptional()
   limit?: number = 20;
+
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  offset?: number = 0;
+}
+
+export interface PostHiddenFilters {
+  authorId?: string;
+  published?: boolean;
 }

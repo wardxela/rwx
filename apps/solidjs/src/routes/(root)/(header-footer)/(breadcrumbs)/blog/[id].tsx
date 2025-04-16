@@ -23,8 +23,12 @@ export default function Page(props: RouteSectionProps) {
     if (!json) {
       return "";
     }
-    // @ts-expect-error It is OutputData
-    return edjsParser.parse(json);
+    try {
+      // @ts-expect-error It is OutputData
+      return edjsParser.parse(json);
+    } catch {
+      return "Запись в разработке...";
+    }
   };
 
   return (
