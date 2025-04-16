@@ -1,17 +1,72 @@
 import { Button } from "@rwx/ui/components/button";
 import { Skeleton } from "@rwx/ui/components/skeleton";
 import { debounce } from "@solid-primitives/scheduled";
-import { createAsync, useSearchParams } from "@solidjs/router";
+import {
+  createAsync,
+  useMatch,
+  useNavigate,
+  useSearchParams,
+} from "@solidjs/router";
 import type { JSX, ParentComponent } from "solid-js";
 import { For, Show, Suspense, createEffect, createSignal } from "solid-js";
 import { getCategories, getPosts, getTags } from "~/shared/queries";
 
 export const BlogSidebar = () => {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const blogMatch = useMatch(() => "/blog");
+
+  const [selectedCategories, setSelectedCategories] = createSignal<number[]>(
+    Array.isArray(searchParams.categories)
+      ? searchParams.categories.map(Number)
+      : searchParams.categories
+        ? [Number(searchParams.categories)]
+        : [],
+  );
+  const [selectedTags, setSelectedTags] = createSignal<number[]>(
+    Array.isArray(searchParams.tags)
+      ? searchParams.tags.map(Number)
+      : searchParams.tags
+        ? [Number(searchParams.tags)]
+        : [],
+  );
+
+  const updateFilters = debounce(() => {
+    if (!blogMatch()) {
+      const params = new URLSearchParams();
+      for (const category of selectedCategories()) {
+        params.append("categories", category.toString());
+      }
+      for (const tag of selectedTags()) {
+        params.append("tags", tag.toString());
+      }
+      navigate(`/blog?${params.toString()}`);
+    } else {
+      setSearchParams({
+        categories: selectedCategories(),
+        tags: selectedTags(),
+      });
+    }
+  }, 300);
+
   return (
     <div class="space-y-7">
-      <Categories />
+      <CategoriesFilters
+        selected={selectedCategories()}
+        onChange={(updated) => {
+          setSelectedCategories(updated);
+          updateFilters();
+        }}
+      />
       <RecentPosts />
-      <Tags />
+      <TagsFilters
+        selected={selectedTags()}
+        onChange={(updated) => {
+          setSelectedTags(updated);
+          updateFilters();
+        }}
+      />
     </div>
   );
 };
@@ -61,26 +116,14 @@ function RecentPosts() {
   );
 }
 
-function Categories() {
-  const [searchParams, setSearchParams] = useSearchParams();
+interface CategoriesFiltersProps {
+  selected: number[];
+  onChange: (categories: number[]) => void;
+}
+
+function CategoriesFilters(props: CategoriesFiltersProps) {
   const categories = createAsync(() => getCategories());
-  const [selectedCategories, setSelectedCategories] = createSignal<number[]>(
-    Array.isArray(searchParams.categories)
-      ? searchParams.categories.map(Number)
-      : searchParams.categories
-        ? [Number(searchParams.categories)]
-        : [],
-  );
   const [showAll, setShowAll] = createSignal(false);
-
-  const setCategories = debounce(
-    (categories: number[]) => setSearchParams({ categories }),
-    300,
-  );
-
-  createEffect(() => {
-    setCategories(selectedCategories());
-  });
 
   return (
     <div>
@@ -120,12 +163,12 @@ function Categories() {
             {(category) => (
               <li>
                 <CategoryCheckbox
-                  value={selectedCategories().includes(category.id)}
+                  value={props.selected.includes(category.id)}
                   onChange={(checked) => {
-                    setSelectedCategories((prev) =>
+                    props.onChange(
                       checked
-                        ? [...prev, category.id]
-                        : prev.filter((id) => id !== category.id),
+                        ? [...props.selected, category.id]
+                        : props.selected.filter((id) => id !== category.id),
                     );
                   }}
                   endText="?"
@@ -176,24 +219,14 @@ const CategoryCheckbox: ParentComponent<TagCheckboxProps> = (props) => {
   );
 };
 
-function Tags() {
-  const [searchParams, setSearchParams] = useSearchParams();
+interface TagsFiltersProps {
+  selected: number[];
+  onChange: (categories: number[]) => void;
+}
+
+function TagsFilters(props: TagsFiltersProps) {
   const tags = createAsync(() => getTags());
-
-  const [selectedTags, setSelectedTags] = createSignal<number[]>(
-    Array.isArray(searchParams.tags)
-      ? searchParams.tags.map(Number)
-      : searchParams.tags
-        ? [Number(searchParams.tags)]
-        : [],
-  );
   const [showAll, setShowAll] = createSignal(false);
-
-  const setTags = debounce((tags: number[]) => setSearchParams({ tags }), 300);
-
-  createEffect(() => {
-    setTags(selectedTags());
-  });
 
   return (
     <div>
@@ -213,12 +246,12 @@ function Tags() {
           <For each={showAll() ? tags() : tags()?.slice(0, 6)}>
             {(tag) => (
               <TagCheckbox
-                value={selectedTags().includes(tag.id)}
+                value={props.selected.includes(tag.id)}
                 onChange={(checked) => {
-                  setSelectedTags((prev) =>
+                  props.onChange(
                     checked
-                      ? [...prev, tag.id]
-                      : prev.filter((id) => id !== tag.id),
+                      ? [...props.selected, tag.id]
+                      : props.selected.filter((id) => id !== tag.id),
                   );
                 }}
                 endText="?"
