@@ -41,7 +41,9 @@ export async function createApp() {
   app.use(passport.session());
 
   app.enableCors({
-    origin: configService.get("NESTJS_CLIENT_URL"),
+    // origin: configService.get("NESTJS_CLIENT_URL"),
+    // TODO: Implement CORS correctly
+    origin: "*",
   });
 
   return app;

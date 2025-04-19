@@ -46,7 +46,7 @@ export default function Page() {
   );
 
   const [currentPage, setCurrentPage] = createSignal<number>(
-    offsetSchema.safeParse(searchParams.offset)?.data ?? 0,
+    offsetSchema.safeParse(searchParams.offset)?.data ?? 1,
   );
 
   const validatedSearchParams = () => {
@@ -80,7 +80,7 @@ export default function Page() {
   const pagesCount = () => Math.ceil((posts()?.total ?? 0) / pageSize);
 
   createEffect(() => {
-    setCurrentPage(offsetSchema.safeParse(searchParams.offset)?.data ?? 0);
+    setCurrentPage(offsetSchema.safeParse(searchParams.offset)?.data ?? 1);
   });
 
   return (
