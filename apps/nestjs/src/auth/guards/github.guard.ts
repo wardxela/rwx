@@ -3,7 +3,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { Request } from "express";
 
 @Injectable()
-export class YandexAuthGuard extends AuthGuard("yandex") {
+export class GithubGuard extends AuthGuard("github") {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const canActivate = (await super.canActivate(context)) as boolean;
     if (canActivate) {

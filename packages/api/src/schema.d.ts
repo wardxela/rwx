@@ -15,6 +15,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/auth/github": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["AuthController_loginGithub"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/auth/yandex/callback": {
     parameters: {
       query?: never;
@@ -23,6 +39,22 @@ export interface paths {
       cookie?: never;
     };
     get: operations["AuthController_callbackYandex"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/auth/github/callback": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["AuthController_callbackGithub"];
     put?: never;
     post?: never;
     delete?: never;
@@ -183,7 +215,7 @@ export interface components {
       id: string;
       firstName: string;
       lastName: string;
-      email: string;
+      email?: string | null;
       image: string | null;
       bio: string | null;
       roles: string[];
@@ -276,7 +308,41 @@ export interface operations {
       };
     };
   };
+  AuthController_loginGithub: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
   AuthController_callbackYandex: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  AuthController_callbackGithub: {
     parameters: {
       query?: never;
       header?: never;

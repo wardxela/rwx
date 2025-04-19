@@ -34,16 +34,18 @@ export class AuthService {
     if (user) {
       return user;
     }
-    const userWithTheSameEmail = await this.usersService.findByEmail(
-      providerUser.user.email,
-    );
-    if (userWithTheSameEmail) {
-      await this.usersService.connectAccount({
-        userId: userWithTheSameEmail.id,
-        provider: providerUser.provider,
-        providerId: providerUser.user.id,
-      });
-      return userWithTheSameEmail;
+    if (providerUser.user.email) {
+      const userWithTheSameEmail = await this.usersService.findByEmail(
+        providerUser.user.email,
+      );
+      if (userWithTheSameEmail) {
+        await this.usersService.connectAccount({
+          userId: userWithTheSameEmail.id,
+          provider: providerUser.provider,
+          providerId: providerUser.user.id,
+        });
+        return userWithTheSameEmail;
+      }
     }
     return this.usersService.createByProvider(providerUser);
   }

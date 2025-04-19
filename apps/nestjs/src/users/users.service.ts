@@ -11,7 +11,7 @@ export interface ProviderUserInfo {
     id: string;
     firstName: string;
     lastName: string;
-    email: string;
+    email?: string | null;
     avatar?: string;
   };
 }

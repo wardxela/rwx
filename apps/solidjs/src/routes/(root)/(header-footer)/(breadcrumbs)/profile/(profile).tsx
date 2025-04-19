@@ -21,8 +21,8 @@ import api from "~/shared/api";
 import { getMe, uploadFileAction } from "~/shared/queries";
 
 const UpdateUserSchema = z.object({
-  firstName: z.string().min(1).max(50).optional(),
-  lastName: z.string().min(1).max(50).optional(),
+  firstName: z.string().max(50).optional(),
+  lastName: z.string().max(50).optional(),
   bio: z.string().max(500).optional(),
   image: z.string().optional(),
 });
@@ -173,7 +173,7 @@ export default function Page() {
                 readonly
                 type="email"
                 placeholder="Email"
-                value={profile()?.email}
+                value={profile()?.email ?? "No email"}
               />
             </TextField>
           </div>

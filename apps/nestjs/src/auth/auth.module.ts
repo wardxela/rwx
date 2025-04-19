@@ -6,11 +6,18 @@ import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { SessionGuard } from "./guards/session.guard";
 import { PassportSerializer } from "./providers/passport.serializer";
+import { GithubStrategy } from "./strategies/github.strategy";
 import { YandexStrategy } from "./strategies/yandex.strategy";
 
 @Module({
   imports: [PassportModule, UsersModule],
-  providers: [AuthService, YandexStrategy, SessionGuard, PassportSerializer],
+  providers: [
+    AuthService,
+    YandexStrategy,
+    GithubStrategy,
+    SessionGuard,
+    PassportSerializer,
+  ],
   controllers: [AuthController],
   exports: [SessionGuard],
 })
