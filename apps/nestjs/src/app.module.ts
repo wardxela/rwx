@@ -10,6 +10,7 @@ import { CategoriesModule } from "./categories/categories.module";
 import { CommonModule } from "./common/common.module";
 import { ConfigModule } from "./config/config.module";
 import { ConfigService } from "./config/config.service";
+import { ContactsModule } from "./contacts/contacts.module";
 import { FilesModule } from "./files/files.module";
 import { TagsModule } from "./tags/tags.module";
 import { UsersModule } from "./users/users.module";
@@ -35,6 +36,7 @@ import { UsersModule } from "./users/users.module";
     TagsModule,
     FilesModule,
     CommonModule,
+    ContactsModule,
   ],
   providers: [AppService],
 })

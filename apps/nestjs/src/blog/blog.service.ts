@@ -140,7 +140,7 @@ export class BlogService {
       .executeTakeFirstOrThrow();
 
     const pageSize = filters.limit ?? 20;
-    const offset = filters.offset ?? 20;
+    const offset = filters.offset ?? 0;
 
     const postIds = await postIdsQuery
       .select("BlogPost.id")

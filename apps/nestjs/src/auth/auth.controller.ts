@@ -1,8 +1,9 @@
-import { Controller, Get, Res, UseGuards } from "@nestjs/common";
-import { Response as ExpressResponse } from "express";
+import { Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { Response as ExpressResponse, Request } from "express";
 import { ConfigService } from "src/config/config.service";
 
 import { GithubGuard } from "./guards/github.guard";
+import { SessionGuard } from "./guards/session.guard";
 import { YandexGuard } from "./guards/yandex.guard";
 
 @Controller("auth")
@@ -31,5 +32,15 @@ export class AuthController {
   @UseGuards(GithubGuard)
   callbackGithub(@Res() res: ExpressResponse) {
     res.redirect(this.configService.get("NESTJS_CLIENT_AUTH_CALLBACK_URL"));
+  }
+
+  @Post("logout")
+  @UseGuards(SessionGuard)
+  async logout(@Req() req: Request): Promise<boolean> {
+    return new Promise((res) => {
+      req.logOut(() => {
+        res(true);
+      });
+    });
   }
 }

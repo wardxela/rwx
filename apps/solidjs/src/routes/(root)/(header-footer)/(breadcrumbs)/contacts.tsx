@@ -5,14 +5,71 @@ import {
   TextFieldInput,
   TextFieldTextArea,
 } from "@rwx/ui/components/text-field";
+import { action, json, useSubmission } from "@solidjs/router";
+import { clientOnly } from "@solidjs/start";
+import { createEffect } from "solid-js";
+import { z } from "zod";
+import api from "~/shared/api";
+import { SiteTitle } from "~/shared/components/site-title";
+
+const Toast = clientOnly(() =>
+  import("~/shared/components/toast").then((module) => ({
+    default: module.Toast,
+  })),
+);
+
+const ContactMessageSchema = z.object({
+  name: z.string().nonempty().max(255),
+  email: z.string().email(),
+  message: z.string().min(25).max(500),
+});
+
+const contactAction = action(async (formData: FormData) => {
+  const validated = ContactMessageSchema.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+    message: formData.get("message"),
+  });
+  if (!validated.success) {
+    return json(
+      {
+        data: null,
+        errors: validated.error.formErrors.fieldErrors,
+      },
+      { revalidate: "nothing" },
+    );
+  }
+  await api.POST("/contacts", {
+    body: {
+      name: validated.data.name,
+      email: validated.data.email,
+      message: validated.data.message,
+    },
+  });
+  return json({
+    data: true,
+    errors: null,
+  });
+}, "contact");
 
 export default function Page() {
+  let formRef!: HTMLFormElement;
+
+  const submission = useSubmission(contactAction);
+
+  createEffect(() => {
+    if (submission.result?.data) {
+      formRef.reset();
+    }
+  });
+
   return (
     <>
+      <SiteTitle>Контакты</SiteTitle>
       <div class="container mt-15 mb-15">
         <div class="flex flex-col gap-8 lg:flex-row">
           <div>
-            <h1 class="mb-5 font-semibold text-3xl leading-10 sm:mb-7 sm:text-5xl">
+            <h1 class="mb-5 font-semibold text-xl leading-10 sm:text-3xl">
               Нужна встреча?
             </h1>
             <p class="max-w mb-4 max-w-md text-neutral-600 sm:text-lg">
@@ -106,32 +163,57 @@ export default function Page() {
           Ваш адрес электронной почты опубликован не будет. Поля, обязательные
           для заполнения, помечены *
         </div>
-        <form class="mb-10 grid grid-cols-1 gap-7 sm:grid-cols-2">
-          <TextField validationState="invalid">
-            <TextFieldInput
-              class="border-destructive"
-              type="text"
-              required
-              placeholder="Имя*"
-            />
-            <TextFieldErrorMessage>Обязательное поле</TextFieldErrorMessage>
+        <form
+          ref={formRef}
+          class="mb-10 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2"
+          action={contactAction}
+          method="post"
+        >
+          <TextField
+            validationState={
+              submission.result?.errors?.name ? "invalid" : "valid"
+            }
+          >
+            <TextFieldInput type="text" name="name" placeholder="Имя" />
+            <TextFieldErrorMessage>
+              {submission.result?.errors?.name}
+            </TextFieldErrorMessage>
           </TextField>
-          <TextField validationState="invalid">
-            <TextFieldInput
-              class="border-destructive"
-              type="email"
-              required
-              placeholder="Email*"
-            />
-            <TextFieldErrorMessage>Неверный формат почты</TextFieldErrorMessage>
+          <TextField
+            validationState={
+              submission.result?.errors?.email ? "invalid" : "valid"
+            }
+          >
+            <TextFieldInput type="email" name="email" placeholder="Email" />
+            <TextFieldErrorMessage>
+              {submission.result?.errors?.email}
+            </TextFieldErrorMessage>
           </TextField>
-          <TextField class="sm:col-span-2">
-            <TextFieldTextArea required placeholder="Комментарий*" />
+          <TextField
+            class="sm:col-span-2"
+            validationState={
+              submission.result?.errors?.message ? "invalid" : "valid"
+            }
+          >
+            <TextFieldTextArea name="message" placeholder="Сообщение" />
+            <TextFieldErrorMessage>
+              {submission.result?.errors?.message}
+            </TextFieldErrorMessage>
           </TextField>
           <div>
-            <Button>Отправить</Button>
+            <Button type="submit" disabled={submission.pending}>
+              Отправить
+            </Button>
           </div>
         </form>
+        <Toast
+          when={Boolean(submission.result?.errors)}
+          action={(toast) => toast.error("Не удалось отправить сообщение")}
+        />
+        <Toast
+          when={Boolean(submission.result?.data)}
+          action={(toast) => toast.success("Сообщение отправлено")}
+        />
       </div>
     </>
   );

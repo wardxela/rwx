@@ -11,6 +11,7 @@ import {
   action,
   createAsync,
   json,
+  redirect,
   useAction,
   useSubmission,
 } from "@solidjs/router";
@@ -34,7 +35,6 @@ const updateProfileAction = action(async (formData: FormData) => {
     bio: formData.get("bio") ?? undefined,
     image: formData.get("image") ?? undefined,
   });
-  console.log(data.error);
   if (!data.success) {
     return json({
       data: null,
@@ -55,11 +55,17 @@ const updateProfileAction = action(async (formData: FormData) => {
   );
 });
 
+const logoutAction = action(async () => {
+  await api.POST("/auth/logout");
+  return redirect("/");
+});
+
 export default function Page() {
   const profile = createAsync(() => getMe());
   const submission = useSubmission(updateProfileAction);
   const updateProfile = useAction(updateProfileAction);
   const uploadFile = useAction(uploadFileAction);
+  const logout = useAction(logoutAction);
 
   let fileInputRef!: HTMLInputElement;
   let firstNameRef!: HTMLInputElement;
@@ -189,8 +195,11 @@ export default function Page() {
             <TextFieldErrorMessage>{bioError()?.message}</TextFieldErrorMessage>
           </TextField>
         </div>
-        <div class="flex justify-end gap-x-4">
-          <Button variant="secondary" onClick={onReset}>
+        <div class="flex gap-x-4">
+          <Button class="mr-4" variant="ghost" type="button" onClick={logout}>
+            Выйти
+          </Button>
+          <Button class="ml-auto" variant="secondary" onClick={onReset}>
             Отменить
           </Button>
           <Button type="submit">Сохранить</Button>

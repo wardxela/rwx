@@ -20,7 +20,6 @@ import {
 } from "@solidjs/router";
 import { clientOnly } from "@solidjs/start";
 import { ErrorBoundary, Show, Suspense, createSignal } from "solid-js";
-import { toast } from "solid-sonner";
 import { z } from "zod";
 import { SelectCategory } from "~/features/categories/select-category";
 import { SelectTags } from "~/features/tags/select-tags";
@@ -32,6 +31,12 @@ import {
   getPosts,
   uploadFileAction,
 } from "~/shared/queries";
+
+const Toast = clientOnly(() =>
+  import("~/shared/components/toast").then((module) => ({
+    default: module.Toast,
+  })),
+);
 
 const Editor = clientOnly(() =>
   import("~/features/blog/editor").then((module) => ({
@@ -64,7 +69,10 @@ const updatePostAction = action(async (id: string, data: UpdatePostSchema) => {
   const validated = updatePostSchema.safeParse(data);
   if (!validated.success) {
     return json(
-      { errors: validated.error.formErrors.fieldErrors },
+      {
+        data: null,
+        errors: validated.error.formErrors.fieldErrors,
+      },
       { revalidate: "nothing" },
     );
   }
@@ -74,7 +82,10 @@ const updatePostAction = action(async (id: string, data: UpdatePostSchema) => {
     body: validated.data,
   });
   return json(
-    { errors: null },
+    {
+      data: true,
+      errors: null,
+    },
     {
       revalidate: [getPosts.key, getMyPosts.key, getPost.keyFor(id)],
     },
@@ -98,12 +109,6 @@ export default function Page(props: RouteSectionProps) {
       title: titleInputRef.value,
       excerpt: excerptInputRef.value,
       ...data,
-    }).then((response) => {
-      if (response.errors) {
-        toast("Не удалось обновить запись");
-      } else {
-        toast("Запись успешно обновлена");
-      }
     });
   };
 
@@ -318,6 +323,14 @@ export default function Page(props: RouteSectionProps) {
           </div>
         </div>
       </Suspense>
+      <Toast
+        when={Boolean(postSubmission.result?.errors)}
+        action={(toast) => toast.error("Не удалось обновить запись")}
+      />
+      <Toast
+        when={Boolean(postSubmission.result?.data)}
+        action={(toast) => toast.success("Запись успешно обновлена")}
+      />
     </ErrorBoundary>
   );
 }
