@@ -13,13 +13,13 @@
     "typecheck": "tsc --customConditions disable"
   },
   "dependencies": {
-    "openapi-fetch": "^0.13.5"
+    "openapi-fetch": "^0.13.7"
   },
   "devDependencies": {
-    "@nestjs/swagger": "^11.1.4",
+    "@nestjs/swagger": "^11.2.0",
     "@rwx/nestjs": "workspace:*",
     "@rwx/tsconfig": "workspace:*",
-    "openapi-typescript": "^7.6.1",
-    "tsx": "^4.19.3"
+    "openapi-typescript": "^7.7.1",
+    "tsx": "^4.19.4"
   }
 }

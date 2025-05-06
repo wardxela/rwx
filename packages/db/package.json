@@ -13,10 +13,10 @@
     "migrate:dev": "prisma migrate dev"
   },
   "devDependencies": {
-    "kysely": "^0.28.1",
-    "pg": "^8.14.1",
-    "prisma": "^6.6.0",
+    "kysely": "^0.28.2",
+    "pg": "^8.15.6",
+    "prisma": "^6.7.0",
     "prisma-kysely": "^1.8.0",
-    "tsx": "^4.19.3"
+    "tsx": "^4.19.4"
   }
 }
