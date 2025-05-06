@@ -53,12 +53,12 @@ const updateProfileAction = action(async (formData: FormData) => {
       revalidate: getMe.key,
     },
   );
-});
+}, "/users/me:post");
 
 const logoutAction = action(async () => {
   await api.POST("/auth/logout");
   return redirect("/");
-});
+}, "/auth/logout:post");
 
 export default function Page() {
   const profile = createAsync(() => getMe());

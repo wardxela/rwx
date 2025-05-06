@@ -26,12 +26,7 @@ import {
   TextFieldLabel,
   TextFieldTextArea,
 } from "#ui/text-field";
-
-const Toast = clientOnly(() =>
-  import("#ui/toast").then((module) => ({
-    default: module.Toast,
-  })),
-);
+import { Toast } from "#ui/toast";
 
 const Editor = clientOnly(() =>
   import("#features/blog/editor").then((module) => ({
@@ -46,7 +41,7 @@ const deletePostAction = action(async (id: string) => {
   return redirect("/author/blog", {
     revalidate: [getPosts.key, getMyPosts.key],
   });
-});
+}, "/blog/posts/{id}:delete");
 
 const updatePostSchema = z.object({
   title: z.string().min(3).max(100).optional(),
@@ -85,7 +80,7 @@ const updatePostAction = action(async (id: string, data: UpdatePostSchema) => {
       revalidate: [getPosts.key, getMyPosts.key, getPost.keyFor(id)],
     },
   );
-});
+}, "/blog/posts/{id}:put");
 
 export default function Page(props: RouteSectionProps) {
   const postId = () => props.params.id!;

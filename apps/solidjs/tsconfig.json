@@ -7,10 +7,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "allowSyntheticDefaultImports": true,
-    "types": ["vinxi/types/client"],
-    "paths": {
-      "@kobalte/core/*": ["../../node_modules/@kobalte/core/dist/*"]
-    }
+    "types": ["vinxi/types/client"]
   },
   "exclude": ["node_modules"]
 }

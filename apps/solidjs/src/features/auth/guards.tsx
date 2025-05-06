@@ -1,4 +1,3 @@
-// import { Skeleton } from "#ui/skeleton";
 import { createAsync, useNavigate } from "@solidjs/router";
 import {
   type Component,
@@ -9,14 +8,7 @@ import {
   createEffect,
 } from "solid-js";
 import { getMe } from "#queries";
-
-import { clientOnly } from "@solidjs/start";
-
-const Skeleton = clientOnly(() =>
-  import("#ui/skeleton").then((module) => ({
-    default: module.Skeleton,
-  })),
-);
+import { Skeleton } from "#ui/skeleton";
 
 export const Authenticated: ParentComponent<Pick<AuthShowProps, "roles">> = (
   props,

@@ -1,5 +1,4 @@
 import { action, json, useSubmission } from "@solidjs/router";
-import { clientOnly } from "@solidjs/start";
 import { createEffect } from "solid-js";
 import { z } from "zod";
 import api from "#api";
@@ -11,12 +10,7 @@ import {
   TextFieldInput,
   TextFieldTextArea,
 } from "#ui/text-field";
-
-const Toast = clientOnly(() =>
-  import("#ui/toast").then((module) => ({
-    default: module.Toast,
-  })),
-);
+import { Toast } from "#ui/toast";
 
 const ContactMessageSchema = z.object({
   name: z.string().nonempty().max(255),
@@ -50,7 +44,7 @@ const contactAction = action(async (formData: FormData) => {
     data: true,
     errors: null,
   });
-}, "contact");
+}, "/contacts:post");
 
 export default function Page() {
   let formRef!: HTMLFormElement;
