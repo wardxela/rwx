@@ -1,7 +1,7 @@
 import type { RouteSectionProps } from "@solidjs/router";
 
-import { Footer } from "~/widgets/footer";
-import { Header } from "~/widgets/header";
+import { Footer } from "#widgets/footer";
+import { Header } from "#widgets/header";
 
 export default function Layout(props: RouteSectionProps) {
   return (

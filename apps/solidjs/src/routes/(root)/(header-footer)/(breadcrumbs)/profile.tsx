@@ -1,15 +1,15 @@
 import type { RouteSectionProps } from "@solidjs/router";
 import { clientOnly } from "@solidjs/start";
-import { Authenticated } from "~/features/auth/guards";
+import { Authenticated } from "#features/auth/guards";
 
 const SidebarProvider = clientOnly(() =>
-  import("@rwx/ui/components/sidebar").then((module) => ({
+  import("#ui/sidebar").then((module) => ({
     default: module.SidebarProvider,
   })),
 );
 
 const UserSidebar = clientOnly(() =>
-  import("~/widgets/user/sidebar").then((module) => ({
+  import("#widgets/user/sidebar").then((module) => ({
     default: module.UserSidebar,
   })),
 );

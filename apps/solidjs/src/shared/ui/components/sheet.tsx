@@ -1,11 +1,11 @@
 import type { Component, ComponentProps, JSX, ValidComponent } from "solid-js";
 import { splitProps } from "solid-js";
 
-import * as SheetPrimitive from "@kobalte/core/src/dialog";
-import type { PolymorphicProps } from "@kobalte/core/src/polymorphic";
+import * as SheetPrimitive from "@kobalte/core/dialog";
+import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 import { type VariantProps, cva } from "class-variance-authority";
 
-import { cn } from "~/lib/utils";
+import { cn } from "#ui/utils";
 
 const Sheet = SheetPrimitive.Root;
 const SheetTrigger = SheetPrimitive.Trigger;

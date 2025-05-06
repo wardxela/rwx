@@ -1,14 +1,4 @@
 import type EditorJS from "@editorjs/editorjs";
-import { Badge } from "@rwx/ui/components/badge";
-import { Button } from "@rwx/ui/components/button";
-import { Label } from "@rwx/ui/components/label";
-import {
-  TextField,
-  TextFieldErrorMessage,
-  TextFieldInput,
-  TextFieldLabel,
-  TextFieldTextArea,
-} from "@rwx/ui/components/text-field";
 import {
   type RouteSectionProps,
   action,
@@ -21,25 +11,30 @@ import {
 import { clientOnly } from "@solidjs/start";
 import { ErrorBoundary, Show, Suspense, createSignal } from "solid-js";
 import { z } from "zod";
-import { SelectCategory } from "~/features/categories/select-category";
-import { SelectTags } from "~/features/tags/select-tags";
-import api from "~/shared/api";
-import { NotFound } from "~/shared/components/not-found";
+import api from "#api";
+import { SelectCategory } from "#features/categories/select-category";
+import { NotFound } from "#features/site/not-found";
+import { SelectTags } from "#features/tags/select-tags";
+import { getMyPosts, getPost, getPosts, uploadFileAction } from "#queries";
+import { Badge } from "#ui/badge";
+import { Button } from "#ui/button";
+import { Label } from "#ui/label";
 import {
-  getMyPosts,
-  getPost,
-  getPosts,
-  uploadFileAction,
-} from "~/shared/queries";
+  TextField,
+  TextFieldErrorMessage,
+  TextFieldInput,
+  TextFieldLabel,
+  TextFieldTextArea,
+} from "#ui/text-field";
 
 const Toast = clientOnly(() =>
-  import("~/shared/components/toast").then((module) => ({
+  import("#ui/toast").then((module) => ({
     default: module.Toast,
   })),
 );
 
 const Editor = clientOnly(() =>
-  import("~/features/blog/editor").then((module) => ({
+  import("#features/blog/editor").then((module) => ({
     default: module.Editor,
   })),
 );

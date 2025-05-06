@@ -1,13 +1,13 @@
+import { createAsync } from "@solidjs/router";
+import { type Component, Suspense } from "solid-js";
+import { getCategories } from "#queries";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@rwx/ui/components/select";
-import { createAsync } from "@solidjs/router";
-import { type Component, Suspense } from "solid-js";
-import { getCategories } from "~/shared/queries";
+} from "#ui/select";
 
 export interface CategoryOption {
   id: number;

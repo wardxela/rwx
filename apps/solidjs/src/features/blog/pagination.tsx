@@ -5,7 +5,7 @@ import {
   PaginationItems,
   PaginationNext,
   PaginationPrevious,
-} from "@rwx/ui/components/pagination";
+} from "#ui/pagination";
 
 export type BlogPaginationProps = {
   count: number;

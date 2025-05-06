@@ -1,3 +1,5 @@
+import { A, useMatch } from "@solidjs/router";
+import { For } from "solid-js";
 import {
   Sidebar,
   SidebarContent,
@@ -8,9 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@rwx/ui/components/sidebar";
-import { A, useMatch } from "@solidjs/router";
-import { For } from "solid-js";
+} from "#ui/sidebar";
 
 const items = [
   {

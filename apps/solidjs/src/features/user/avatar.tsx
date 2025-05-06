@@ -1,8 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@rwx/ui/components/avatar";
-import { Skeleton } from "@rwx/ui/components/skeleton";
 import { createAsync } from "@solidjs/router";
 import { type Component, type ComponentProps, Suspense } from "solid-js";
-import { getMe } from "~/shared/queries";
+import { getMe } from "#queries";
+import { Avatar, AvatarFallback, AvatarImage } from "#ui/avatar";
+import { Skeleton } from "#ui/skeleton";
 
 export const UserAvatar: Component<ComponentProps<typeof Avatar>> = (props) => {
   const user = createAsync(() => getMe());

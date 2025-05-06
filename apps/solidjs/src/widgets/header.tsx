@@ -2,8 +2,8 @@ import { A, useLocation } from "@solidjs/router";
 import type { Component, ParentComponent } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { Portal } from "solid-js/web";
-import { AuthShow } from "~/features/auth/guards";
-import { UserAvatar } from "~/features/user/avatar";
+import { AuthShow } from "#features/auth/guards";
+import { UserAvatar } from "#features/user/avatar";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = createSignal(false);

@@ -1,11 +1,11 @@
-import * as ButtonPrimitive from "@kobalte/core/src/button";
-import type { PolymorphicProps } from "@kobalte/core/src/polymorphic";
+import * as ButtonPrimitive from "@kobalte/core/button";
+import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import type { JSX, ValidComponent } from "solid-js";
 import { splitProps } from "solid-js";
 
-import { cn } from "~/lib/utils";
+import { cn } from "#ui/utils";
 
 const buttonVariants = cva(
   "ring-offset-background focus-visible:ring-ring inline-flex cursor-pointer items-center justify-center font-medium transition-colors select-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",

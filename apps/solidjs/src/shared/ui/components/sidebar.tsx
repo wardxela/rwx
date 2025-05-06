@@ -24,14 +24,14 @@ import { Polymorphic } from "@kobalte/core";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 
-import type { ButtonProps } from "~/components/button";
-import { Button } from "~/components/button";
-import { Separator } from "~/components/separator";
-import { Sheet, SheetContent } from "~/components/sheet";
-import { Skeleton } from "~/components/skeleton";
-import { TextField, TextFieldInput } from "~/components/text-field";
-import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
-import { cn } from "~/lib/utils";
+import { cn } from "#ui/utils";
+import type { ButtonProps } from "./button";
+import { Button } from "./button";
+import { Separator } from "./separator";
+import { Sheet, SheetContent } from "./sheet";
+import { Skeleton } from "./skeleton";
+import { TextField, TextFieldInput } from "./text-field";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 
 const MOBILE_BREAKPOINT = 768;
 const SIDEBAR_COOKIE_NAME = "sidebar:state";

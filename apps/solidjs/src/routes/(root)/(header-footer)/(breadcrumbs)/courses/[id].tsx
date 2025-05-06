@@ -1,17 +1,12 @@
-import { Button } from "@rwx/ui/components/button";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@rwx/ui/components/tabs";
+import { A } from "@solidjs/router";
+import { Button } from "#ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 import {
   TextField,
   TextFieldErrorMessage,
   TextFieldInput,
   TextFieldTextArea,
-} from "@rwx/ui/components/text-field";
-import { A } from "@solidjs/router";
+} from "#ui/text-field";
 
 export default function Page() {
   return (

@@ -1,4 +1,4 @@
-import { Skeleton } from "@rwx/ui/components/skeleton";
+// import { Skeleton } from "#ui/skeleton";
 import { createAsync, useNavigate } from "@solidjs/router";
 import {
   type Component,
@@ -8,7 +8,15 @@ import {
   Suspense,
   createEffect,
 } from "solid-js";
-import { getMe } from "~/shared/queries";
+import { getMe } from "#queries";
+
+import { clientOnly } from "@solidjs/start";
+
+const Skeleton = clientOnly(() =>
+  import("#ui/skeleton").then((module) => ({
+    default: module.Skeleton,
+  })),
+);
 
 export const Authenticated: ParentComponent<Pick<AuthShowProps, "roles">> = (
   props,

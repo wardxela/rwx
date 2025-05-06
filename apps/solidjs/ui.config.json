@@ -7,7 +7,7 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "~/components",
-    "utils": "~/lib/utils"
+    "components": "#ui/components",
+    "utils": "#ui/utils"
   }
 }

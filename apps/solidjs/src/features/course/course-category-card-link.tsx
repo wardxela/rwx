@@ -1,7 +1,8 @@
-import { cn } from "@rwx/ui/lib/utils";
+import { cn } from "#ui/utils";
+
 import type { Component } from "solid-js";
 
-import { getRussianOrdinalPluralWord } from "~/shared/utils/intl";
+import { getRussianOrdinalPluralWord } from "#intl";
 
 export interface CourseCategoryLinkProps {
   class?: string | undefined;

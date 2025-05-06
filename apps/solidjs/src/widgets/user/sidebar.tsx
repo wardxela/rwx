@@ -1,3 +1,6 @@
+import { A, useMatch } from "@solidjs/router";
+import { For } from "solid-js";
+import { AuthShow } from "#features/auth/guards";
 import {
   Sidebar,
   SidebarContent,
@@ -7,10 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@rwx/ui/components/sidebar";
-import { A, useMatch } from "@solidjs/router";
-import { For } from "solid-js";
-import { AuthShow } from "~/features/auth/guards";
+} from "#ui/sidebar";
 
 const links = [
   {

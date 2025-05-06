@@ -5,8 +5,8 @@
  3. Each lesson has its own dedicated page with Markdown editor.
  */
 
-import { Button } from "@rwx/ui/components/button";
 import { For, createSignal } from "solid-js";
+import { Button } from "#ui/button";
 
 type Module = {
   id: string;

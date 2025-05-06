@@ -1,23 +1,19 @@
-import { Button } from "@rwx/ui/components/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTrigger,
-} from "@rwx/ui/components/drawer";
-import { TextField, TextFieldInput } from "@rwx/ui/components/text-field";
-import { Toggle } from "@rwx/ui/components/toggle";
 import { debounce } from "@solid-primitives/scheduled";
 import { createAsync, useSearchParams } from "@solidjs/router";
 import { clientOnly } from "@solidjs/start";
 import { For, Show, Suspense, createEffect, createSignal } from "solid-js";
 import { z } from "zod";
-import { BlogSidebar } from "~/features/blog/blog-sidebar";
-import { PostLink, PostLinkSkeleton } from "~/features/blog/post-link";
-import { SiteTitle } from "~/shared/components/site-title";
-import { getPosts } from "~/shared/queries";
+import { BlogSidebar } from "#features/blog/blog-sidebar";
+import { PostLink, PostLinkSkeleton } from "#features/blog/post-link";
+import { SiteTitle } from "#features/site/site-title";
+import { getPosts } from "#queries";
+import { Button } from "#ui/button";
+import { Drawer, DrawerContent, DrawerTrigger } from "#ui/drawer";
+import { TextField, TextFieldInput } from "#ui/text-field";
+import { Toggle } from "#ui/toggle";
 
 const BlogPagination = clientOnly(() =>
-  import("~/features/blog/pagination").then((module) => ({
+  import("#features/blog/pagination").then((module) => ({
     default: module.BlogPagination,
   })),
 );

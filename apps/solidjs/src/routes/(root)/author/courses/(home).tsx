@@ -1,5 +1,5 @@
-import { Button } from "@rwx/ui/components/button";
-import { CourseCardLink } from "~/features/course/course-card-link";
+import { CourseCardLink } from "#features/course/course-card-link";
+import { Button } from "#ui/button";
 
 export default function Page() {
   return (

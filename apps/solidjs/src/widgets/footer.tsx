@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 
-import { cn } from "@rwx/ui/lib/utils";
+import { cn } from "#ui/utils";
 
 export interface FooterProps {
   class?: string;

@@ -3,8 +3,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@rwx/ui/components/accordion";
-import { Button } from "@rwx/ui/components/button";
+} from "#ui/accordion";
+import { Button } from "#ui/button";
 
 export default function Page() {
   return (

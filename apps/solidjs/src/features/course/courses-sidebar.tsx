@@ -1,4 +1,3 @@
-import { Checkbox } from "@rwx/ui/components/checkbox";
 import {
   type Component,
   For,
@@ -6,6 +5,7 @@ import {
   type ParentComponent,
   createUniqueId,
 } from "solid-js";
+import { Checkbox } from "#ui/checkbox";
 
 export const CoursesSidebar = () => {
   return (

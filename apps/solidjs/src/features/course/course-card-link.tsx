@@ -1,10 +1,7 @@
 import type { Component } from "solid-js";
 import { Match, Show, Switch } from "solid-js";
 
-import {
-  formatTimeDelta,
-  getRussianOrdinalPluralWord,
-} from "~/shared/utils/intl";
+import { formatTimeDelta, getRussianOrdinalPluralWord } from "#intl";
 
 export interface CourseCardLinkProps {
   href: string;

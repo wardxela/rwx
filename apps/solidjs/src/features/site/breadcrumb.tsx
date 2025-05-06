@@ -9,7 +9,7 @@ import {
   BreadcrumbList,
   Breadcrumb as BreadcrumbOriginal,
   BreadcrumbSeparator,
-} from "@rwx/ui/components/breadcrumb";
+} from "#ui/breadcrumb";
 
 export const Breadcrumb: Component = () => {
   const location = useLocation();

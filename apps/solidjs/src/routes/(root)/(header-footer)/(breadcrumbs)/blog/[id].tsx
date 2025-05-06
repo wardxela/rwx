@@ -3,13 +3,6 @@ import type { Component } from "solid-js";
 import { ErrorBoundary, For, Show, Suspense, createEffect } from "solid-js";
 
 import type { paths } from "@rwx/api";
-import { Avatar, AvatarFallback, AvatarImage } from "@rwx/ui/components/avatar";
-import { Button } from "@rwx/ui/components/button";
-import {
-  TextField,
-  TextFieldErrorMessage,
-  TextFieldTextArea,
-} from "@rwx/ui/components/text-field";
 import {
   type RouteSectionProps,
   action,
@@ -18,20 +11,19 @@ import {
   useSubmission,
 } from "@solidjs/router";
 import { isValid, z } from "zod";
-import { AuthShow } from "~/features/auth/guards";
-import api from "~/shared/api";
-import { NotFound } from "~/shared/components/not-found";
-import { Toast } from "~/shared/components/toast";
+import api from "#api";
+import { AuthShow } from "#features/auth/guards";
+import { NotFound } from "#features/site/not-found";
+import { formatTimeDelta, getRussianOrdinalPluralWord } from "#intl";
+import { getMyPosts, getPost, getPostComments, getPosts } from "#queries";
+import { Avatar, AvatarFallback, AvatarImage } from "#ui/avatar";
+import { Button } from "#ui/button";
 import {
-  getMyPosts,
-  getPost,
-  getPostComments,
-  getPosts,
-} from "~/shared/queries";
-import {
-  formatTimeDelta,
-  getRussianOrdinalPluralWord,
-} from "~/shared/utils/intl";
+  TextField,
+  TextFieldErrorMessage,
+  TextFieldTextArea,
+} from "#ui/text-field";
+import { Toast } from "#ui/toast";
 
 const edjsParser = edjsHTML();
 

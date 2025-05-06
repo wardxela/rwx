@@ -1,20 +1,3 @@
-import { Button } from "@rwx/ui/components/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@rwx/ui/components/dialog";
-import { Skeleton } from "@rwx/ui/components/skeleton";
-import {
-  TextField,
-  TextFieldErrorMessage,
-  TextFieldInput,
-  TextFieldLabel,
-} from "@rwx/ui/components/text-field";
 import {
   action,
   createAsync,
@@ -25,9 +8,26 @@ import {
 } from "@solidjs/router";
 import { For, Suspense } from "solid-js";
 import { z } from "zod";
-import { PostLink, PostLinkSkeleton } from "~/features/blog/post-link";
-import api from "~/shared/api";
-import { getMyPosts, getPosts } from "~/shared/queries";
+import api from "#api";
+import { PostLink, PostLinkSkeleton } from "#features/blog/post-link";
+import { getMyPosts, getPosts } from "#queries";
+import { Button } from "#ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "#ui/dialog";
+import { Skeleton } from "#ui/skeleton";
+import {
+  TextField,
+  TextFieldErrorMessage,
+  TextFieldInput,
+  TextFieldLabel,
+} from "#ui/text-field";
 
 const CreatePostSchema = z.object({
   title: z.string().min(3).max(100),

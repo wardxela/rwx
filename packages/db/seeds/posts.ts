@@ -1574,7 +1574,7 @@ export default [
         {
           type: "code",
           data: {
-            code: "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n    - name: Cache node modules\n      uses: actions/cache@v3\n      with:\n        path: ~/.npm\n        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}\n        restore-keys: |\n          ${{ runner.os }}-node-\n          \n    - name: Cache Next.js build\n      uses: actions/cache@v3\n      with:\n        path: |\n          .next/cache\n        key: ${{ runner.os }}-nextjs-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}\n        restore-keys: |\n          ${{ runner.os }}-nextjs-",
+            code: "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n    - name: Cache node modules\n      uses: actions/cache@v3\n      with:\n        path: #.npm\n        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}\n        restore-keys: |\n          ${{ runner.os }}-node-\n          \n    - name: Cache Next.js build\n      uses: actions/cache@v3\n      with:\n        path: |\n          .next/cache\n        key: ${{ runner.os }}-nextjs-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}\n        restore-keys: |\n          ${{ runner.os }}-nextjs-",
             language: "yaml",
           },
         },

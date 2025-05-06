@@ -1,15 +1,11 @@
-import { Button } from "@rwx/ui/components/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTrigger,
-} from "@rwx/ui/components/drawer";
-import { TextField, TextFieldInput } from "@rwx/ui/components/text-field";
-import { Toggle } from "@rwx/ui/components/toggle";
 import { Show, createSignal } from "solid-js";
-import { CourseCardLink } from "~/features/course/course-card-link";
-import { CoursesSidebar } from "~/features/course/courses-sidebar";
-import { SiteTitle } from "~/shared/components/site-title";
+import { CourseCardLink } from "#features/course/course-card-link";
+import { CoursesSidebar } from "#features/course/courses-sidebar";
+import { SiteTitle } from "#features/site/site-title";
+import { Button } from "#ui/button";
+import { Drawer, DrawerContent, DrawerTrigger } from "#ui/drawer";
+import { TextField, TextFieldInput } from "#ui/text-field";
+import { Toggle } from "#ui/toggle";
 
 const [isGridView, setIsGridView] = createSignal(true);
 

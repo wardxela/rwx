@@ -1,5 +1,5 @@
-import { Button } from "@rwx/ui/components/button";
-import { GuestOnly } from "~/features/auth/guards";
+import { GuestOnly } from "#features/auth/guards";
+import { Button } from "#ui/button";
 
 export default function Page() {
   return (

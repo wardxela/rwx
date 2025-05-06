@@ -1,4 +1,4 @@
-import { NotFound } from "~/shared/components/not-found";
+import { NotFound } from "#features/site/not-found";
 
 export default function Page() {
   return (

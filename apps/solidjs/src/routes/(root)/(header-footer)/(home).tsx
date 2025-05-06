@@ -1,16 +1,16 @@
 import { A, createAsync } from "@solidjs/router";
 import { type Component, For, type JSX, Suspense } from "solid-js";
 
-import { Button } from "@rwx/ui/components/button";
+import { Button } from "#ui/button";
 
-import { PostLink, PostLinkSkeleton } from "~/features/blog/post-link";
-import { CourseCardLink } from "~/features/course/course-card-link";
+import { PostLink, PostLinkSkeleton } from "#features/blog/post-link";
+import { CourseCardLink } from "#features/course/course-card-link";
 import {
   CourseCategoryLink,
   type CourseCategoryLinkProps,
-} from "~/features/course/course-category-card-link";
-import { SiteTitle } from "~/shared/components/site-title";
-import { getPosts } from "~/shared/queries";
+} from "#features/course/course-category-card-link";
+import { SiteTitle } from "#features/site/site-title";
+import { getPosts } from "#queries";
 
 export default function Page() {
   return (

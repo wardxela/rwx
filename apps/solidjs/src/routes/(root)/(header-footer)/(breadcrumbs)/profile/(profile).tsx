@@ -1,12 +1,3 @@
-import { Button } from "@rwx/ui/components/button";
-import { Label } from "@rwx/ui/components/label";
-import {
-  TextField,
-  TextFieldErrorMessage,
-  TextFieldInput,
-  TextFieldLabel,
-  TextFieldTextArea,
-} from "@rwx/ui/components/text-field";
 import {
   action,
   createAsync,
@@ -17,9 +8,18 @@ import {
 } from "@solidjs/router";
 import { Suspense } from "solid-js";
 import { z } from "zod";
-import { UserAvatar } from "~/features/user/avatar";
-import api from "~/shared/api";
-import { getMe, uploadFileAction } from "~/shared/queries";
+import api from "#api";
+import { UserAvatar } from "#features/user/avatar";
+import { getMe, uploadFileAction } from "#queries";
+import { Button } from "#ui/button";
+import { Label } from "#ui/label";
+import {
+  TextField,
+  TextFieldErrorMessage,
+  TextFieldInput,
+  TextFieldLabel,
+  TextFieldTextArea,
+} from "#ui/text-field";
 
 const UpdateUserSchema = z.object({
   firstName: z.string().max(50).optional(),

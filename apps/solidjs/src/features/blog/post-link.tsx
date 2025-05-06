@@ -1,5 +1,6 @@
-import { Skeleton } from "@rwx/ui/components/skeleton";
+import { A } from "@solidjs/router";
 import { type Component, Show } from "solid-js";
+import { Skeleton } from "#ui/skeleton";
 
 export type PostLinkProps = {
   link: string;
@@ -11,7 +12,7 @@ export type PostLinkProps = {
 
 export const PostLink: Component<PostLinkProps> = (props) => {
   return (
-    <a
+    <A
       href={props.link}
       class="@container rounded-2xl transition hover:shadow-lg"
     >
@@ -34,7 +35,7 @@ export const PostLink: Component<PostLinkProps> = (props) => {
           </Show>
         </div>
       </div>
-    </a>
+    </A>
   );
 };
 

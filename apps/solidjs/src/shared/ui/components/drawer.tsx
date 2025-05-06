@@ -10,7 +10,7 @@ import type {
 } from "@corvu/drawer";
 import DrawerPrimitive from "@corvu/drawer";
 
-import { cn } from "~/lib/utils";
+import { cn } from "#ui/utils";
 
 const Drawer = DrawerPrimitive;
 

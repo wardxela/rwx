@@ -1,5 +1,3 @@
-import { Button } from "@rwx/ui/components/button";
-import { Skeleton } from "@rwx/ui/components/skeleton";
 import { debounce } from "@solid-primitives/scheduled";
 import {
   createAsync,
@@ -9,12 +7,9 @@ import {
 } from "@solidjs/router";
 import type { JSX, ParentComponent } from "solid-js";
 import { For, Show, Suspense, createEffect, createSignal } from "solid-js";
-import {
-  getBlogCategories,
-  getCategories,
-  getPosts,
-  getTags,
-} from "~/shared/queries";
+import { getBlogCategories, getCategories, getPosts, getTags } from "#queries";
+import { Button } from "#ui/button";
+import { Skeleton } from "#ui/skeleton";
 
 export const BlogSidebar = () => {
   const navigate = useNavigate();

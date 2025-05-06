@@ -1,6 +1,6 @@
 import type { RouteSectionProps } from "@solidjs/router";
 
-import { Breadcrumb } from "~/components/breadcrumb";
+import { Breadcrumb } from "#features/site/breadcrumb";
 
 export default function Layout(props: RouteSectionProps) {
   return (
