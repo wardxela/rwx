@@ -20,7 +20,12 @@ export const getPosts = query(
 export const getMyPosts = query(async () => {
   const response = await api.GET("/blog/my-posts");
   return response.data;
-}, "/blog/mine");
+}, "/blog/my-posts");
+
+export const getBlogCategories = query(async () => {
+  const response = await api.GET("/blog/categories");
+  return response.data ?? [];
+}, "/blog/categories");
 
 export const getPost = query(async (id: string) => {
   const response = await api.GET("/blog/posts/{id}", {
@@ -31,6 +36,13 @@ export const getPost = query(async (id: string) => {
   }
   return response.data;
 }, "/blog/posts/{id}");
+
+export const getPostComments = query(async (id) => {
+  const response = await api.GET("/blog/posts/{id}/comments", {
+    params: { path: { id } },
+  });
+  return response.data;
+}, "/blog/posts/{id}/comments");
 
 export const getCategories = query(async () => {
   const response = await api.GET("/categories");
@@ -51,4 +63,4 @@ export const uploadFileAction = action(async (formData: FormData) => {
     image.data.url;
   }
   return json(image.data?.url, { revalidate: "nothing" });
-});
+}, "/files/upload:post");

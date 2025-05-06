@@ -4,7 +4,9 @@ import { Kysely } from "kysely";
 import { InjectKysely } from "nestjs-kysely";
 import { filter } from "rxjs";
 import { FilesService } from "src/files/files.service";
+import { CommentDto } from "./dto/comment.dto";
 import { CreatePostDto } from "./dto/create-post.dto";
+import { LeaveCommentDto } from "./dto/leave-comment.dto";
 import { PostFiltersDto, PostHiddenFilters } from "./dto/post-filters.dto";
 import { PostDto, PostsDto } from "./dto/post.dto";
 import { UpdateBlogPostDto } from "./dto/update-blog-post.dto";
@@ -243,6 +245,7 @@ export class BlogService {
       .leftJoin("Category", "BlogPost.categoryId", "Category.id")
       .leftJoin("_BlogPostToTag", "_BlogPostToTag.A", "BlogPost.id")
       .leftJoin("Tag", "Tag.id", "_BlogPostToTag.B")
+      .leftJoin("BlogPostComment", "BlogPostComment.postId", "BlogPost.id")
       .select([
         "BlogPost.id",
         "BlogPost.title",
@@ -262,7 +265,9 @@ export class BlogService {
         "Category.description as categoryDescription",
         "Tag.id as tagId",
         "Tag.name as tagName",
+        ({ fn }) => fn.count("BlogPostComment.id").as("commentsCount"),
       ])
+      .groupBy(["BlogPost.id", "User.id", "Category.id", "Tag.id"])
       .execute();
 
     if (!rows.length) {
@@ -280,6 +285,7 @@ export class BlogService {
       published: post.published,
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
+      commentsCount: post.commentsCount,
       author: {
         id: post.authorId!,
         firstName: post.authorFirstName!,
@@ -302,5 +308,60 @@ export class BlogService {
           name: r.tagName!,
         })),
     };
+  }
+
+  async getPostComments(postId: string): Promise<CommentDto[]> {
+    const comments = await this.db
+      .selectFrom("BlogPostComment")
+      .where("BlogPostComment.postId", "=", postId)
+      .innerJoin("User", "User.id", "BlogPostComment.authorId")
+      .select([
+        "BlogPostComment.id",
+        "BlogPostComment.postId",
+        "BlogPostComment.content",
+        "BlogPostComment.createdAt",
+        "BlogPostComment.updatedAt",
+        "User.id as authorId",
+        "User.firstName as authorFirstName",
+        "User.lastName as authorLastName",
+        "User.image as authorImage",
+        "User.bio as authorBio",
+      ])
+      .execute();
+    return comments.map((comment) => ({
+      id: comment.id,
+      postId: comment.postId,
+      content: comment.content,
+      author: {
+        id: comment.authorId,
+        firstName: comment.authorFirstName,
+        lastName: comment.authorLastName,
+        image: comment.authorImage,
+        bio: comment.authorBio,
+      },
+      createdAt: comment.createdAt,
+      updatedAt: comment.updatedAt,
+    }));
+  }
+
+  async leaveComment(
+    authorId: string,
+    postId: string,
+    comment: LeaveCommentDto,
+  ): Promise<boolean> {
+    try {
+      await this.db
+        .insertInto("BlogPostComment")
+        .values({
+          authorId,
+          postId,
+          content: comment.content,
+          updatedAt: new Date(),
+        })
+        .executeTakeFirstOrThrow();
+      return true;
+    } catch {
+      return false;
+    }
   }
 }

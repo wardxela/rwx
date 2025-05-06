@@ -9,7 +9,8 @@
     "allowSyntheticDefaultImports": true,
     "types": ["vinxi/types/client"],
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@kobalte/core/src/*": ["../../node_modules/@kobalte/core/dist/*"]
     }
   },
   "exclude": ["node_modules"]

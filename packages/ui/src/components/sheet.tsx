@@ -1,8 +1,8 @@
 import type { Component, ComponentProps, JSX, ValidComponent } from "solid-js";
 import { splitProps } from "solid-js";
 
-import * as SheetPrimitive from "@kobalte/core/dialog";
-import type { PolymorphicProps } from "@kobalte/core/polymorphic";
+import * as SheetPrimitive from "@kobalte/core/src/dialog";
+import type { PolymorphicProps } from "@kobalte/core/src/polymorphic";
 import { type VariantProps, cva } from "class-variance-authority";
 
 import { cn } from "~/lib/utils";

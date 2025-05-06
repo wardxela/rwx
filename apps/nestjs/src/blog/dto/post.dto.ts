@@ -17,6 +17,7 @@ export class PostDto {
   published: boolean;
   createdAt: Date;
   updatedAt: Date;
+  commentsCount?: string | number | bigint;
   author: PostAuthorDto;
   category?: CategoryDto;
   tags: TagDto[];

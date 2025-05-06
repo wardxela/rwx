@@ -9,7 +9,12 @@ import {
 } from "@solidjs/router";
 import type { JSX, ParentComponent } from "solid-js";
 import { For, Show, Suspense, createEffect, createSignal } from "solid-js";
-import { getCategories, getPosts, getTags } from "~/shared/queries";
+import {
+  getBlogCategories,
+  getCategories,
+  getPosts,
+  getTags,
+} from "~/shared/queries";
 
 export const BlogSidebar = () => {
   const navigate = useNavigate();
@@ -123,7 +128,7 @@ interface CategoriesFiltersProps {
 }
 
 function CategoriesFilters(props: CategoriesFiltersProps) {
-  const categories = createAsync(() => getCategories());
+  const categories = createAsync(() => getBlogCategories());
   const [showAll, setShowAll] = createSignal(false);
 
   return (
@@ -172,7 +177,8 @@ function CategoriesFilters(props: CategoriesFiltersProps) {
                         : props.selected.filter((id) => id !== category.id),
                     );
                   }}
-                  endText="?"
+                  // @ts-expect-error
+                  endText={category.count}
                 >
                   {category.name}
                 </CategoryCheckbox>

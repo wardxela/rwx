@@ -6,7 +6,8 @@
     "jsxImportSource": "solid-js",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@kobalte/core/src/*": ["../../node_modules/@kobalte/core/dist/*"]
     }
   },
   "include": ["."],

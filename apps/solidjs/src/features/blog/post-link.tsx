@@ -18,7 +18,7 @@ export const PostLink: Component<PostLinkProps> = (props) => {
       <div class="flex h-full @lg:flex-row flex-col rounded-2xl border border-gray-200">
         <img
           src={props.image ?? "/placeholder.jpg"}
-          class="@lg:h-auto h-52 @lg:min-h-62 @lg:max-w-1/3 rounded-t-2xl @lg:rounded-l-2xl @lg:rounded-tr-none object-cover"
+          class="h-52 @lg:min-h-62 w-full @lg:max-w-1/3 rounded-t-2xl @lg:rounded-l-2xl @lg:rounded-tr-none object-cover"
           alt={props.title}
         />
         <div class="@sm:p-5 p-4">

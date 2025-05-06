@@ -1,22 +1,43 @@
 import edjsHTML from "editorjs-html";
 import type { Component } from "solid-js";
-import { ErrorBoundary, For, Show, Suspense } from "solid-js";
+import { ErrorBoundary, For, Show, Suspense, createEffect } from "solid-js";
 
+import type { paths } from "@rwx/api";
+import { Avatar, AvatarFallback, AvatarImage } from "@rwx/ui/components/avatar";
 import { Button } from "@rwx/ui/components/button";
 import {
   TextField,
   TextFieldErrorMessage,
-  TextFieldInput,
   TextFieldTextArea,
 } from "@rwx/ui/components/text-field";
-import { type RouteSectionProps, createAsync } from "@solidjs/router";
+import {
+  type RouteSectionProps,
+  action,
+  createAsync,
+  json,
+  useSubmission,
+} from "@solidjs/router";
+import { isValid, z } from "zod";
+import { AuthShow } from "~/features/auth/guards";
+import api from "~/shared/api";
 import { NotFound } from "~/shared/components/not-found";
-import { getPost } from "~/shared/queries";
+import { Toast } from "~/shared/components/toast";
+import {
+  getMyPosts,
+  getPost,
+  getPostComments,
+  getPosts,
+} from "~/shared/queries";
+import {
+  formatTimeDelta,
+  getRussianOrdinalPluralWord,
+} from "~/shared/utils/intl";
 
 const edjsParser = edjsHTML();
 
 export default function Page(props: RouteSectionProps) {
   const post = createAsync(() => getPost(props.params.id!));
+  const comments = createAsync(() => getPostComments(props.params.id!));
 
   const content = () => {
     const json = post()?.content;
@@ -30,6 +51,14 @@ export default function Page(props: RouteSectionProps) {
       return "Запись в разработке...";
     }
   };
+
+  const commentsCountText = () =>
+    getRussianOrdinalPluralWord({
+      count: Number(post()?.commentsCount),
+      one: "Комментарий",
+      few: "Комментария",
+      many: "Комментариев",
+    });
 
   return (
     <ErrorBoundary fallback={<NotFound />}>
@@ -106,7 +135,9 @@ export default function Page(props: RouteSectionProps) {
                 fill="#FF782D"
               />
             </svg>
-            <span class="text-neutral-600">TODO Комментариев</span>
+            <span class="text-neutral-600">
+              {Number(post()?.commentsCount)} {commentsCountText()}
+            </span>
           </div>
         </div>
         <Show when={post()?.image}>
@@ -116,9 +147,9 @@ export default function Page(props: RouteSectionProps) {
             class="mb-5 w-full rounded-3xl sm:mb-10"
           />
         </Show>
-        <div class="prose mb-5 sm:mb-10" innerHTML={content()} />
+        <div class="prose mx-auto mb-6" innerHTML={content()} />
         <Show when={(post()?.tags.length ?? 0) > 0}>
-          <div class="mb-7 flex flex-wrap items-center gap-2 sm:mb-14">
+          <div class="mb-4 flex flex-wrap items-center gap-2 sm:mb-6">
             <div class="mr-3 text-lg text-neutral-600">Теги:</div>
             <For each={post()?.tags}>
               {(tag) => (
@@ -129,162 +160,162 @@ export default function Page(props: RouteSectionProps) {
             </For>
           </div>
         </Show>
-        <div class="mb-7 flex items-center gap-4 sm:mb-14 md:gap-7">
-          <a
-            href="/blog/1"
-            class="group flex grow items-center gap-6 rounded-lg border border-neutral-200 transition hover:bg-neutral-100 sm:grow-0 sm:rounded-3xl sm:p-8"
-          >
-            <div class="grid h-12 w-full shrink-0 place-items-center rounded-lg bg-neutral-100 text-neutral-400 transition group-hover:bg-neutral-300 group-hover:text-neutral-600 sm:w-12">
-              <svg
-                width="25"
-                height="25"
-                viewBox="0 0 15 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <title>Предыдущая статья</title>
-                <path
-                  d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z"
-                  fill="currentColor"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </div>
-            <div class="hidden sm:block">
-              <div class="mb-3 text-lg text-neutral-600">Назад</div>
-              <div class="font-semibold text-xl">
-                Best LearnPress WordPress Theme Collection for 2023
-              </div>
-            </div>
-          </a>
-          <a
-            href="/blog/1"
-            class="group flex grow items-center gap-6 rounded-lg border border-neutral-200 transition hover:bg-neutral-100 sm:grow-0 sm:rounded-3xl sm:p-8"
-          >
-            <div class="hidden sm:block">
-              <div class="mb-3 text-lg text-neutral-600">Назад</div>
-              <div class="font-semibold text-xl">
-                Best LearnPress WordPress Theme Collection for 2023
-              </div>
-            </div>
-            <div class="grid h-12 w-full shrink-0 place-items-center rounded-lg bg-neutral-100 text-neutral-400 transition group-hover:bg-neutral-300 group-hover:text-neutral-600 sm:w-12">
-              <svg
-                width="25"
-                height="25"
-                viewBox="0 0 15 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <title>Следующая статья</title>
-                <path
-                  d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z"
-                  fill="currentColor"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </div>
-          </a>
-        </div>
         <div>
-          <h6 class="mb-3 font-semibold text-xl">Комментарии</h6>
-          <div class="mb-5 text-neutral-600 sm:mb-10 sm:text-lg">
-            20 комментариев
+          <h6 class="mb-1 font-semibold text-xl">Комментарии</h6>
+          <div class="mb-4 text-neutral-600">
+            {Number(post()?.commentsCount)} {commentsCountText()}
           </div>
-          <div class="mb-4 font-semibold text-lg sm:mb-7">
-            Оставить комментарий
+          <div class="mb-10">
+            <LeaveCommentForm postId={props.params.id!} />
           </div>
-          <form class="mb-10 grid grid-cols-2 gap-4 sm:gap-7">
-            <TextField validationState="invalid">
-              <TextFieldInput
-                class="border-destructive"
-                type="text"
-                required
-                placeholder="Имя*"
-              />
-              <TextFieldErrorMessage>Обязательное поле</TextFieldErrorMessage>
-            </TextField>
-            <TextField validationState="invalid">
-              <TextFieldInput
-                class="border-destructive"
-                type="email"
-                required
-                placeholder="Email*"
-              />
-              <TextFieldErrorMessage>
-                Неверный формат почты
-              </TextFieldErrorMessage>
-            </TextField>
-            <TextField class="col-span-2">
-              <TextFieldTextArea required placeholder="Комментарий*" />
-            </TextField>
-            <div>
-              <Button>Отправить</Button>
+          <Suspense>
+            <div class="space-y-5">
+              <For each={comments()}>
+                {(comment) => <ArticleComment comment={comment} />}
+              </For>
             </div>
-          </form>
-          <div class="space-y-5">
-            <ArticleComment
-              author="John Doe"
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis. Urna, donec turpis egestas volutpat. Quisque nec non amet quis. Varius tellus justo odio parturient mauris curabitur lorem in. Pulvinar sit ultrices mi ut eleifend luctus ut. Id sed faucibus bibendum augue id cras purus. At eget euismod cursus non. Molestie dignissim sed volutpat feugiat vel enim eu turpis imperdiet."
-              date="Jan 24, 2023"
-            />
-            <ArticleComment
-              author="John Doe"
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis. Urna, donec turpis egestas volutpat. Quisque nec non amet quis. Varius tellus justo odio parturient mauris curabitur lorem in. Pulvinar sit ultrices mi ut eleifend luctus ut. Id sed faucibus bibendum augue id cras purus. At eget euismod cursus non. Molestie dignissim sed volutpat feugiat vel enim eu turpis imperdiet."
-              date="Jan 24, 2023"
-            />
-            <ArticleComment
-              author="John Doe"
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis. Urna, donec turpis egestas volutpat. Quisque nec non amet quis. Varius tellus justo odio parturient mauris curabitur lorem in. Pulvinar sit ultrices mi ut eleifend luctus ut. Id sed faucibus bibendum augue id cras purus. At eget euismod cursus non. Molestie dignissim sed volutpat feugiat vel enim eu turpis imperdiet."
-              date="Jan 24, 2023"
-              comments={[
-                {
-                  author: "John Doe",
-                  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis. Urna, donec turpis egestas volutpat. Quisque nec non amet quis. Varius tellus justo odio parturient mauris curabitur lorem in. Pulvinar sit ultrices mi ut eleifend luctus ut. Id sed faucibus bibendum augue id cras purus. At eget euismod cursus non. Molestie dignissim sed volutpat feugiat vel enim eu turpis imperdiet.",
-                  date: "Jan 24, 2023",
-                },
-                {
-                  author: "John Doe",
-                  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras facilisis faucibus odio arcu duis dui, adipiscing facilisis. Urna, donec turpis egestas volutpat. Quisque nec non amet quis. Varius tellus justo odio parturient mauris curabitur lorem in. Pulvinar sit ultrices mi ut eleifend luctus ut. Id sed faucibus bibendum augue id cras purus. At eget euismod cursus non. Molestie dignissim sed volutpat feugiat vel enim eu turpis imperdiet.",
-                  date: "Jan 24, 2023",
-                },
-              ]}
-            />
-          </div>
+          </Suspense>
         </div>
       </Suspense>
     </ErrorBoundary>
   );
 }
 
+const CommentSchema = z.object({
+  postId: z.string().uuid(),
+  content: z.string().min(1).max(10000),
+});
+
+const leaveCommentAction = action(async (formData: FormData) => {
+  const validated = CommentSchema.safeParse({
+    postId: formData.get("postId"),
+    content: formData.get("content"),
+  });
+  if (!validated.success) {
+    return json(
+      {
+        data: null,
+        errors: validated.error.formErrors.fieldErrors,
+      },
+      { revalidate: "nothing" },
+    );
+  }
+  await api.POST("/blog/posts/{id}/comments", {
+    params: {
+      path: {
+        id: validated.data.postId,
+      },
+    },
+    body: {
+      content: validated.data.content,
+    },
+  });
+  return json(
+    {
+      data: true,
+      errors: null,
+    },
+    {
+      revalidate: [
+        getPosts.key,
+        getMyPosts.key,
+        getPost.keyFor(validated.data.postId),
+        getPostComments.keyFor(validated.data.postId),
+      ],
+    },
+  );
+}, "/blog/posts/{id}/comments:post");
+
+const LeaveCommentForm = (props: { postId: string }) => {
+  let formRef!: HTMLFormElement;
+
+  const submission = useSubmission(leaveCommentAction);
+
+  createEffect(() => {
+    if (submission.result?.data) {
+      formRef.reset();
+    }
+  });
+
+  return (
+    <div class="relative">
+      <form
+        ref={formRef}
+        method="post"
+        action={leaveCommentAction}
+        class="space-y-4"
+      >
+        <input type="hidden" name="postId" value={props.postId} />
+        <TextField
+          validationState={
+            submission.result?.errors?.content ? "invalid" : "valid"
+          }
+        >
+          <TextFieldTextArea
+            name="content"
+            required
+            placeholder="Текст комментария"
+          />
+          <TextFieldErrorMessage>
+            {submission.result?.errors?.content}
+          </TextFieldErrorMessage>
+        </TextField>
+        <div>
+          <Button type="submit">Отправить</Button>
+        </div>
+      </form>
+      <AuthShow
+        unauth={
+          <>
+            <div class="absolute inset-0 grid place-items-center bg-white/85" />
+            <div class="-translate-1/2 absolute top-1/2 left-1/2 text-center">
+              <Button as="a" variant="link" href="/login">
+                Авторизуйтесь, чтобы оставлять комментарии
+              </Button>
+            </div>
+          </>
+        }
+      />
+      <Toast
+        when={Boolean(submission.result?.errors)}
+        action={(toast) => toast.error("Не удалось оставить комментарий")}
+      />
+      <Toast
+        when={Boolean(submission.result?.data)}
+        action={(toast) => toast.success("Комментарий успешно оставлен")}
+      />
+    </div>
+  );
+};
+
 interface ArticleCommentProps {
-  author: string;
-  text: string;
-  date: string;
-  comments?: ArticleCommentProps[];
+  comment: paths["/blog/posts/{id}/comments"]["get"]["responses"]["200"]["content"]["application/json"][number];
 }
 
 const ArticleComment: Component<ArticleCommentProps> = (props) => {
   return (
     <div>
-      <div class="grid grid-cols-[56px_1fr] gap-2.5 border-neutral-200 border-t pt-5 sm:gap-5">
-        <img
-          src="/person.png"
-          alt="person"
-          class="aspect-square size-12 object-cover sm:size-14"
-        />
+      <div class="grid grid-cols-[48px_1fr] gap-2.5 border-neutral-200 border-t pt-5 sm:gap-5">
+        <Avatar class="size-12">
+          <AvatarImage src={props.comment.author.image ?? undefined} />
+          <AvatarFallback>{`${props.comment.author.firstName.at(0)}${props.comment.author.lastName.at(0)}`}</AvatarFallback>
+        </Avatar>
         <div>
-          <div class="mb-3 flex justify-between gap-2">
-            <div class="font-semibold text-sm sm:text-base">{props.author}</div>
-            <div class="text-neutral-600 text-sm sm:text-base">
-              {props.date}
+          <div class="mb-2 flex justify-between gap-2">
+            <div class="font-semibold text-sm sm:text-base">
+              {props.comment.author.firstName} {props.comment.author.lastName}
+            </div>
+            <div class="text-neutral-600 text-sm">
+              {formatTimeDelta(
+                Date.now() - new Date(props.comment.updatedAt).getTime(),
+              )}{" "}
+              назад
             </div>
           </div>
-          <div class="text-neutral-600 leading-7 sm:text-lg">{props.text}</div>
+          <div class="text-neutral-600 leading-7">{props.comment.content}</div>
         </div>
       </div>
-      <Show when={props.comments?.length}>
+      {/* <Show when={props.comments?.length}>
         <div class="mt-5 ml-10 space-y-5">
           <For each={props.comments}>
             {(comment) => (
@@ -296,7 +327,7 @@ const ArticleComment: Component<ArticleCommentProps> = (props) => {
             )}
           </For>
         </div>
-      </Show>
+      </Show> */}
     </div>
   );
 };

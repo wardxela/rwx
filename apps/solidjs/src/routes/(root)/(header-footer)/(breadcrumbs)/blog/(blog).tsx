@@ -87,9 +87,7 @@ export default function Page() {
     <>
       <SiteTitle>Блог</SiteTitle>
       <div class="mb-8 flex items-center justify-between gap-2 sm:mb-10">
-        <h1 class="font-semibold text-2xl leading-10 sm:text-4xl">
-          Все статьи
-        </h1>
+        <h1 class="font-semibold text-2xl leading-10 sm:text-4xl">Блог</h1>
         <div class="flex items-center gap-2">
           <TextField>
             <TextFieldInput

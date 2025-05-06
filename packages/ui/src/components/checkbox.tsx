@@ -1,8 +1,8 @@
 import type { ValidComponent } from "solid-js";
 import { Match, Switch, splitProps } from "solid-js";
 
-import * as CheckboxPrimitive from "@kobalte/core/checkbox";
-import type { PolymorphicProps } from "@kobalte/core/polymorphic";
+import * as CheckboxPrimitive from "@kobalte/core/src/checkbox";
+import type { PolymorphicProps } from "@kobalte/core/src/polymorphic";
 
 import { cn } from "~/lib/utils";
 

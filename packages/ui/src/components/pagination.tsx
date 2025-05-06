@@ -1,8 +1,8 @@
 import type { JSX, ValidComponent } from "solid-js";
 import { Show, splitProps } from "solid-js";
 
-import * as PaginationPrimitive from "@kobalte/core/pagination";
-import type { PolymorphicProps } from "@kobalte/core/polymorphic";
+import * as PaginationPrimitive from "@kobalte/core/src/pagination";
+import type { PolymorphicProps } from "@kobalte/core/src/polymorphic";
 
 import { buttonVariants } from "~/components/button";
 import { cn } from "~/lib/utils";

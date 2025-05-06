@@ -1,12 +1,5 @@
 import { Type } from "class-transformer";
-import {
-  IsArray,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Max,
-  Min,
-} from "class-validator";
+import { IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
 
 export class PostFiltersDto {
   @IsString()

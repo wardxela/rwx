@@ -281,13 +281,20 @@ export default function Page() {
                 Давайте Начнем Учиться
               </h2>
               <Button
+                as="a"
+                href="/login"
                 size="lg"
                 variant="outline-primary"
                 class="ml-auto w-full sm:w-auto"
               >
                 Я студент
               </Button>
-              <Button size="lg" class="ml-auto w-full sm:w-auto lg:ml-0">
+              <Button
+                as="a"
+                href="/login"
+                size="lg"
+                class="ml-auto w-full sm:w-auto lg:ml-0"
+              >
                 Стать Преподавателем
               </Button>
             </div>

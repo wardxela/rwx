@@ -13,14 +13,14 @@
     "./components/*": {
       "@rwx/live-types": "./src/components/*.tsx",
       "types": "./dist/components/*.d.ts",
-      "default": "./dist/components/*.jsx"
+      "default": "./dist/components/*.js"
     }
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "tsup --watch",
+    "dev": "tsdown --watch",
     "typecheck": "tsc --emitDeclarationOnly false"
   },
   "dependencies": {
@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@rwx/tsconfig": "workspace:*",
-    "tsup": "^8.4.0"
+    "tsdown": "^0.11.0",
+    "vite-plugin-solid": "^2.11.6"
   }
 }

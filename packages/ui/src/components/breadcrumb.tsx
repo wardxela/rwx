@@ -1,5 +1,5 @@
 import type { PolymorphicProps } from "@kobalte/core";
-import * as BreadcrumbPrimitive from "@kobalte/core/breadcrumbs";
+import * as BreadcrumbPrimitive from "@kobalte/core/src/breadcrumbs";
 import type { Component, ComponentProps, JSX, ValidComponent } from "solid-js";
 import { Show, splitProps } from "solid-js";
 

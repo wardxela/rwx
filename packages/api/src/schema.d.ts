@@ -191,6 +191,38 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/blog/posts/{id}/comments": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["BlogController_getPostComments"];
+    put?: never;
+    post: operations["BlogController_leavePostComment"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/blog/categories": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["BlogController_getCategories"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/categories": {
     parameters: {
       query?: never;
@@ -312,6 +344,7 @@ export interface components {
       createdAt: string;
       /** Format: date-time */
       updatedAt: string;
+      commentsCount?: Record<string, never>;
       author: components["schemas"]["PostAuthorDto"];
       category?: components["schemas"]["CategoryDto"];
       tags: components["schemas"]["TagDto"][];
@@ -319,6 +352,32 @@ export interface components {
     PostsDto: {
       page: components["schemas"]["PostDto"][];
       total: number;
+    };
+    CommentAuthor: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      image: string | null;
+      bio: string | null;
+    };
+    CommentDto: {
+      id: string;
+      postId: string;
+      content: string;
+      author: components["schemas"]["CommentAuthor"];
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+    };
+    LeaveCommentDto: {
+      content: string;
+    };
+    CategoryDtoCounted: {
+      id: number;
+      name: string;
+      description?: string | null;
+      count: Record<string, never>;
     };
     UpdateBlogPostDto: {
       title?: string;
@@ -650,6 +709,71 @@ export interface operations {
         };
         content: {
           "application/json": boolean;
+        };
+      };
+    };
+  };
+  BlogController_getPostComments: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CommentDto"][];
+        };
+      };
+    };
+  };
+  BlogController_leavePostComment: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["LeaveCommentDto"];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": boolean;
+        };
+      };
+    };
+  };
+  BlogController_getCategories: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CategoryDtoCounted"][];
         };
       };
     };
