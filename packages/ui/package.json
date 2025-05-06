@@ -5,15 +5,10 @@
   "type": "module",
   "files": ["dist"],
   "exports": {
-    "./utils": {
-      "@rwx/live-types": "./src/lib/utils.ts",
-      "types": "./dist/lib/utils.d.ts",
-      "default": "./dist/lib/utils.js"
-    },
-    "./components/*": {
-      "@rwx/live-types": "./src/components/*.tsx",
-      "types": "./dist/components/*.d.ts",
-      "default": "./dist/components/*.js"
+    "./*": {
+      "@rwx/live-types": ["./src/*.ts", "./src/*.tsx"],
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
     }
   },
   "license": "MIT",

@@ -1,4 +1,4 @@
-import { cn } from "@rwx/ui/utils";
+import { cn } from "@rwx/ui/lib/utils";
 import type { Component } from "solid-js";
 
 import { getRussianOrdinalPluralWord } from "~/shared/utils/intl";
