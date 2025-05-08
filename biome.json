@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": []
+    "ignore": ["schema.d.ts"]
   },
   "formatter": {
     "indentStyle": "space"
