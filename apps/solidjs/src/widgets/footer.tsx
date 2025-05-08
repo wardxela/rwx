@@ -17,8 +17,9 @@ export const Footer: Component<FooterProps> = (props) => {
               <span class="font-bold text-2xl leading-8">ЧИП</span>
             </h6>
             <div class="text-lg text-neutral-600 leading-7">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Наша образовательная онлайн-платформа предлагает удобный и
+              современный способ обучения: курсы, тесты, задания и поддержка
+              преподавателей — всё в одном месте
             </div>
           </div>
           <div class="max-w-48 grow">
@@ -98,7 +99,7 @@ export const Footer: Component<FooterProps> = (props) => {
           <div class="max-w-sm grow">
             <h6 class="mb-8 font-semibold text-xl">Напишите Нам</h6>
             <div class="mb-4 text-lg text-neutral-600 leading-7">
-              Адрес: г. Рязань, ул. Высоковольтная, д. 10,
+              Адрес: г. Рязань
             </div>
             <div class="mb-4 text-lg text-neutral-600 leading-7">
               Телефон:{" "}
@@ -111,10 +112,10 @@ export const Footer: Component<FooterProps> = (props) => {
               <br />
               Почта:{" "}
               <a
-                href="mailto:supportlms@gmail.com"
+                href="mailto:wardxela@gmail.com"
                 class="transition hover:text-primary"
               >
-                supportlms@gmail.com
+                wardxela@gmail.com
               </a>
             </div>
           </div>

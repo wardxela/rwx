@@ -1,20 +1,37 @@
-import { Show, createSignal } from "solid-js";
-import { CourseCardLink } from "#features/course/course-card-link";
+import { createAsync } from "@solidjs/router";
+import { For, Show, Suspense, createSignal } from "solid-js";
+import {
+  CourseCardLink,
+  CourseLinkSkeleton,
+} from "#features/course/course-card-link";
 import { CoursesSidebar } from "#features/course/courses-sidebar";
 import { SiteTitle } from "#features/site/site-title";
+import { getCourses } from "#queries";
 import { Button } from "#ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "#ui/drawer";
+import { CommonPagination, useSearchParamsPagination } from "#ui/pagination";
 import { TextField, TextFieldInput } from "#ui/text-field";
 import { Toggle } from "#ui/toggle";
 
 const [isGridView, setIsGridView] = createSignal(true);
 
+const pageSize = 8;
+
 export default function Page() {
+  const { offset, intermidiatePage, setCurrentPage } =
+    useSearchParamsPagination({ size: pageSize });
+  const courses = createAsync(() =>
+    getCourses({
+      limit: pageSize,
+      offset: offset(),
+    }),
+  );
+  const pagesCount = () => Math.ceil((courses()?.total ?? 0) / pageSize);
   return (
     <>
       <SiteTitle>Курсы</SiteTitle>
       <div class="container grid gap-7 pt-8 pb-12 sm:pt-16 sm:pb-24 lg:grid-cols-[1fr_270px]">
-        <div>
+        <div class="flex flex-col">
           <div class="mb-8 items-center justify-between gap-2 sm:mb-10 sm:flex">
             <h1 class="mb-4 font-semibold text-2xl leading-10 sm:mb-0 sm:text-4xl">
               Все курсы
@@ -106,55 +123,33 @@ export default function Page() {
               "grid-cols-[repeat(auto-fill,minmax(260px,1fr))]": isGridView(),
             }}
           >
-            <CourseCardLink
-              href="/courses/1"
-              preview="/course-preview.png"
-              author="Артем Неизвестный"
-              title="Создай веб-сайт с помощью  LMS plugin"
-              category="Фотосъемка"
-              lessonsCount={10}
-              durationMs={2 * 2592000000}
-              studentsCount={156}
-              oldPrice={19999}
-              price={0}
-              level="Эксперт"
-            />
-            <CourseCardLink
-              href="/courses/1"
-              preview="/course-preview.png"
-              author="Артем Неизвестный"
-              title="Создай веб-сайт с помощью  LMS plugin"
-              category="Фотосъемка"
-              lessonsCount={11}
-              durationMs={2 * 2592000000}
-              studentsCount={156}
-              oldPrice={19999}
-              price={0}
-            />
-            <CourseCardLink
-              href="/courses/1"
-              preview="/course-preview.png"
-              author="Артем Неизвестный"
-              title="Создай веб-сайт с помощью  LMS plugin"
-              category="Фотосъемка"
-              lessonsCount={0}
-              durationMs={2 * 2592000000}
-              studentsCount={156}
-              oldPrice={19999}
-              price={0}
-            />
-            <CourseCardLink
-              href="/courses/1"
-              preview="/course-preview.png"
-              author="Артем Неизвестный"
-              title="Создай веб-сайт с помощью  LMS plugin"
-              category="Фотосъемка"
-              durationMs={5 * 604800000}
-              studentsCount={101}
-              oldPrice={19999}
-              price={11999}
-            />
+            <Suspense
+              fallback={
+                <For each={Array.from({ length: 4 })}>
+                  {() => <CourseLinkSkeleton />}
+                </For>
+              }
+            >
+              <Show when={courses()?.page.length} fallback="Ничего не найдено">
+                <For each={courses()?.page}>
+                  {(post) => (
+                    <CourseCardLink href={`/courses/${post.id}`} data={post} />
+                  )}
+                </For>
+              </Show>
+            </Suspense>
           </div>
+          <Suspense>
+            <Show when={pagesCount() > 1}>
+              <div class="mt-auto flex justify-center">
+                <CommonPagination
+                  count={pagesCount()}
+                  page={intermidiatePage()}
+                  onPageChange={setCurrentPage}
+                />
+              </div>
+            </Show>
+          </Suspense>
         </div>
         <div class="hidden lg:block">
           <CoursesSidebar />

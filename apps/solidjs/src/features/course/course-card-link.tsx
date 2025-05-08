@@ -1,36 +1,30 @@
 import type { Component } from "solid-js";
 import { Match, Show, Switch } from "solid-js";
 
+import type { paths } from "@rwx/api";
+import { A } from "@solidjs/router";
 import { formatTimeDelta, getRussianOrdinalPluralWord } from "#intl";
+import { Skeleton } from "#ui/skeleton";
 
 export interface CourseCardLinkProps {
+  data: paths["/courses"]["get"]["responses"]["200"]["content"]["application/json"]["page"][number];
   href: string;
-  preview: string;
-  title: string;
-  author: string;
-  category: string;
-  durationMs: number;
-  studentsCount: number;
-  price: number;
-  oldPrice?: number;
-  lessonsCount?: number;
-  level?: string;
 }
 
 export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
-  const durationText = () => formatTimeDelta(props.durationMs);
+  const durationText = () => formatTimeDelta(props.data.duration);
 
   const studentsText = () =>
     getRussianOrdinalPluralWord({
-      count: props.studentsCount,
+      count: props.data.studentsCount,
       one: "Студент",
       few: "Студента",
       many: "Студентов",
     });
 
-  const lessontsText = () =>
+  const lessonsText = () =>
     getRussianOrdinalPluralWord({
-      count: props.lessonsCount ?? 0,
+      count: props.data.lessonsCount,
       one: "Занятие",
       few: "Занятия",
       many: "Занятий",
@@ -40,19 +34,25 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
     <div class="@container">
       <div class="relative flex h-full @lg:flex-row flex-col rounded-2xl border border-gray-200">
         <img
-          src={props.preview}
-          alt="course"
+          src={props.data.image ?? "/placeholder.jpg"}
+          alt={props.data.title}
           class="@lg:h-auto h-52 @lg:min-h-62 @lg:max-w-1/3 rounded-t-2xl @lg:rounded-l-2xl @lg:rounded-tr-none object-cover"
         />
-        <div class="absolute top-5 left-5 grid h-10 place-items-center rounded-lg bg-black px-3 py-2 text-white">
-          <div class="font-medium">{props.category}</div>
-        </div>
+        <Show when={props.data.category}>
+          <div class="absolute top-5 left-5 grid h-10 place-items-center rounded-lg bg-black px-3 py-2 text-white">
+            <div class="font-medium">{props.data.category?.name}</div>
+          </div>
+        </Show>
         <div class="flex grow flex-col @xl:p-5 p-4 @xl:text-base text-sm">
           <div class="mb-3">
             <span class="text-neutral-600">Автор: </span>
-            <span>{props.author}</span>
+            <span>
+              {props.data.author.firstName} {props.data.author.lastName}
+            </span>
           </div>
-          <h6 class="mb-4 font-semibold @xl:text-xl text-lg">{props.title}</h6>
+          <h6 class="mb-4 font-semibold @xl:text-xl text-lg">
+            {props.data.title}
+          </h6>
           <div class="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2.5">
             <div class="flex items-center gap-1.5">
               <svg
@@ -92,32 +92,10 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
                 <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
               </svg>
               <div class="text-neutral-600 text-sm">
-                {props.studentsCount} {studentsText()}
+                {props.data.studentsCount} {studentsText()}
               </div>
             </div>
-            <Show when={props.level !== undefined}>
-              <div class="flex items-center gap-1.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="text-primary"
-                >
-                  <title>Difficutly</title>
-                  <line x1="12" x2="12" y1="20" y2="10" />
-                  <line x1="18" x2="18" y1="20" y2="4" />
-                  <line x1="6" x2="6" y1="20" y2="16" />
-                </svg>
-                <div class="text-neutral-600 text-sm">{props.level}</div>
-              </div>
-            </Show>
-            <Show when={props.lessonsCount !== undefined}>
+            <Show when={props.data.lessonsCount !== undefined}>
               <div class="flex items-center gap-1.5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -138,7 +116,7 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
                   <path d="M4 4v16" />
                 </svg>
                 <div class="text-neutral-600 text-sm">
-                  {props.lessonsCount} {lessontsText()}
+                  {props.data.lessonsCount} {lessonsText()}
                 </div>
               </div>
             </Show>
@@ -146,26 +124,48 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
           <hr class="mt-auto mb-4 h-px border-gray-200" />
           <div class="flex items-center justify-between">
             <div class="flex flex-wrap items-center gap-2 @xl:text-base text-sm">
-              <Show when={props.oldPrice !== undefined}>
+              <Show when={props.data.oldPrice !== undefined}>
                 <div class="text-neutral-400 line-through">
-                  {props.oldPrice}₽
+                  {props.data.oldPrice}₽
                 </div>
               </Show>
-              <Switch>
-                <Match when={!props.price}>
-                  <div class="text-green-600">Бесплатно</div>
-                </Match>
-                <Match when={props.price}>
-                  <div class="font-medium text-orange-500">{props.price}₽</div>
-                </Match>
-              </Switch>
+              <Show
+                when={props.data.price}
+                fallback={<div class="text-green-600">Бесплатно</div>}
+              >
+                <div class="font-medium text-orange-500">
+                  {props.data.price}₽
+                </div>
+              </Show>
             </div>
-            <a href={props.href} class="font-medium @xl:text-base text-sm">
+            <A href={props.href} class="font-medium @xl:text-base text-sm">
               Подробнее
-            </a>
+            </A>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+export function CourseLinkSkeleton() {
+  return (
+    <div class="flex flex-col">
+      <Skeleton class="h-52 rounded-2xl" />
+      <div class="flex grow flex-col px-4 py-5">
+        <Skeleton class="mb-3 h-4 w-2/5" />
+        <Skeleton class="mb-4 h-4" />
+        <div class="mb-6 grid w-3/4 grid-cols-3 gap-2">
+          <Skeleton class="h-4" />
+          <Skeleton class="h-4" />
+          <Skeleton class="h-4" />
+          <Skeleton class="h-4" />
+        </div>
+        <div class="flex justify-between gap-2">
+          <Skeleton class="h-4 w-1/3" />
+          <Skeleton class="h-4 w-1/4" />
+        </div>
+      </div>
+    </div>
+  );
+}

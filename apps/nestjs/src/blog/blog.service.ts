@@ -2,14 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { DB } from "@rwx/db";
 import { Kysely } from "kysely";
 import { InjectKysely } from "nestjs-kysely";
-import { filter } from "rxjs";
 import { FilesService } from "src/files/files.service";
+import { CommentCreateDto } from "./dto/comment-create.dto";
 import { CommentDto } from "./dto/comment.dto";
-import { CreatePostDto } from "./dto/create-post.dto";
-import { LeaveCommentDto } from "./dto/leave-comment.dto";
+import { PostCreateDto } from "./dto/post-create.dto";
 import { PostFiltersDto, PostHiddenFilters } from "./dto/post-filters.dto";
+import { PostUpdateDto } from "./dto/post-update.dto";
 import { PostDto, PostsDto } from "./dto/post.dto";
-import { UpdateBlogPostDto } from "./dto/update-blog-post.dto";
 
 @Injectable()
 export class BlogService {
@@ -18,8 +17,8 @@ export class BlogService {
     private filesService: FilesService,
   ) {}
 
-  async createPost(authorId: string, data: CreatePostDto): Promise<PostDto> {
-    const { id: postId } = await this.db
+  async createPost(authorId: string, data: PostCreateDto): Promise<string> {
+    const { id } = await this.db
       .insertInto("BlogPost")
       .values({
         authorId,
@@ -29,10 +28,10 @@ export class BlogService {
       })
       .returning(["BlogPost.id"])
       .executeTakeFirstOrThrow();
-    return (await this.getPost(postId))!;
+    return id;
   }
 
-  async updatePost(id: string, data: UpdateBlogPostDto): Promise<void> {
+  async updatePost(id: string, data: PostUpdateDto): Promise<void> {
     const { tags, ...dto } = data;
     return this.db.transaction().execute(async (trx) => {
       await trx
@@ -166,7 +165,7 @@ export class BlogService {
         postIds.map((p) => p.id),
       )
       .leftJoin("User", "User.id", "BlogPost.authorId")
-      .leftJoin("Category", "BlogPost.categoryId", "Category.id")
+      .leftJoin("Category", "Category.id", "BlogPost.categoryId")
       .leftJoin("_BlogPostToTag", "_BlogPostToTag.A", "BlogPost.id")
       .leftJoin("Tag", "Tag.id", "_BlogPostToTag.B")
       .select([
@@ -347,7 +346,7 @@ export class BlogService {
   async leaveComment(
     authorId: string,
     postId: string,
-    comment: LeaveCommentDto,
+    comment: CommentCreateDto,
   ): Promise<boolean> {
     try {
       await this.db

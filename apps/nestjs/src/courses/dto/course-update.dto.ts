@@ -1,5 +1,4 @@
 import {
-  IsArray,
   IsBoolean,
   IsNumber,
   IsObject,
@@ -7,24 +6,31 @@ import {
   IsString,
   IsUrl,
   MaxLength,
+  Min,
   MinLength,
 } from "class-validator";
 
-export class UpdateBlogPostDto {
+export class CourseUpdateDto {
   @IsString()
   @MinLength(3)
   @MaxLength(100)
   @IsOptional()
   title?: string;
 
-  @IsObject()
-  @IsOptional()
-  content?: unknown;
-
   @IsString()
-  @MaxLength(1000)
+  @MaxLength(5000)
   @IsOptional()
-  excerpt?: string;
+  description?: string;
+
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  price?: number;
+
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  oldPrice?: number;
 
   @IsString()
   @IsUrl({ require_host: false })
@@ -35,11 +41,11 @@ export class UpdateBlogPostDto {
   @IsOptional()
   published?: boolean;
 
+  @IsObject()
+  @IsOptional()
+  faq?: unknown;
+
   @IsNumber()
   @IsOptional()
   categoryId?: number;
-
-  @IsArray()
-  @IsOptional()
-  tags?: number[];
 }

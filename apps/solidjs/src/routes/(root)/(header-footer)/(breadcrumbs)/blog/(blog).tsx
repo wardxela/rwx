@@ -1,7 +1,6 @@
 import { debounce } from "@solid-primitives/scheduled";
 import { createAsync, useSearchParams } from "@solidjs/router";
-import { clientOnly } from "@solidjs/start";
-import { For, Show, Suspense, createEffect, createSignal } from "solid-js";
+import { For, Show, Suspense, createSignal } from "solid-js";
 import { z } from "zod";
 import { BlogSidebar } from "#features/blog/blog-sidebar";
 import { PostLink, PostLinkSkeleton } from "#features/blog/post-link";
@@ -9,14 +8,9 @@ import { SiteTitle } from "#features/site/site-title";
 import { getPosts } from "#queries";
 import { Button } from "#ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "#ui/drawer";
+import { CommonPagination, useSearchParamsPagination } from "#ui/pagination";
 import { TextField, TextFieldInput } from "#ui/text-field";
 import { Toggle } from "#ui/toggle";
-
-const BlogPagination = clientOnly(() =>
-  import("#features/blog/pagination").then((module) => ({
-    default: module.BlogPagination,
-  })),
-);
 
 const [isGridView, setIsGridView] = createSignal(true);
 
@@ -24,25 +18,19 @@ const querySchema = z.object({
   search: z.string().optional().catch(undefined),
   categories: z.array(z.coerce.number()).optional().catch(undefined),
   tags: z.array(z.coerce.number()).optional().catch(undefined),
-  offset: z.coerce.number().optional().catch(undefined),
 });
-
-const offsetSchema = z.coerce
-  .number()
-  .transform((value) => Math.floor(value / pageSize) + 1);
 
 const pageSize = 8;
 
 export default function Page() {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const { offset, intermidiatePage, setCurrentPage } =
+    useSearchParamsPagination({ size: pageSize });
+
   const updateFilters = debounce(
     (...args: Parameters<typeof setSearchParams>) => setSearchParams(...args),
     300,
-  );
-
-  const [currentPage, setCurrentPage] = createSignal<number>(
-    offsetSchema.safeParse(searchParams.offset)?.data ?? 1,
   );
 
   const validatedSearchParams = () => {
@@ -58,7 +46,6 @@ export default function Page() {
         : searchParams.tags
           ? [searchParams.tags]
           : undefined,
-      offset: searchParams.offset,
     });
     if (!result.success) {
       return undefined;
@@ -69,15 +56,12 @@ export default function Page() {
   const posts = createAsync(() =>
     getPosts({
       ...validatedSearchParams(),
+      offset: offset(),
       limit: pageSize,
     }),
   );
 
   const pagesCount = () => Math.ceil((posts()?.total ?? 0) / pageSize);
-
-  createEffect(() => {
-    setCurrentPage(offsetSchema.safeParse(searchParams.offset)?.data ?? 1);
-  });
 
   return (
     <>
@@ -203,13 +187,10 @@ export default function Page() {
       <Suspense>
         <Show when={pagesCount() > 1}>
           <div class="mt-auto flex justify-center">
-            <BlogPagination
+            <CommonPagination
               count={pagesCount()}
-              page={currentPage()}
-              onPageChange={(page) => {
-                setCurrentPage(page);
-                updateFilters({ offset: (page - 1) * pageSize });
-              }}
+              page={intermidiatePage()}
+              onPageChange={setCurrentPage}
             />
           </div>
         </Show>

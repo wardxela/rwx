@@ -17,10 +17,13 @@ export const getPosts = query(
   "/blog/posts",
 );
 
-export const getMyPosts = query(async () => {
-  const response = await api.GET("/blog/my-posts");
-  return response.data;
-}, "/blog/my-posts");
+export const getMyPosts = query(
+  async (query?: paths["/blog/posts/mine"]["get"]["parameters"]["query"]) => {
+    const response = await api.GET("/blog/posts/mine", { params: { query } });
+    return response.data;
+  },
+  "/blog/posts/mine",
+);
 
 export const getBlogCategories = query(async () => {
   const response = await api.GET("/blog/categories");
@@ -64,3 +67,23 @@ export const uploadFileAction = action(async (formData: FormData) => {
   }
   return json(image.data?.url, { revalidate: "nothing" });
 }, "/files/upload:post");
+
+export const getCourses = query(
+  async (query?: paths["/courses"]["get"]["parameters"]["query"]) => {
+    const response = await api.GET("/courses", {
+      params: { query },
+    });
+    return response.data;
+  },
+  "/courses",
+);
+
+export const getMyCourses = query(
+  async (query?: paths["/courses/mine"]["get"]["parameters"]["query"]) => {
+    const response = await api.GET("/courses/mine", {
+      params: { query },
+    });
+    return response.data;
+  },
+  "/courses/mine",
+);

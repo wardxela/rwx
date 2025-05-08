@@ -2,11 +2,10 @@ import {
   action,
   createAsync,
   json,
-  query,
   redirect,
   useSubmission,
 } from "@solidjs/router";
-import { For, Suspense } from "solid-js";
+import { For, Show, Suspense, createSignal } from "solid-js";
 import { z } from "zod";
 import api from "#api";
 import { PostLink, PostLinkSkeleton } from "#features/blog/post-link";
@@ -21,7 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "#ui/dialog";
-import { Skeleton } from "#ui/skeleton";
+import { CommonPagination, useSearchParamsPagination } from "#ui/pagination";
 import {
   TextField,
   TextFieldErrorMessage,
@@ -43,7 +42,7 @@ const createPost = action(async (formData: FormData) => {
       errors: data.error.errors,
     });
   }
-  const response = await api.POST("/blog", {
+  const response = await api.POST("/blog/posts", {
     body: data.data,
   });
   if (!response.data) {
@@ -52,22 +51,34 @@ const createPost = action(async (formData: FormData) => {
       errors: [],
     });
   }
-  return redirect(`/author/blog/${response.data.id}`, {
+  return redirect(`/author/blog/${response.data}`, {
     revalidate: [getPosts.key, getMyPosts.key],
   });
-}, "/blog:post");
+}, "/blog/posts:post");
+
+const pageSize = 8;
 
 export default function Page() {
-  const posts = createAsync(() => getMyPosts());
   const submission = useSubmission(createPost);
+  const { offset, intermidiatePage, setCurrentPage } =
+    useSearchParamsPagination({ size: pageSize });
+
+  const posts = createAsync(() =>
+    getMyPosts({
+      limit: pageSize,
+      offset: offset(),
+    }),
+  );
 
   const titleError = () =>
     submission.result?.errors?.find((error) => error.path.includes("title"));
 
+  const pagesCount = () => Math.ceil((posts()?.total ?? 0) / pageSize);
+
   return (
-    <div class="px-10 py-8">
+    <div class="flex h-full flex-col px-10 py-8">
       <div class="mb-6 flex items-center justify-between">
-        <h1 class="font-bold">Блог</h1>
+        <h1 class="font-bold text-2xl">Блог</h1>
         <Dialog>
           <DialogTrigger as={Button}>Создать</DialogTrigger>
           <DialogContent>
@@ -113,19 +124,32 @@ export default function Page() {
           </>
         }
       >
-        <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
-          <For each={posts()?.page}>
-            {(post) => (
-              <PostLink
-                link={`/author/blog/${post.id}`}
-                title={post.title}
-                excerpt={post.excerpt}
-                updatedAt={post.updatedAt}
-                image={post.image}
-              />
-            )}
-          </For>
-        </div>
+        <Show when={posts()?.page.length} fallback="У вас нет записей">
+          <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
+            <For each={posts()?.page}>
+              {(post) => (
+                <PostLink
+                  link={`/author/blog/${post.id}`}
+                  title={post.title}
+                  excerpt={post.excerpt}
+                  updatedAt={post.updatedAt}
+                  image={post.image}
+                />
+              )}
+            </For>
+          </div>
+        </Show>
+      </Suspense>
+      <Suspense>
+        <Show when={pagesCount() > 1}>
+          <div class="mt-auto flex justify-center">
+            <CommonPagination
+              count={pagesCount()}
+              page={intermidiatePage()}
+              onPageChange={setCurrentPage}
+            />
+          </div>
+        </Show>
       </Suspense>
     </div>
   );

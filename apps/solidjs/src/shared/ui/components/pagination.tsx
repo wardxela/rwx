@@ -1,9 +1,12 @@
 import type { JSX, ValidComponent } from "solid-js";
-import { Show, splitProps } from "solid-js";
+import { Show, createEffect, createSignal, splitProps } from "solid-js";
 
 import * as PaginationPrimitive from "@kobalte/core/pagination";
 import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 
+import { debounce } from "@solid-primitives/scheduled";
+import { useSearchParams } from "@solidjs/router";
+import { z } from "zod";
 import { cn } from "#ui/utils";
 import { buttonVariants } from "./button";
 
@@ -185,6 +188,81 @@ const PaginationNext = <T extends ValidComponent = "button">(
     </PaginationPrimitive.Next>
   );
 };
+
+export type CommonPaginationProps = {
+  count: number;
+  page: number;
+  onPageChange: (page: number) => void;
+};
+
+const offsetSchema = z.coerce.number().default(0);
+
+export interface UseSearchParamsPaginationParams {
+  size: number;
+}
+
+export function useSearchParamsPagination(
+  params: UseSearchParamsPaginationParams,
+) {
+  const size = () => params.size;
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const setSearchParamsDebounced = debounce(
+    (...args: Parameters<typeof setSearchParams>) => setSearchParams(...args),
+    300,
+  );
+
+  const offset = () => {
+    const result = offsetSchema.safeParse(searchParams.offset);
+    if (!result.success) {
+      return 0;
+    }
+    return result.data;
+  };
+
+  const currentPage = () => {
+    return Math.floor(offset() / size()) + 1;
+  };
+
+  const [intermidiatePage, setIntermidiatePage] = createSignal<number>(
+    currentPage(),
+  );
+
+  const setCurrentPage = (page: number) => {
+    setIntermidiatePage(page);
+    setSearchParamsDebounced({ offset: (page - 1) * size() });
+  };
+
+  createEffect(() => {
+    setIntermidiatePage(currentPage());
+  });
+
+  return {
+    offset,
+    intermidiatePage,
+    setCurrentPage,
+  };
+}
+
+export function CommonPagination(props: CommonPaginationProps) {
+  return (
+    <Pagination
+      fixedItems
+      itemComponent={(props) => (
+        <PaginationItem page={props.page}>{props.page}</PaginationItem>
+      )}
+      ellipsisComponent={() => <PaginationEllipsis />}
+      count={props.count}
+      page={props.page}
+      onPageChange={props.onPageChange}
+    >
+      <PaginationPrevious />
+      <PaginationItems />
+      <PaginationNext />
+    </Pagination>
+  );
+}
 
 export {
   Pagination,

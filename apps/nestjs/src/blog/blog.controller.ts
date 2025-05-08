@@ -10,19 +10,20 @@ import {
   Put,
   Query,
   Req,
+  Res,
   UseGuards,
 } from "@nestjs/common";
-import { Request } from "express";
+import { Request, Response } from "express";
 import { Roles } from "src/auth/guards/roles.decorator";
 import { SessionGuard } from "src/auth/guards/session.guard";
 import { CategoriesService } from "src/categories/categories.service";
 import { BlogService } from "./blog.service";
+import { CommentCreateDto } from "./dto/comment-create.dto";
 import { CommentDto } from "./dto/comment.dto";
-import { CreatePostDto } from "./dto/create-post.dto";
-import { LeaveCommentDto } from "./dto/leave-comment.dto";
+import { PostCreateDto } from "./dto/post-create.dto";
 import { PostFiltersDto } from "./dto/post-filters.dto";
+import { PostUpdateDto } from "./dto/post-update.dto";
 import { PostDto, PostsDto } from "./dto/post.dto";
-import { UpdateBlogPostDto } from "./dto/update-blog-post.dto";
 
 @Controller("blog")
 export class BlogController {
@@ -31,23 +32,51 @@ export class BlogController {
     private readonly categoriesService: CategoriesService,
   ) {}
 
-  @Post()
+  @Post("posts")
   @Roles(["INSTRUCTOR"])
   @UseGuards(SessionGuard)
   async createPost(
     @Req() req: Request,
-    @Body() blogPost: CreatePostDto,
-  ): Promise<PostDto> {
-    return this.service.createPost(req.user!.id, blogPost);
+    @Res() res: Response,
+    @Body() blogPost: PostCreateDto,
+  ) {
+    return res.json(await this.service.createPost(req.user!.id, blogPost));
   }
 
-  @Get("my-posts")
+  @Put("posts/:id")
   @Roles(["INSTRUCTOR"])
   @UseGuards(SessionGuard)
-  async getMyPosts(@Req() req: Request): Promise<PostsDto> {
-    return this.service.getPosts({
-      authorId: req.user!.id,
-    });
+  async updatePost(
+    @Param("id") id: string,
+    @Body() updateData: PostUpdateDto,
+    @Req() req: Request,
+  ): Promise<boolean> {
+    const post = await this.service.getPost(id);
+    if (!post) {
+      throw new NotFoundException(`Post with id ${id} not found`);
+    }
+    if (post.author.id !== req.user!.id) {
+      throw new ForbiddenException("You are not the author of this post");
+    }
+    await this.service.updatePost(id, updateData);
+    return true;
+  }
+
+  @Delete("posts/:id")
+  @Roles(["INSTRUCTOR"])
+  @UseGuards(SessionGuard)
+  async deletePost(
+    @Req() req: Request,
+    @Param("id") id: string,
+  ): Promise<boolean> {
+    const post = await this.service.getPost(id);
+    if (!post) {
+      throw new NotFoundException(`Post with id ${id} not found`);
+    }
+    if (post.author.id !== req.user!.id) {
+      throw new ForbiddenException("You are not the author of this post");
+    }
+    return this.service.deletePost(id);
   }
 
   @Get("posts")
@@ -55,6 +84,19 @@ export class BlogController {
     return this.service.getPosts({
       ...filters,
       published: true,
+    });
+  }
+
+  @Get("posts/mine")
+  @Roles(["INSTRUCTOR"])
+  @UseGuards(SessionGuard)
+  async getMyPosts(
+    @Req() req: Request,
+    @Query() filters: PostFiltersDto,
+  ): Promise<PostsDto> {
+    return this.service.getPosts({
+      ...filters,
+      authorId: req.user!.id,
     });
   }
 
@@ -83,7 +125,7 @@ export class BlogController {
   async leavePostComment(
     @Req() req: Request,
     @Param("id") postId: string,
-    @Body() blogPost: LeaveCommentDto,
+    @Body() blogPost: CommentCreateDto,
   ): Promise<boolean> {
     const isLeft = this.service.leaveComment(req.user!.id, postId, blogPost);
     if (!isLeft) {
@@ -95,41 +137,5 @@ export class BlogController {
   @Get("categories")
   getCategories() {
     return this.categoriesService.findAllWithPublishedPostsCount();
-  }
-
-  @Delete("posts/:id")
-  @Roles(["INSTRUCTOR"])
-  @UseGuards(SessionGuard)
-  async deletePost(
-    @Req() req: Request,
-    @Param("id") id: string,
-  ): Promise<boolean> {
-    const post = await this.service.getPost(id);
-    if (!post) {
-      throw new NotFoundException(`Post with id ${id} not found`);
-    }
-    if (post.author.id !== req.user!.id) {
-      throw new ForbiddenException("You are not the author of this post");
-    }
-    return this.service.deletePost(id);
-  }
-
-  @Put("posts/:id")
-  @Roles(["INSTRUCTOR"])
-  @UseGuards(SessionGuard)
-  async updatePost(
-    @Param("id") id: string,
-    @Body() updateData: UpdateBlogPostDto,
-    @Req() req: Request,
-  ): Promise<boolean> {
-    const post = await this.service.getPost(id);
-    if (!post) {
-      throw new NotFoundException(`Post with id ${id} not found`);
-    }
-    if (post.author.id !== req.user!.id) {
-      throw new ForbiddenException("You are not the author of this post");
-    }
-    await this.service.updatePost(id, updateData);
-    return true;
   }
 }

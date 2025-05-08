@@ -127,38 +127,6 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/blog": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post: operations["BlogController_createPost"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/blog/my-posts": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: operations["BlogController_getMyPosts"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   "/blog/posts": {
     parameters: {
       query?: never;
@@ -168,7 +136,7 @@ export interface paths {
     };
     get: operations["BlogController_getAllPosts"];
     put?: never;
-    post?: never;
+    post: operations["BlogController_createPost"];
     delete?: never;
     options?: never;
     head?: never;
@@ -186,6 +154,22 @@ export interface paths {
     put: operations["BlogController_updatePost"];
     post?: never;
     delete: operations["BlogController_deletePost"];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/blog/posts/mine": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["BlogController_getMyPosts"];
+    put?: never;
+    post?: never;
+    delete?: never;
     options?: never;
     head?: never;
     patch?: never;
@@ -287,6 +271,54 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/courses": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["CoursesController_getAllCourses"];
+    put?: never;
+    post: operations["CoursesController_createCourse"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/courses/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put: operations["CoursesController_updateCourse"];
+    post?: never;
+    delete: operations["CoursesController_deleteCourse"];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/courses/mine": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["CoursesController_getMyCourses"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -314,8 +346,18 @@ export interface components {
     FileDto: {
       url: string;
     };
-    CreatePostDto: {
+    PostCreateDto: {
       title: string;
+    };
+    PostUpdateDto: {
+      title?: string;
+      content?: Record<string, never>;
+      excerpt?: string;
+      /** Format: uri */
+      image?: string;
+      published?: boolean;
+      categoryId?: number;
+      tags?: number[];
     };
     PostAuthorDto: {
       id: string;
@@ -370,7 +412,7 @@ export interface components {
       /** Format: date-time */
       updatedAt: string;
     };
-    LeaveCommentDto: {
+    CommentCreateDto: {
       content: string;
     };
     CategoryDtoCounted: {
@@ -378,16 +420,6 @@ export interface components {
       name: string;
       description?: string | null;
       count: Record<string, never>;
-    };
-    UpdateBlogPostDto: {
-      title?: string;
-      content?: Record<string, never>;
-      excerpt?: string;
-      /** Format: uri */
-      image?: string;
-      published?: boolean;
-      categoryId?: number;
-      tags?: number[];
     };
     SendMessageDto: {
       name: string;
@@ -402,6 +434,37 @@ export interface components {
       message: string;
       /** Format: date-time */
       createdAt: string;
+    };
+    CourseCreateDto: {
+      title: string;
+    };
+    CourseDto: {
+      id: string;
+      title: string;
+      description: string;
+      price: number;
+      oldPrice?: number;
+      image: string | null;
+      published: boolean;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      author: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        image: string | null;
+        bio: string | null;
+      };
+      duration: number;
+      studentsCount: number;
+      lessonsCount: number;
+      category?: components["schemas"]["CategoryDto"];
+    };
+    CoursesDto: {
+      page: components["schemas"]["CourseDto"][];
+      total: number;
     };
   };
   responses: never;
@@ -579,48 +642,6 @@ export interface operations {
       };
     };
   };
-  BlogController_createPost: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreatePostDto"];
-      };
-    };
-    responses: {
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["PostDto"];
-        };
-      };
-    };
-  };
-  BlogController_getMyPosts: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["PostsDto"];
-        };
-      };
-    };
-  };
   BlogController_getAllPosts: {
     parameters: {
       query?: {
@@ -643,6 +664,27 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["PostsDto"];
         };
+      };
+    };
+  };
+  BlogController_createPost: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PostCreateDto"];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
     };
   };
@@ -678,7 +720,7 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["UpdateBlogPostDto"];
+        "application/json": components["schemas"]["PostUpdateDto"];
       };
     };
     responses: {
@@ -709,6 +751,31 @@ export interface operations {
         };
         content: {
           "application/json": boolean;
+        };
+      };
+    };
+  };
+  BlogController_getMyPosts: {
+    parameters: {
+      query?: {
+        search?: string;
+        tags?: number[];
+        categories?: number[];
+        limit?: number;
+        offset?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["PostsDto"];
         };
       };
     };
@@ -745,7 +812,7 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["LeaveCommentDto"];
+        "application/json": components["schemas"]["CommentCreateDto"];
       };
     };
     responses: {
@@ -875,6 +942,123 @@ export interface operations {
         };
         content: {
           "application/json": boolean;
+        };
+      };
+    };
+  };
+  CoursesController_getAllCourses: {
+    parameters: {
+      query?: {
+        search?: string;
+        authors?: string[];
+        categories?: number[];
+        minPrice?: number;
+        maxPrice?: number;
+        rating?: number;
+        limit?: number;
+        offset?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CoursesDto"];
+        };
+      };
+    };
+  };
+  CoursesController_createCourse: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CourseCreateDto"];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  CoursesController_updateCourse: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  CoursesController_deleteCourse: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": boolean;
+        };
+      };
+    };
+  };
+  CoursesController_getMyCourses: {
+    parameters: {
+      query?: {
+        search?: string;
+        authors?: string[];
+        categories?: number[];
+        minPrice?: number;
+        maxPrice?: number;
+        rating?: number;
+        limit?: number;
+        offset?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CoursesDto"];
         };
       };
     };

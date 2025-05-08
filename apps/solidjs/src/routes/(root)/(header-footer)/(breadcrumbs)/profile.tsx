@@ -1,18 +1,7 @@
 import type { RouteSectionProps } from "@solidjs/router";
-import { clientOnly } from "@solidjs/start";
 import { Authenticated } from "#features/auth/guards";
-
-const SidebarProvider = clientOnly(() =>
-  import("#ui/sidebar").then((module) => ({
-    default: module.SidebarProvider,
-  })),
-);
-
-const UserSidebar = clientOnly(() =>
-  import("#widgets/user/sidebar").then((module) => ({
-    default: module.UserSidebar,
-  })),
-);
+import { SidebarProvider } from "#ui/sidebar";
+import { UserSidebar } from "#widgets/user/sidebar";
 
 export default function Layout(props: RouteSectionProps) {
   return (

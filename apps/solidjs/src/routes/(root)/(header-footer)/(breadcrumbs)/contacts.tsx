@@ -109,9 +109,7 @@ export default function Page() {
               </div>
               <div class="flex flex-col justify-between">
                 <div class="text-neutral-600 leading-7">Email</div>
-                <div class="font-medium leading-tight">
-                  contact@wardxela.com
-                </div>
+                <div class="font-medium leading-tight">wardxela@gmail.com</div>
               </div>
             </div>
           </div>

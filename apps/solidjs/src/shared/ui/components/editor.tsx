@@ -40,5 +40,9 @@ export const Editor: Component<EditorProps> = (props) => {
     editor.destroy();
   });
 
-  return <div id={id} />;
+  return (
+    <div class="rounded-xl border border-input p-16">
+      <div id={id} />
+    </div>
+  );
 };

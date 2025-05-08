@@ -1,11 +1,5 @@
 import type { RouteSectionProps } from "@solidjs/router";
-import { clientOnly } from "@solidjs/start";
-
-const Toaster = clientOnly(() =>
-  import("solid-sonner").then((module) => ({
-    default: module.Toaster,
-  })),
-);
+import { Toaster } from "solid-sonner";
 
 export default function Layout(props: RouteSectionProps) {
   return (

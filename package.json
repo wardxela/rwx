@@ -15,7 +15,8 @@
     "migrate": "bun --cwd packages/db migrate",
     "migrate:dev": "bun --cwd packages/db migrate:dev",
     "seed": "bun --cwd packages/db seed",
-    "build:api": "bun --cwd packages/api build:api",
+    "build:api": "bun --cwd packages/api build",
+    "build:db": "bun --cwd packages/db build",
     "ui-add": "turbo run ui-add",
     "prepare": "husky"
   },

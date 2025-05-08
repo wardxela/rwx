@@ -23,11 +23,6 @@ const links = [
     url: "/profile/courses",
     icon: null,
   },
-  {
-    title: "Отзывы",
-    url: "/profile/reviews",
-    icon: null,
-  },
 ];
 
 export function UserSidebar() {

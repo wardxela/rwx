@@ -112,10 +112,9 @@ model Tag {
 model Course {
   id          String   @id @default(dbgenerated("gen_random_uuid()"))
   title       String
-  slug        String   @unique
   description String   @db.Text
-  price       Decimal  @db.Decimal(10, 2)
-  oldPrice    Decimal? @db.Decimal(10, 2)
+  price       Float
+  oldPrice    Float?
   image       String?
   published   Boolean  @default(false)
   createdAt   DateTime @default(now())
@@ -127,18 +126,19 @@ model Course {
   // Relations
   authorId    String
   author      User               @relation(fields: [authorId], references: [id])
-  categoryId  Int
-  category    Category           @relation(fields: [categoryId], references: [id])
+  categoryId  Int?
+  category    Category?          @relation(fields: [categoryId], references: [id])
   modules     Module[]
   enrollments CourseEnrollment[]
   reviews     CourseReview[]
 }
 
 model Module {
-  id          String  @id @default(dbgenerated("gen_random_uuid()"))
-  title       String
-  description String? @db.Text
-  position    Int
+  id        String   @id @default(dbgenerated("gen_random_uuid()"))
+  title     String
+  position  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
   courseId String
@@ -147,11 +147,13 @@ model Module {
 }
 
 model Lesson {
-  id       String @id @default(dbgenerated("gen_random_uuid()"))
-  title    String
-  content  String @db.Text
-  position Int
-  duration Int? // Duration in minutes
+  id        String   @id @default(dbgenerated("gen_random_uuid()"))
+  title     String
+  content   Json
+  position  Int
+  duration  Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
   moduleId String

@@ -10,7 +10,7 @@ import {
   json,
   useSubmission,
 } from "@solidjs/router";
-import { isValid, z } from "zod";
+import { z } from "zod";
 import api from "#api";
 import { AuthShow } from "#features/auth/guards";
 import { NotFound } from "#features/site/not-found";

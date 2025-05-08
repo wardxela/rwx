@@ -1,16 +1,46 @@
 import { A, createAsync } from "@solidjs/router";
-import { type Component, For, type JSX, Suspense } from "solid-js";
+import { type Component, For, type JSX, Show, Suspense } from "solid-js";
 
 import { Button } from "#ui/button";
 
 import { PostLink, PostLinkSkeleton } from "#features/blog/post-link";
-import { CourseCardLink } from "#features/course/course-card-link";
+import {
+  CourseCardLink,
+  CourseLinkSkeleton,
+} from "#features/course/course-card-link";
 import {
   CourseCategoryLink,
   type CourseCategoryLinkProps,
 } from "#features/course/course-category-card-link";
 import { SiteTitle } from "#features/site/site-title";
-import { getPosts } from "#queries";
+import { getCourses, getPosts } from "#queries";
+
+const staticReviews = [
+  {
+    quote:
+      "Платформа удобная и интуитивно понятная. Прошёл курс по веб-разработке — всё структурировано и доступно.",
+    author: "Иван Петров",
+    position: "Фронтенд-разработчик",
+  },
+  {
+    quote:
+      "Очень понравился подход к обучению: теория чередуется с практикой, а преподаватели всегда на связи.",
+    author: "Екатерина Смирнова",
+    position: "Преподаватель английского",
+  },
+  {
+    quote:
+      "Прошёл несколько курсов по маркетингу — теперь использую полученные знания в работе. Отличный ресурс!",
+    author: "Алексей Воронов",
+    position: "SMM-специалист",
+  },
+  {
+    quote:
+      "Учиться на платформе комфортно даже с телефона. Приятный интерфейс и полезный контент.",
+    author: "Мария Козлова",
+    position: "Студентка",
+  },
+];
 
 export default function Page() {
   return (
@@ -67,55 +97,12 @@ export default function Page() {
               title="Рекомендуемые Курсы"
               description="Ознакомьтесь с нашими популярными курсами"
               action={
-                <Button size="lg" variant="outline">
+                <Button as={A} href="/courses" size="lg" variant="outline">
                   Все Курсы
                 </Button>
               }
             />
-            <div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 sm:gap-7 md:grid-cols-[repeat(auto-fill,minmax(350px,1fr))]">
-              <CourseCardLink
-                href="/courses/1"
-                preview="/course-preview.png"
-                author="Артем Неизвестный"
-                title="Создай веб-сайт с помощью  LMS plugin"
-                category="Фотосъемка"
-                durationMs={2 * 2592000000}
-                studentsCount={156}
-                oldPrice={19999}
-                price={0}
-              />
-              <CourseCardLink
-                href="/courses/1"
-                preview="/course-preview.png"
-                author="Артем Неизвестный"
-                title="Создай веб-сайт с помощью  LMS plugin"
-                category="Фотосъемка"
-                durationMs={5 * 604800000}
-                studentsCount={101}
-                oldPrice={19999}
-                price={11999}
-              />
-              <CourseCardLink
-                href="/courses/1"
-                preview="/course-preview.png"
-                author="Артем Неизвестный"
-                title="Создай веб-сайт с помощью  LMS plugin"
-                category="Фотосъемка"
-                durationMs={4 * 604800000}
-                studentsCount={102}
-                price={29999}
-              />
-              <CourseCardLink
-                href="/courses/1"
-                preview="/course-preview.png"
-                author="Артем Неизвестный"
-                title="Создай веб-сайт с помощью  LMS plugin"
-                category="Фотосъемка"
-                durationMs={2592000000}
-                studentsCount={40}
-                price={0}
-              />
-            </div>
+            <FavouriteCourses />
           </div>
         </section>
         <div class="relative">
@@ -217,57 +204,20 @@ export default function Page() {
               Что студенты говорят о ЧИП
             </div>
             <div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 sm:gap-7 md:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-              <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
-                <img src="/quote.svg" alt="quote" class="mb-5 w-10" />
-                <div class="mb-7 text-lg leading-7">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s. Lorem Ipsum is
-                  simply dummy text of the printing and typesetting industry.
-                  Lorem Ipsum has been the industry's standard dummy text ever
-                  since the 1500s.
-                </div>
-                <div class="mt-auto mb-2 font-semibold text-xl capitalize">
-                  Кто-то там
-                </div>
-                <div class="text-lg text-neutral-600 leading-7">Дизайнер</div>
-              </div>
-              <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
-                <img src="/quote.svg" alt="quote" class="mb-5 w-10" />
-                <div class="mb-7 text-lg leading-7">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s.
-                </div>
-                <div class="mt-auto mb-2 font-semibold text-xl capitalize">
-                  Кто-то там
-                </div>
-                <div class="text-lg text-neutral-600 leading-7">Дизайнер</div>
-              </div>
-              <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
-                <img src="/quote.svg" alt="quote" class="mb-5 w-10" />
-                <div class="mb-7 text-lg leading-7">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s.
-                </div>
-                <div class="mt-auto mb-2 font-semibold text-xl capitalize">
-                  Кто-то там
-                </div>
-                <div class="text-lg text-neutral-600 leading-7">Дизайнер</div>
-              </div>
-              <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
-                <img src="/quote.svg" alt="quote" class="mb-5 w-10" />
-                <div class="mb-7 text-lg leading-7">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s.
-                </div>
-                <div class="mt-auto mb-2 font-semibold text-xl capitalize">
-                  Кто-то там
-                </div>
-                <div class="text-lg text-neutral-600 leading-7">Дизайнер</div>
-              </div>
+              <For each={staticReviews}>
+                {(review) => (
+                  <div class="flex flex-col justify-start rounded-3xl border border-gray-200 px-8 py-10">
+                    <img src="/quote.svg" alt="quote" class="mb-5 w-10" />
+                    <div class="mb-7 text-lg leading-7">{review.quote}</div>
+                    <div class="mt-auto mb-2 font-semibold text-xl capitalize">
+                      {review.author}
+                    </div>
+                    <div class="text-lg text-neutral-600 leading-7">
+                      {review.position}
+                    </div>
+                  </div>
+                )}
+              </For>
             </div>
           </div>
         </section>
@@ -318,6 +268,29 @@ export default function Page() {
     </>
   );
 }
+
+const FavouriteCourses = () => {
+  const courses = createAsync(() => getCourses({ limit: 4 }));
+  return (
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 sm:gap-7 md:grid-cols-[repeat(auto-fill,minmax(350px,1fr))]">
+      <Suspense
+        fallback={
+          <For each={Array.from({ length: 4 })}>
+            {() => <CourseLinkSkeleton />}
+          </For>
+        }
+      >
+        <Show when={courses()?.page.length} fallback="Ничего не найдено">
+          <For each={courses()?.page}>
+            {(post) => (
+              <CourseCardLink href={`/courses/${post.id}`} data={post} />
+            )}
+          </For>
+        </Show>
+      </Suspense>
+    </div>
+  );
+};
 
 const RecentPosts = () => {
   const posts = createAsync(() => getPosts({ limit: 4 }));
