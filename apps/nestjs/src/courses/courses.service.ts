@@ -9,7 +9,7 @@ import {
   CourseHiddenFilters,
 } from "./dto/course-filters.dto";
 import { CourseUpdateDto } from "./dto/course-update.dto";
-import { CoursesDto } from "./dto/course.dto";
+import { CourseDto, CoursesDto } from "./dto/course.dto";
 import { LessonUpdateDto } from "./dto/lesson-update.dto";
 import { ModuleCreateDto } from "./dto/module-create.dto";
 
@@ -94,7 +94,7 @@ export class CoursesService {
     return (result?.maxPosition ?? 0) + 1;
   }
 
-  async getCourse(id: string) {
+  async getCourse(id: string): Promise<CourseDto | null> {
     const course = await this.db
       .selectFrom("Course")
       .leftJoin("User", "User.id", "Course.authorId")
@@ -102,6 +102,7 @@ export class CoursesService {
       .leftJoin("Module", "Module.courseId", "Course.id")
       .leftJoin("Lesson", "Lesson.moduleId", "Module.id")
       .leftJoin("CourseEnrollment", "CourseEnrollment.courseId", "Course.id")
+      .leftJoin("CourseReview", "CourseReview.courseId", "Course.id")
       .select(({ fn }) => [
         "Course.id",
         "Course.title",
@@ -123,6 +124,7 @@ export class CoursesService {
         fn.count("CourseEnrollment.id").as("studentsCount"),
         fn.sum("Lesson.duration").as("duration"),
         fn.count("Lesson.id").as("lessonsCount"),
+        fn.avg("CourseReview.rating").as("averageRating"),
       ])
       .where("Course.id", "=", id)
       .groupBy(["Course.id", "User.id", "Category.id"])
@@ -161,6 +163,7 @@ export class CoursesService {
       duration: Number(course.duration),
       studentsCount: Number(course.studentsCount),
       lessonsCount: Number(course.lessonsCount),
+      averageRating: Number(course.averageRating),
     };
   }
 
@@ -263,6 +266,7 @@ export class CoursesService {
       .leftJoin("Module", "Module.courseId", "Course.id")
       .leftJoin("Lesson", "Lesson.moduleId", "Module.id")
       .leftJoin("CourseEnrollment", "CourseEnrollment.courseId", "Course.id")
+      .leftJoin("CourseReview", "CourseReview.courseId", "Course.id")
       .select(({ fn }) => [
         "Course.id",
         "Course.title",
@@ -284,6 +288,7 @@ export class CoursesService {
         fn.count("CourseEnrollment.id").as("studentsCount"),
         fn.sum("Lesson.duration").as("duration"),
         fn.count("Lesson.id").as("lessonsCount"),
+        fn.avg("CourseReview.rating").as("averageRating"),
       ])
       .where(
         "Course.id",
@@ -324,6 +329,7 @@ export class CoursesService {
         duration: Number(course.duration),
         studentsCount: Number(course.studentsCount),
         lessonsCount: Number(course.lessonsCount),
+        averageRating: Number(course.averageRating),
       })),
       total: Number(total.count),
     };

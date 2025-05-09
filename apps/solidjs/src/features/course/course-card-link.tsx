@@ -53,7 +53,7 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
           <h6 class="mb-4 font-semibold @xl:text-xl text-lg">
             {props.data.title}
           </h6>
-          <div class="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2.5">
+          <div class="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2.5">
             <div class="flex items-center gap-1.5">
               <svg
                 width="16"
@@ -71,7 +71,9 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
                   clip-rule="evenodd"
                 />
               </svg>
-              <div class="text-neutral-600 text-sm">{durationText()}</div>
+              <div class="text-neutral-600 text-sm leading-4">
+                {durationText()}
+              </div>
             </div>
             <div class="flex items-center gap-1.5">
               <svg
@@ -91,7 +93,7 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
                 <path d="M22 10v6" />
                 <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
               </svg>
-              <div class="text-neutral-600 text-sm">
+              <div class="text-neutral-600 text-sm leading-4">
                 {props.data.studentsCount} {studentsText()}
               </div>
             </div>
@@ -115,13 +117,35 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
                   <path d="M8 8v12" />
                   <path d="M4 4v16" />
                 </svg>
-                <div class="text-neutral-600 text-sm">
+                <div class="text-neutral-600 text-sm leading-4">
                   {props.data.lessonsCount} {lessonsText()}
                 </div>
               </div>
             </Show>
+            <div class="flex items-center gap-1.5">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                class="text-primary"
+              >
+                <title>Rating</title>
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"
+                />
+              </svg>
+              <div class="text-neutral-600 text-sm leading-4">
+                {props.data.averageRating}
+              </div>
+            </div>
           </div>
-          <hr class="mt-auto mb-4 h-px border-gray-200" />
+          <hr class="my-4 h-px border-gray-200" />
           <div class="flex items-center justify-between">
             <div class="flex flex-wrap items-center gap-2 @xl:text-base text-sm">
               <Show when={props.data.oldPrice !== undefined}>

@@ -16,6 +16,7 @@ export class CourseDto {
   createdAt: Date;
   updatedAt: Date;
   faq?: unknown;
+  category?: CategoryDto;
   author: {
     id: string;
     firstName: string;
@@ -26,5 +27,5 @@ export class CourseDto {
   duration: number;
   studentsCount: number;
   lessonsCount: number;
-  category?: CategoryDto;
+  averageRating: number;
 }

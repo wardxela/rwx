@@ -483,6 +483,7 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
             faq?: Record<string, never>;
+            category?: components["schemas"]["CategoryDto"];
             author: {
                 id: string;
                 firstName: string;
@@ -493,7 +494,7 @@ export interface components {
             duration: number;
             studentsCount: number;
             lessonsCount: number;
-            category?: components["schemas"]["CategoryDto"];
+            averageRating: number;
         };
         CoursesDto: {
             page: components["schemas"]["CourseDto"][];
