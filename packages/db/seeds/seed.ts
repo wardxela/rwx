@@ -21,8 +21,12 @@ async function seed() {
     .onConflict((oc) => oc.column("name").doNothing())
     .execute();
 
-  // TODO: filter instructors
-  const instructors = await db.selectFrom("User").select("id").execute();
+  const instructors = await db
+    .selectFrom("User")
+    .select("id")
+    //@ts-expect-error
+    .where("roles", "@>", "{INSTRUCTOR}")
+    .execute();
 
   const getRandomInstructor = () =>
     instructors[Math.floor(Math.random() * instructors.length)];

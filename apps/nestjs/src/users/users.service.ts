@@ -3,6 +3,7 @@ import { Account, DB, User, UserRole } from "@rwx/db";
 import { Kysely, Selectable } from "kysely";
 import { InjectKysely } from "nestjs-kysely";
 import { FilesService } from "src/files/files.service";
+import { UserCountedDto, UserDto } from "./dto/get-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 
 export interface ProviderUserInfo {
@@ -128,6 +129,31 @@ export class UsersService {
       .returningAll()
       .executeTakeFirstOrThrow();
     return this.transformUser(user);
+  }
+
+  async getAllCourseAuthors(): Promise<UserCountedDto[]> {
+    return (
+      this.db
+        .selectFrom("User")
+        .leftJoin("Course", "Course.authorId", "User.id")
+        // @ts-expect-error
+        .where("roles", "@>", "{INSTRUCTOR}")
+        .select(({ fn }) => [
+          "User.id",
+          "User.bio",
+          "User.email",
+          "User.image",
+          "User.roles",
+          "User.firstName",
+          "User.lastName",
+          "User.createdAt",
+          "User.updatedAt",
+          fn.count("Course.id").as("count"),
+        ])
+        .groupBy("User.id")
+        .orderBy("count", "desc")
+        .execute()
+    );
   }
 }
 

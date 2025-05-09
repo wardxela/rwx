@@ -319,6 +319,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/courses/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CoursesController_getCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/courses/authors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CoursesController_getAuthors"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -466,6 +498,20 @@ export interface components {
         CoursesDto: {
             page: components["schemas"]["CourseDto"][];
             total: number;
+        };
+        UserCountedDto: {
+            id: string;
+            firstName: string;
+            lastName: string;
+            email?: string | null;
+            image: string | null;
+            bio: string | null;
+            roles: string[];
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            count: Record<string, never>;
         };
     };
     responses: never;
@@ -1081,6 +1127,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CoursesDto"];
+                };
+            };
+        };
+    };
+    CoursesController_getCategories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryDtoCounted"][];
+                };
+            };
+        };
+    };
+    CoursesController_getAuthors: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserCountedDto"][];
                 };
             };
         };

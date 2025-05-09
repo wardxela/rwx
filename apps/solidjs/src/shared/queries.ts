@@ -25,11 +25,6 @@ export const getMyPosts = query(
   "/blog/posts/mine",
 );
 
-export const getBlogCategories = query(async () => {
-  const response = await api.GET("/blog/categories");
-  return response.data ?? [];
-}, "/blog/categories");
-
 export const getPost = query(async (id: string) => {
   const response = await api.GET("/blog/posts/{id}", {
     params: { path: { id } },
@@ -51,6 +46,21 @@ export const getCategories = query(async () => {
   const response = await api.GET("/categories");
   return response.data ?? [];
 }, "/categories");
+
+export const getBlogCategories = query(async () => {
+  const response = await api.GET("/blog/categories");
+  return response.data ?? [];
+}, "/blog/categories");
+
+export const getCourseCategories = query(async () => {
+  const response = await api.GET("/courses/categories");
+  return response.data ?? [];
+}, "/courses/categories");
+
+export const getCourseAuthors = query(async () => {
+  const response = await api.GET("/courses/authors");
+  return response.data ?? [];
+}, "/courses/authors");
 
 export const getTags = query(async () => {
   const response = await api.GET("/tags");

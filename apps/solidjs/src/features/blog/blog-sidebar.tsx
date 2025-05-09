@@ -132,32 +132,14 @@ function CategoriesFilters(props: CategoriesFiltersProps) {
       <ul class="space-y-2">
         <Suspense
           fallback={
-            <>
-              <li class="flex h-6 gap-2">
-                <Skeleton class="grow" />
-                <Skeleton class="w-5" />
-              </li>
-              <li class="flex h-6 gap-2">
-                <Skeleton class="grow" />
-                <Skeleton class="w-5" />
-              </li>
-              <li class="flex h-6 gap-2">
-                <Skeleton class="grow" />
-                <Skeleton class="w-5" />
-              </li>
-              <li class="flex h-6 gap-2">
-                <Skeleton class="grow" />
-                <Skeleton class="w-5" />
-              </li>
-              <li class="flex h-6 gap-2">
-                <Skeleton class="grow" />
-                <Skeleton class="w-5" />
-              </li>
-              <li class="flex h-6 gap-2">
-                <Skeleton class="grow" />
-                <Skeleton class="w-5" />
-              </li>
-            </>
+            <For each={Array.from({ length: 6 })}>
+              {() => (
+                <li class="flex h-6 gap-2">
+                  <Skeleton class="grow" />
+                  <Skeleton class="w-5" />
+                </li>
+              )}
+            </For>
           }
         >
           <For each={showAll() ? categories() : categories()?.slice(0, 6)}>

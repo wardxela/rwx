@@ -26,4 +26,19 @@ export class CategoriesService {
       .orderBy("count", "desc")
       .execute();
   }
+
+  async findAllWithPublishedCoursesCount(): Promise<CategoryDtoCounted[]> {
+    return this.db
+      .selectFrom("Category")
+      .leftJoin("Course", "Course.categoryId", "Category.id")
+      .select(({ fn }) => [
+        "Category.id",
+        "Category.name",
+        "Category.description",
+        fn.count("Course.id").as("count"),
+      ])
+      .groupBy("Category.id")
+      .orderBy("count", "desc")
+      .execute();
+  }
 }

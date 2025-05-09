@@ -16,6 +16,9 @@ import {
 import { Request, Response } from "express";
 import { Roles } from "src/auth/guards/roles.decorator";
 import { SessionGuard } from "src/auth/guards/session.guard";
+import { CategoriesService } from "src/categories/categories.service";
+import { UserCountedDto } from "src/users/dto/get-user.dto";
+import { UsersService } from "src/users/users.service";
 import { CoursesService } from "./courses.service";
 import { CourseCreateDto } from "./dto/course-create.dto";
 import { CourseFiltersDto } from "./dto/course-filters.dto";
@@ -24,7 +27,11 @@ import { CourseDto, CoursesDto } from "./dto/course.dto";
 
 @Controller("courses")
 export class CoursesController {
-  constructor(private readonly service: CoursesService) {}
+  constructor(
+    private readonly service: CoursesService,
+    private readonly categoriesService: CategoriesService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Post()
   @Roles(["INSTRUCTOR"])
@@ -52,21 +59,6 @@ export class CoursesController {
   @UseGuards(SessionGuard)
   async deleteCourse(@Param("id") id: string): Promise<boolean> {
     return this.service.deleteCourse(id);
-  }
-
-  @Get(":id")
-  async getCourse(
-    @Req() req: Request,
-    @Param("id") id: string,
-  ): Promise<CourseDto> {
-    const course = await this.service.getCourse(id);
-    if (!course) {
-      throw new NotFoundException(`Course with id ${id} not found`);
-    }
-    if (!course.published && course.author.id !== req?.user?.id) {
-      throw new ForbiddenException("The post is not available yet");
-    }
-    return course;
   }
 
   @Get()
@@ -109,4 +101,29 @@ export class CoursesController {
   // ): Promise<void> {
   //   await this.service.updateLesson(lessonId, data);
   // }
+
+  @Get("categories")
+  getCategories() {
+    return this.categoriesService.findAllWithPublishedCoursesCount();
+  }
+
+  @Get("authors")
+  getAuthors(): Promise<UserCountedDto[]> {
+    return this.usersService.getAllCourseAuthors();
+  }
+
+  @Get(":id")
+  async getCourse(
+    @Req() req: Request,
+    @Param("id") id: string,
+  ): Promise<CourseDto> {
+    const course = await this.service.getCourse(id);
+    if (!course) {
+      throw new NotFoundException(`Course with id ${id} not found`);
+    }
+    if (!course.published && course.author.id !== req?.user?.id) {
+      throw new ForbiddenException("The post is not available yet");
+    }
+    return course;
+  }
 }

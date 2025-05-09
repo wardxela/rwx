@@ -1,5 +1,7 @@
-import { createAsync } from "@solidjs/router";
+import { debounce } from "@solid-primitives/scheduled";
+import { createAsync, useSearchParams } from "@solidjs/router";
 import { For, Show, Suspense, createSignal } from "solid-js";
+import { z } from "zod";
 import {
   CourseCardLink,
   CourseLinkSkeleton,
@@ -17,16 +19,57 @@ const [isGridView, setIsGridView] = createSignal(true);
 
 const pageSize = 8;
 
+const querySchema = z.object({
+  search: z.string().optional().catch(undefined),
+  categories: z.array(z.coerce.number()).optional().catch(undefined),
+  authors: z.array(z.string()).optional().catch(undefined),
+  minPrice: z.coerce.number().optional().catch(undefined),
+  maxPrice: z.coerce.number().optional().catch(undefined),
+});
+
 export default function Page() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const updateFilters = debounce(
+    (...args: Parameters<typeof setSearchParams>) => setSearchParams(...args),
+    300,
+  );
+
   const { offset, intermidiatePage, setCurrentPage } =
     useSearchParamsPagination({ size: pageSize });
+
+  const validatedSearchParams = () => {
+    const result = querySchema.safeParse({
+      search: searchParams.search?.toString(),
+      categories: Array.isArray(searchParams.categories)
+        ? searchParams.categories
+        : searchParams.categories
+          ? [searchParams.categories]
+          : undefined,
+      authors: Array.isArray(searchParams.authors)
+        ? searchParams.authors
+        : searchParams.authors
+          ? [searchParams.authors]
+          : undefined,
+      minPrice: searchParams.minPrice,
+      maxPrice: searchParams.maxPrice,
+    });
+    if (!result.success) {
+      return undefined;
+    }
+    return result.data;
+  };
+
   const courses = createAsync(() =>
     getCourses({
+      ...validatedSearchParams(),
       limit: pageSize,
       offset: offset(),
     }),
   );
+
   const pagesCount = () => Math.ceil((courses()?.total ?? 0) / pageSize);
+
   return (
     <>
       <SiteTitle>Курсы</SiteTitle>
@@ -38,7 +81,16 @@ export default function Page() {
             </h1>
             <div class="flex items-center gap-2">
               <TextField>
-                <TextFieldInput type="search" placeholder="Поиск" />
+                <TextFieldInput
+                  ref={(el) => {
+                    el.value = searchParams.search?.toString() ?? "";
+                  }}
+                  type="search"
+                  placeholder="Поиск"
+                  onInput={(e) =>
+                    updateFilters({ search: e.currentTarget.value })
+                  }
+                />
               </TextField>
               <Toggle
                 pressed={isGridView()}
