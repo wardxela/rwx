@@ -12,6 +12,7 @@ import { CourseUpdateDto } from "./dto/course-update.dto";
 import { CourseDto, CoursesDto } from "./dto/course.dto";
 import { LessonUpdateDto } from "./dto/lesson-update.dto";
 import { ModuleCreateDto } from "./dto/module-create.dto";
+import { LessonDto, ModuleDto } from "./dto/module.dto";
 
 @Injectable()
 export class CoursesService {
@@ -333,5 +334,58 @@ export class CoursesService {
       })),
       total: Number(total.count),
     };
+  }
+
+  async getCourseStructure(id: string): Promise<ModuleDto[]> {
+    const modules = await this.db
+      .selectFrom("Module")
+      .where("Module.courseId", "=", id)
+      .selectAll("Module")
+      .orderBy("Module.position")
+      .execute();
+    const lessons = await this.db
+      .selectFrom("Lesson")
+      .where(
+        "Lesson.moduleId",
+        "in",
+        modules.map((m) => m.id),
+      )
+      .select([
+        "Lesson.id",
+        "Lesson.title",
+        "Lesson.position",
+        "Lesson.duration",
+        "Lesson.createdAt",
+        "Lesson.updatedAt",
+        "Lesson.moduleId",
+      ])
+      .orderBy(["Lesson.moduleId", "Lesson.position"])
+      .execute();
+    const lessonsByModule = lessons.reduce(
+      (acc, lesson) => {
+        if (!acc[lesson.moduleId]) {
+          acc[lesson.moduleId] = [];
+        }
+        acc[lesson.moduleId].push(lesson);
+        return acc;
+      },
+      {} as Record<string, typeof lessons>,
+    );
+    return modules.map((module) => ({
+      id: module.id,
+      title: module.title,
+      position: module.position,
+      lessons: lessonsByModule[module.id] || [],
+      createdAt: module.createdAt,
+      updatedAt: module.updatedAt,
+    }));
+  }
+
+  async getCourseLesson(lessonId: string): Promise<LessonDto> {
+    return this.db
+      .selectFrom("Lesson")
+      .where("Lesson.id", "=", lessonId)
+      .selectAll("Lesson")
+      .executeTakeFirstOrThrow();
   }
 }

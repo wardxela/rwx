@@ -107,3 +107,17 @@ export const getCourse = query(async (id: string) => {
   }
   return response.data;
 }, "/courses/{id}");
+
+export const getCourseStructure = query(async (id: string) => {
+  const response = await api.GET("/courses/{id}/structure", {
+    params: { path: { id } },
+  });
+  return response.data;
+}, "/courses/{id}/structure");
+
+export const getCourseLesson = query(async (id: string) => {
+  const response = await api.GET("/courses/lessons/{id}", {
+    params: { path: { id } },
+  });
+  return response.data;
+}, "/courses/lessons/{id}");

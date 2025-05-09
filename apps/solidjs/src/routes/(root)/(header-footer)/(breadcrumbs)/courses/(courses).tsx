@@ -88,7 +88,7 @@ export default function Page() {
                   type="search"
                   placeholder="Поиск"
                   onInput={(e) =>
-                    updateFilters({ search: e.currentTarget.value })
+                    updateFilters({ offset: 0, search: e.currentTarget.value })
                   }
                 />
               </TextField>

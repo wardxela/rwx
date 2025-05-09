@@ -24,6 +24,7 @@ import { CourseCreateDto } from "./dto/course-create.dto";
 import { CourseFiltersDto } from "./dto/course-filters.dto";
 import { CourseUpdateDto } from "./dto/course-update.dto";
 import { CourseDto, CoursesDto } from "./dto/course.dto";
+import { LessonDto, ModuleDto } from "./dto/module.dto";
 
 @Controller("courses")
 export class CoursesController {
@@ -112,6 +113,11 @@ export class CoursesController {
     return this.usersService.getAllCourseAuthors();
   }
 
+  @Get("lessons/:id")
+  async getCourseLesson(@Param("id") id: string): Promise<LessonDto> {
+    return this.service.getCourseLesson(id);
+  }
+
   @Get(":id")
   async getCourse(
     @Req() req: Request,
@@ -125,5 +131,10 @@ export class CoursesController {
       throw new ForbiddenException("The post is not available yet");
     }
     return course;
+  }
+
+  @Get(":id/structure")
+  async getCourseStructure(@Param("id") id: string): Promise<ModuleDto[]> {
+    return this.service.getCourseStructure(id);
   }
 }

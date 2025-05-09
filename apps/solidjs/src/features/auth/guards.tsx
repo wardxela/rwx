@@ -7,6 +7,7 @@ import {
   Suspense,
   createEffect,
 } from "solid-js";
+import { RedirectEffect } from "#features/site/redirect";
 import { getMe } from "#queries";
 import { Skeleton } from "#ui/skeleton";
 
@@ -14,7 +15,7 @@ export const Authenticated: ParentComponent<Pick<AuthShowProps, "roles">> = (
   props,
 ) => {
   return (
-    <AuthShow unauth={<Redirect link="/login" />} roles={props.roles}>
+    <AuthShow unauth={<RedirectEffect link="/login" />} roles={props.roles}>
       {props.children}
     </AuthShow>
   );
@@ -22,7 +23,9 @@ export const Authenticated: ParentComponent<Pick<AuthShowProps, "roles">> = (
 
 export const GuestOnly: ParentComponent = (props) => {
   return (
-    <AuthShow unauth={props.children}>{<Redirect link="/profile" />}</AuthShow>
+    <AuthShow unauth={props.children}>
+      {<RedirectEffect link="/profile" />}
+    </AuthShow>
   );
 };
 
@@ -48,12 +51,4 @@ export const AuthShow: ParentComponent<AuthShowProps> = (props) => {
       </Show>
     </Suspense>
   );
-};
-
-const Redirect: Component<{ link: string }> = (props) => {
-  const navigate = useNavigate();
-  createEffect(() => {
-    navigate(props.link);
-  });
-  return null;
 };

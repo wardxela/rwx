@@ -1,10 +1,11 @@
 import { A, type RouteSectionProps, createAsync } from "@solidjs/router";
 import edjsHTML from "editorjs-html";
-import { ErrorBoundary, Show, Suspense } from "solid-js";
+import { ErrorBoundary, For, Show, Suspense } from "solid-js";
+import { AuthShow } from "#features/auth/guards";
 import { NotFound } from "#features/site/not-found";
 import { SiteTitle } from "#features/site/site-title";
 import { formatTimeDelta, getRussianOrdinalPluralWord } from "#intl";
-import { getCourse } from "#queries";
+import { getCourse, getCourseStructure } from "#queries";
 import { Button } from "#ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 import {
@@ -18,6 +19,7 @@ const edjsParser = edjsHTML();
 
 export default function Page(props: RouteSectionProps) {
   const course = createAsync(() => getCourse(props.params.id!));
+  const structure = createAsync(() => getCourseStructure(props.params.id!));
 
   const faq = () => {
     const json = course()?.faq;
@@ -202,22 +204,16 @@ export default function Page(props: RouteSectionProps) {
                 <div class="p-7">
                   <h6 class="mb-3 font-semibold text-xl">Структура курса</h6>
                   <ul class="space-y-3 text-lg text-neutral-600 leading-7">
-                    <li>
-                      <span class="font-semibold">Модуль 1:</span> Введение и
-                      основы
-                    </li>
-                    <li>
-                      <span class="font-semibold">Модуль 2:</span> Продвинутые
-                      техники
-                    </li>
-                    <li>
-                      <span class="font-semibold">Модуль 3:</span> Практические
-                      задания
-                    </li>
-                    <li>
-                      <span class="font-semibold">Модуль 4:</span> Итоговый
-                      проект
-                    </li>
+                    <For each={structure()}>
+                      {(module) => (
+                        <li>
+                          <span class="font-semibold">
+                            Модуль {module.position}:
+                          </span>{" "}
+                          {module.title}
+                        </li>
+                      )}
+                    </For>
                   </ul>
                 </div>
               </TabsContent>
@@ -287,9 +283,17 @@ export default function Page(props: RouteSectionProps) {
                   {course()?.price}₽
                 </div>
               </div>
-              <Button as={A} href="/courses/1/take">
-                Записаться
-              </Button>
+              <AuthShow
+                unauth={
+                  <Button variant="outline" as={A} href="/login">
+                    Авторизуйтесь, чтобы посмотреть курс
+                  </Button>
+                }
+              >
+                <Button as={A} href={`/courses/${course()?.id}/lessons`}>
+                  Перейти
+                </Button>
+              </AuthShow>
             </div>
           </div>
         </div>
