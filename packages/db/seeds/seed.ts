@@ -10,7 +10,6 @@ async function seed() {
   for (const instructor of instructorsData) {
     await db.insertInto("User").values(instructor).execute();
   }
-  console.log("creted");
 
   await db.insertInto("Category").values(categories).execute();
 

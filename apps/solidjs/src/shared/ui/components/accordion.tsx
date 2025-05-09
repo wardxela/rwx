@@ -37,7 +37,7 @@ const AccordionTrigger = <T extends ValidComponent = "button">(
     <AccordionPrimitive.Header class="flex">
       <AccordionPrimitive.Trigger
         class={cn(
-          "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-expanded]>svg]:rotate-180",
+          "flex flex-1 items-center justify-between py-4 text-start font-medium transition-all hover:underline [&[data-expanded]>svg]:rotate-180",
           local.class,
         )}
         {...others}
