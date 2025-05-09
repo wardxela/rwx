@@ -294,7 +294,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        get: operations["CoursesController_getCourse"];
         put: operations["CoursesController_updateCourse"];
         post?: never;
         delete: operations["CoursesController_deleteCourse"];
@@ -450,6 +450,7 @@ export interface components {
             createdAt: string;
             /** Format: date-time */
             updatedAt: string;
+            faq?: Record<string, never>;
             author: {
                 id: string;
                 firstName: string;
@@ -992,6 +993,27 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    CoursesController_getCourse: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseDto"];
+                };
             };
         };
     };

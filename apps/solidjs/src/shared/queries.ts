@@ -87,3 +87,13 @@ export const getMyCourses = query(
   },
   "/courses/mine",
 );
+
+export const getCourse = query(async (id: string) => {
+  const response = await api.GET("/courses/{id}", {
+    params: { path: { id } },
+  });
+  if (!response.data) {
+    throw new Error("Курс не найден");
+  }
+  return response.data;
+}, "/courses/{id}");

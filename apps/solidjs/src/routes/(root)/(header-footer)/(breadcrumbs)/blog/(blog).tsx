@@ -171,17 +171,19 @@ export default function Page() {
             </For>
           }
         >
-          <For each={posts()?.page}>
-            {(post) => (
-              <PostLink
-                link={`/blog/${post.id}`}
-                title={post.title}
-                excerpt={post.excerpt}
-                updatedAt={post.updatedAt}
-                image={post.image}
-              />
-            )}
-          </For>
+          <Show when={posts()?.page.length} fallback="Ничего не найдено">
+            <For each={posts()?.page}>
+              {(post) => (
+                <PostLink
+                  link={`/blog/${post.id}`}
+                  title={post.title}
+                  excerpt={post.excerpt}
+                  updatedAt={post.updatedAt}
+                  image={post.image}
+                />
+              )}
+            </For>
+          </Show>
         </Suspense>
       </div>
       <Suspense>

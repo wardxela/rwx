@@ -32,7 +32,7 @@ export const CourseCategoryLink: Component<CourseCategoryLinkProps> = (
       )}
     >
       <div class="relative grid h-8 w-8 place-items-center">
-        <img src={props.imgSrc} alt="icon" />
+        <img src={props.imgSrc} alt={props.title} />
       </div>
       <div class="flex flex-col items-center justify-start gap-2 sm:gap-3">
         <div class="font-semibold text-lg capitalize transition group-hover:text-orange-500 sm:text-xl">

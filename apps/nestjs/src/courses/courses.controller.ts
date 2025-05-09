@@ -2,7 +2,9 @@ import {
   Body,
   Controller,
   Delete,
+  ForbiddenException,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -18,7 +20,7 @@ import { CoursesService } from "./courses.service";
 import { CourseCreateDto } from "./dto/course-create.dto";
 import { CourseFiltersDto } from "./dto/course-filters.dto";
 import { CourseUpdateDto } from "./dto/course-update.dto";
-import { CoursesDto } from "./dto/course.dto";
+import { CourseDto, CoursesDto } from "./dto/course.dto";
 
 @Controller("courses")
 export class CoursesController {
@@ -50,6 +52,21 @@ export class CoursesController {
   @UseGuards(SessionGuard)
   async deleteCourse(@Param("id") id: string): Promise<boolean> {
     return this.service.deleteCourse(id);
+  }
+
+  @Get(":id")
+  async getCourse(
+    @Req() req: Request,
+    @Param("id") id: string,
+  ): Promise<CourseDto> {
+    const course = await this.service.getCourse(id);
+    if (!course) {
+      throw new NotFoundException(`Course with id ${id} not found`);
+    }
+    if (!course.published && course.author.id !== req?.user?.id) {
+      throw new ForbiddenException("The post is not available yet");
+    }
+    return course;
   }
 
   @Get()

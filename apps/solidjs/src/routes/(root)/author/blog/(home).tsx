@@ -114,18 +114,15 @@ export default function Page() {
           </DialogContent>
         </Dialog>
       </div>
-      <Suspense
-        fallback={
-          <>
-            <PostLinkSkeleton />
-            <PostLinkSkeleton />
-            <PostLinkSkeleton />
-            <PostLinkSkeleton />
-          </>
-        }
-      >
-        <Show when={posts()?.page.length} fallback="У вас нет записей">
-          <div class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
+      <div class="mb-6 grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
+        <Suspense
+          fallback={
+            <For each={Array.from({ length: 4 })}>
+              {() => <PostLinkSkeleton />}
+            </For>
+          }
+        >
+          <Show when={posts()?.page.length} fallback="У вас нет записей">
             <For each={posts()?.page}>
               {(post) => (
                 <PostLink
@@ -137,9 +134,9 @@ export default function Page() {
                 />
               )}
             </For>
-          </div>
-        </Show>
-      </Suspense>
+          </Show>
+        </Suspense>
+      </div>
       <Suspense>
         <Show when={pagesCount() > 1}>
           <div class="mt-auto flex justify-center">

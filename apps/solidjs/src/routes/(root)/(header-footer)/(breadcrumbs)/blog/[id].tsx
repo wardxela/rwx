@@ -14,6 +14,7 @@ import { z } from "zod";
 import api from "#api";
 import { AuthShow } from "#features/auth/guards";
 import { NotFound } from "#features/site/not-found";
+import { SiteTitle } from "#features/site/site-title";
 import { formatTimeDelta, getRussianOrdinalPluralWord } from "#intl";
 import { getMyPosts, getPost, getPostComments, getPosts } from "#queries";
 import { Avatar, AvatarFallback, AvatarImage } from "#ui/avatar";
@@ -54,6 +55,9 @@ export default function Page(props: RouteSectionProps) {
 
   return (
     <ErrorBoundary fallback={<NotFound />}>
+      <Show when={post()}>
+        <SiteTitle>{post()?.title}</SiteTitle>
+      </Show>
       <Suspense>
         <h1 class="mb-4 font-semibold text-xl leading-7 sm:mb-5 sm:text-4xl sm:leading-10">
           {post()?.title}

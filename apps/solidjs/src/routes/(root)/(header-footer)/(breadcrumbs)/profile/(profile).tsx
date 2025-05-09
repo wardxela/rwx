@@ -9,6 +9,7 @@ import {
 import { Suspense } from "solid-js";
 import { z } from "zod";
 import api from "#api";
+import { SiteTitle } from "#features/site/site-title";
 import { UserAvatar } from "#features/user/avatar";
 import { getMe, uploadFileAction } from "#queries";
 import { Button } from "#ui/button";
@@ -122,89 +123,101 @@ export default function Page() {
   };
 
   return (
-    <Suspense>
-      <form
-        class="mx-auto max-w-2xl space-y-8"
-        action={updateProfileAction}
-        method="post"
-      >
-        <div class="space-y-6">
-          <h2 class="font-semibold text-xl">Данные</h2>
-          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <div class="col-span-full">
-              <Label for="photo">Аватар</Label>
-              <div class="mt-2 flex items-center gap-x-3">
-                <UserAvatar class="size-12" />
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  onChange={handleFileChange}
-                  class="hidden"
-                />
-                <Button variant="outline" onClick={() => fileInputRef.click()}>
-                  Изменить
-                </Button>
+    <>
+      <SiteTitle>Профиль</SiteTitle>
+      <Suspense>
+        <form
+          class="mx-auto max-w-2xl space-y-8"
+          action={updateProfileAction}
+          method="post"
+        >
+          <div class="space-y-6">
+            <h2 class="font-semibold text-xl">Данные</h2>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div class="col-span-full">
+                <Label for="photo">Аватар</Label>
+                <div class="mt-2 flex items-center gap-x-3">
+                  <UserAvatar class="size-12" />
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    onChange={handleFileChange}
+                    class="hidden"
+                  />
+                  <Button
+                    variant="outline"
+                    onClick={() => fileInputRef.click()}
+                  >
+                    Изменить
+                  </Button>
+                </div>
               </div>
+              <TextField
+                validationState={firstNameError() ? "invalid" : "valid"}
+              >
+                <TextFieldLabel>Имя</TextFieldLabel>
+                <TextFieldInput
+                  ref={firstNameRef}
+                  type="text"
+                  name="firstName"
+                  placeholder="Имя"
+                  value={profile()?.firstName}
+                />
+                <TextFieldErrorMessage>
+                  {firstNameError()?.message}
+                </TextFieldErrorMessage>
+              </TextField>
+              <TextField
+                validationState={lastNameError() ? "invalid" : "valid"}
+              >
+                <TextFieldLabel>Фамилия</TextFieldLabel>
+                <TextFieldInput
+                  ref={lastNameRef}
+                  type="text"
+                  name="lastName"
+                  placeholder="Фамилия"
+                  value={profile()?.lastName}
+                />
+                <TextFieldErrorMessage>
+                  {lastNameError()?.message}
+                </TextFieldErrorMessage>
+              </TextField>
+              <TextField>
+                <TextFieldLabel>Email</TextFieldLabel>
+                <TextFieldInput
+                  disabled
+                  readonly
+                  type="email"
+                  placeholder="Email"
+                  value={profile()?.email ?? "No email"}
+                />
+              </TextField>
             </div>
-            <TextField validationState={firstNameError() ? "invalid" : "valid"}>
-              <TextFieldLabel>Имя</TextFieldLabel>
-              <TextFieldInput
-                ref={firstNameRef}
-                type="text"
-                name="firstName"
-                placeholder="Имя"
-                value={profile()?.firstName}
+            <TextField validationState={bioError() ? "invalid" : "valid"}>
+              <TextFieldLabel>Обо мне</TextFieldLabel>
+              <TextFieldTextArea
+                ref={bioRef}
+                name="bio"
+                placeholder="Люблю учиться, увлекаюсь программированием..."
+                value={profile()?.bio ?? ""}
+                class="resize-none"
               />
               <TextFieldErrorMessage>
-                {firstNameError()?.message}
+                {bioError()?.message}
               </TextFieldErrorMessage>
-            </TextField>
-            <TextField validationState={lastNameError() ? "invalid" : "valid"}>
-              <TextFieldLabel>Фамилия</TextFieldLabel>
-              <TextFieldInput
-                ref={lastNameRef}
-                type="text"
-                name="lastName"
-                placeholder="Фамилия"
-                value={profile()?.lastName}
-              />
-              <TextFieldErrorMessage>
-                {lastNameError()?.message}
-              </TextFieldErrorMessage>
-            </TextField>
-            <TextField>
-              <TextFieldLabel>Email</TextFieldLabel>
-              <TextFieldInput
-                disabled
-                readonly
-                type="email"
-                placeholder="Email"
-                value={profile()?.email ?? "No email"}
-              />
             </TextField>
           </div>
-          <TextField validationState={bioError() ? "invalid" : "valid"}>
-            <TextFieldLabel>Обо мне</TextFieldLabel>
-            <TextFieldTextArea
-              ref={bioRef}
-              name="bio"
-              placeholder="Люблю учиться, увлекаюсь программированием..."
-              value={profile()?.bio ?? ""}
-              class="resize-none"
-            />
-            <TextFieldErrorMessage>{bioError()?.message}</TextFieldErrorMessage>
-          </TextField>
-        </div>
-        <div class="flex gap-x-4">
-          <Button class="mr-4" variant="ghost" type="button" onClick={logout}>
-            Выйти
-          </Button>
-          <Button class="ml-auto" variant="secondary" onClick={onReset}>
-            Отменить
-          </Button>
-          <Button type="submit">Сохранить</Button>
-        </div>
-      </form>
-    </Suspense>
+          <div class="flex gap-x-4">
+            <Button class="mr-4" variant="ghost" type="button" onClick={logout}>
+              Выйти
+            </Button>
+            <Button class="ml-auto" variant="secondary" onClick={onReset}>
+              Отменить
+            </Button>
+            <Button type="submit">Сохранить</Button>
+          </div>
+        </form>
+      </Suspense>
+    </>
   );
 }

@@ -118,7 +118,7 @@ export default function Page() {
             </div>
           </div>
           <div
-            class="grid gap-4"
+            class="mb-10 grid gap-4"
             classList={{
               "grid-cols-[repeat(auto-fill,minmax(260px,1fr))]": isGridView(),
             }}

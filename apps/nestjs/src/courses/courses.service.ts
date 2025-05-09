@@ -94,6 +94,76 @@ export class CoursesService {
     return (result?.maxPosition ?? 0) + 1;
   }
 
+  async getCourse(id: string) {
+    const course = await this.db
+      .selectFrom("Course")
+      .leftJoin("User", "User.id", "Course.authorId")
+      .leftJoin("Category", "Category.id", "Course.categoryId")
+      .leftJoin("Module", "Module.courseId", "Course.id")
+      .leftJoin("Lesson", "Lesson.moduleId", "Module.id")
+      .leftJoin("CourseEnrollment", "CourseEnrollment.courseId", "Course.id")
+      .select(({ fn }) => [
+        "Course.id",
+        "Course.title",
+        "Course.description",
+        "Course.price",
+        "Course.oldPrice",
+        "Course.image",
+        "Course.faq",
+        "Course.published",
+        "Course.createdAt",
+        "Course.updatedAt",
+        "User.id as authorId",
+        "User.firstName as authorFirstName",
+        "User.lastName as authorLastName",
+        "User.image as authorImage",
+        "User.bio as authorBio",
+        "Category.id as categoryId",
+        "Category.name as categoryName",
+        fn.count("CourseEnrollment.id").as("studentsCount"),
+        fn.sum("Lesson.duration").as("duration"),
+        fn.count("Lesson.id").as("lessonsCount"),
+      ])
+      .where("Course.id", "=", id)
+      .groupBy(["Course.id", "User.id", "Category.id"])
+      .executeTakeFirst();
+
+    if (!course) {
+      return null;
+    }
+
+    return {
+      id: course.id,
+      title: course.title,
+      description: course.description,
+      price: Number(course.price),
+      oldPrice: course.oldPrice ? Number(course.oldPrice) : undefined,
+      image: course.image ? this.filesService.resolve(course.image) : null,
+      faq: course.faq,
+      published: course.published,
+      createdAt: course.createdAt,
+      updatedAt: course.updatedAt,
+      author: {
+        id: course.authorId!,
+        firstName: course.authorFirstName!,
+        lastName: course.authorLastName!,
+        bio: course.authorBio,
+        image: course.authorImage
+          ? this.filesService.resolve(course.authorImage)
+          : null,
+      },
+      category: course.categoryId
+        ? {
+            id: course.categoryId!,
+            name: course.categoryName!,
+          }
+        : undefined,
+      duration: Number(course.duration),
+      studentsCount: Number(course.studentsCount),
+      lessonsCount: Number(course.lessonsCount),
+    };
+  }
+
   async getCourses(
     filters: CourseFiltersDto & CourseHiddenFilters,
   ): Promise<CoursesDto> {
@@ -200,6 +270,7 @@ export class CoursesService {
         "Course.price",
         "Course.oldPrice",
         "Course.image",
+        "Course.faq",
         "Course.published",
         "Course.createdAt",
         "Course.updatedAt",
@@ -231,6 +302,7 @@ export class CoursesService {
         price: Number(course.price),
         oldPrice: course.oldPrice ? Number(course.oldPrice) : undefined,
         image: course.image ? this.filesService.resolve(course.image) : null,
+        faq: course.faq,
         published: course.published,
         createdAt: course.createdAt,
         updatedAt: course.updatedAt,

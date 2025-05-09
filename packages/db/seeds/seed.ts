@@ -1,21 +1,16 @@
+import type { UserRole } from "../dist";
 import categories from "./categories";
+import courses from "./courses";
 import { db } from "./db";
+import instructorsData from "./instructors";
 import blogPosts from "./posts";
 import tags from "./tags";
 
 async function seed() {
-  await db
-    .insertInto("User")
-    .values({
-      email: "instructor@example.com",
-      firstName: "Иван",
-      lastName: "Петров",
-      roles: ["INSTRUCTOR"],
-      bio: "Опытный преподаватель с 10-летним стажем в области программирования и веб-разработки.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=instructor1",
-      updatedAt: new Date(),
-    })
-    .execute();
+  for (const instructor of instructorsData) {
+    await db.insertInto("User").values(instructor).execute();
+  }
+  console.log("creted");
 
   await db.insertInto("Category").values(categories).execute();
 
@@ -26,11 +21,11 @@ async function seed() {
     .onConflict((oc) => oc.column("name").doNothing())
     .execute();
 
-  const instructor = (await db
-    .selectFrom("User")
-    .select("id")
-    .where("email", "=", "instructor@example.com")
-    .executeTakeFirst())!;
+  // TODO: filter instructors
+  const instructors = await db.selectFrom("User").select("id").execute();
+
+  const getRandomInstructor = () =>
+    instructors[Math.floor(Math.random() * instructors.length)];
 
   for (const post of blogPosts) {
     await db
@@ -42,7 +37,7 @@ async function seed() {
         excerpt: post.excerpt,
         image: post.image,
         published: true,
-        authorId: instructor.id,
+        authorId: getRandomInstructor().id,
         updatedAt: new Date(),
       })
       .returning("id")
@@ -60,6 +55,54 @@ async function seed() {
           }
         }
       });
+  }
+
+  for (const courseData of courses) {
+    const { modules, ...course } = courseData;
+
+    // Insert course
+    const courseInsert = await db
+      .insertInto("Course")
+      .values({
+        ...course,
+        authorId: getRandomInstructor().id,
+        updatedAt: new Date(),
+      })
+      .returning("id")
+      .executeTakeFirst();
+
+    if (!courseInsert) continue;
+
+    // Insert modules for this course
+    for (const [moduleIdx, moduleData] of modules.entries()) {
+      const { lessons, ...module } = moduleData;
+
+      const moduleInsert = await db
+        .insertInto("Module")
+        .values({
+          ...module,
+          position: moduleIdx + 1,
+          courseId: courseInsert.id,
+          updatedAt: new Date(),
+        })
+        .returning("id")
+        .executeTakeFirst();
+
+      if (!moduleInsert) continue;
+
+      // Insert lessons for this module
+      for (const [lessonIdx, lessonData] of lessons.entries()) {
+        await db
+          .insertInto("Lesson")
+          .values({
+            ...lessonData,
+            position: lessonIdx + 1,
+            moduleId: moduleInsert.id,
+            updatedAt: new Date(),
+          })
+          .execute();
+      }
+    }
   }
 }
 

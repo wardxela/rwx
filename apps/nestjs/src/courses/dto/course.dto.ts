@@ -15,6 +15,7 @@ export class CourseDto {
   published: boolean;
   createdAt: Date;
   updatedAt: Date;
+  faq?: unknown;
   author: {
     id: string;
     firstName: string;
