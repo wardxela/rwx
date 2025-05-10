@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { DB } from "@rwx/db";
 import { Kysely } from "kysely";
 import { InjectKysely } from "nestjs-kysely";
-import { CategoryDto, CategoryDtoCounted } from "./dto/category.dto";
+import { CategoryCountedDto, CategoryDto } from "./dto/category.dto";
 
 @Injectable()
 export class CategoriesService {
@@ -12,7 +12,7 @@ export class CategoriesService {
     return this.db.selectFrom("Category").selectAll().execute();
   }
 
-  async findAllWithPublishedPostsCount(): Promise<CategoryDtoCounted[]> {
+  async findAllWithPublishedPostsCount(): Promise<CategoryCountedDto[]> {
     return this.db
       .selectFrom("Category")
       .leftJoin("BlogPost", "BlogPost.categoryId", "Category.id")
@@ -27,7 +27,7 @@ export class CategoriesService {
       .execute();
   }
 
-  async findAllWithPublishedCoursesCount(): Promise<CategoryDtoCounted[]> {
+  async findAllWithPublishedCoursesCount(): Promise<CategoryCountedDto[]> {
     return this.db
       .selectFrom("Category")
       .leftJoin("Course", "Course.categoryId", "Category.id")

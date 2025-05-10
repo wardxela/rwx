@@ -108,16 +108,51 @@ export const getCourse = query(async (id: string) => {
   return response.data;
 }, "/courses/{id}");
 
-export const getCourseStructure = query(async (id: string) => {
-  const response = await api.GET("/courses/{id}/structure", {
-    params: { path: { id } },
-  });
-  return response.data;
-}, "/courses/{id}/structure");
+export const getCourseStructure = query(
+  (id: string) =>
+    api
+      .GET("/courses/{id}/structure", { params: { path: { id } } })
+      .then((response) => {
+        if (!response.data) {
+          throw new NotFoundError();
+        }
+        return response.data;
+      }),
+  "/courses/{id}/structure",
+);
 
-export const getCourseLesson = query(async (id: string) => {
-  const response = await api.GET("/courses/lessons/{id}", {
-    params: { path: { id } },
-  });
-  return response.data;
-}, "/courses/lessons/{id}");
+export const getCourseReviews = query(
+  (id: string) =>
+    api
+      .GET("/courses/{id}/reviews", { params: { path: { id } } })
+      .then((response) => response.data ?? []),
+  "/courses/{id}/reviews",
+);
+
+export const getMyCourseReview = query(
+  (id: string) =>
+    api
+      .GET("/courses/{id}/reviews/mine", { params: { path: { id } } })
+      .then((response) => {
+        if (!response.data) {
+          throw new NotFoundError();
+        }
+        return response.data;
+      }),
+  "/courses/{id}/reviews/mine",
+);
+
+export const getCourseLesson = query(
+  (id: string) =>
+    api
+      .GET("/courses/lessons/{id}", { params: { path: { id } } })
+      .then((response) => {
+        if (!response.data) {
+          throw new NotFoundError();
+        }
+        return response.data;
+      }),
+  "/courses/lessons/{id}",
+);
+
+export class NotFoundError extends Error {}

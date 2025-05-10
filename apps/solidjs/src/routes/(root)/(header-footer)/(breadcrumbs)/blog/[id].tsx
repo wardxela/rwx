@@ -278,7 +278,7 @@ const LeaveCommentForm = (props: { postId: string }) => {
       />
       <Toast
         when={Boolean(submission.result?.data)}
-        action={(toast) => toast.success("Комментарий успешно оставлен")}
+        action={(toast) => toast.success("Комментарий успешно отправлен")}
       />
     </div>
   );

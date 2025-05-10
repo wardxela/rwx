@@ -1,25 +1,54 @@
-import { A, type RouteSectionProps, createAsync } from "@solidjs/router";
+import {
+  A,
+  type RouteSectionProps,
+  action,
+  createAsync,
+  json,
+  useSubmission,
+} from "@solidjs/router";
+import { clientOnly } from "@solidjs/start";
 import edjsHTML from "editorjs-html";
-import { ErrorBoundary, For, Show, Suspense } from "solid-js";
+import {
+  type Component,
+  ErrorBoundary,
+  For,
+  Show,
+  Suspense,
+  createEffect,
+} from "solid-js";
+import { z } from "zod";
+import api from "#api";
 import { AuthShow } from "#features/auth/guards";
 import { NotFound } from "#features/site/not-found";
 import { SiteTitle } from "#features/site/site-title";
 import { formatTimeDelta, getRussianOrdinalPluralWord } from "#intl";
-import { getCourse, getCourseStructure } from "#queries";
+import {
+  getCourse,
+  getCourseReviews,
+  getCourseStructure,
+  getMe,
+  getMyCourseReview,
+} from "#queries";
 import { Button } from "#ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 import {
   TextField,
   TextFieldErrorMessage,
-  TextFieldInput,
   TextFieldTextArea,
 } from "#ui/text-field";
+import { Toast } from "#ui/toast";
 
 const edjsParser = edjsHTML();
 
+const StarRating = clientOnly(() =>
+  import("#ui/star-rating").then((module) => ({ default: module.StarRating })),
+);
+
 export default function Page(props: RouteSectionProps) {
-  const course = createAsync(() => getCourse(props.params.id!));
-  const structure = createAsync(() => getCourseStructure(props.params.id!));
+  const courseId = () => props.params.id!;
+  const course = createAsync(() => getCourse(courseId()));
+  const structure = createAsync(() => getCourseStructure(courseId()));
+  const reviews = createAsync(() => getCourseReviews(courseId()));
 
   const faq = () => {
     const json = course()?.faq;
@@ -243,25 +272,48 @@ export default function Page(props: RouteSectionProps) {
               <TabsContent value="reviews">
                 <div class="p-7">
                   <h6 class="mb-3 font-semibold text-xl">Отзывы</h6>
-                  <ul class="space-y-5 text-lg text-neutral-600 leading-7">
-                    <li>
-                      <blockquote>
-                        "Отличный курс! Много практики и полезной информации."
-                        <span class="mt-2 block font-semibold text-primary text-sm">
-                          — Иван Петров
-                        </span>
-                      </blockquote>
-                    </li>
-                    <li>
-                      <blockquote>
-                        "Прекрасное объяснение сложных тем. Очень доволен
-                        результатом."
-                        <span class="mt-2 block font-semibold text-primary text-sm">
-                          — Мария Сидорова
-                        </span>
-                      </blockquote>
-                    </li>
-                  </ul>
+                  <Show
+                    when={reviews()?.length}
+                    fallback="На этот курс еще нет отзывов"
+                  >
+                    <ul class="space-y-5 text-lg text-neutral-600 leading-7">
+                      <For each={reviews()}>
+                        {(review) => (
+                          <li>
+                            <blockquote>
+                              <div class="mb-2">"{review.comment}"</div>
+                              <div class="flex items-center gap-1.5">
+                                <span class="block font-semibold text-primary text-sm">
+                                  — {review.author.firstName}{" "}
+                                  {review.author.lastName}
+                                </span>
+                                <svg
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  class="ml-2 text-primary"
+                                >
+                                  <title>Rating</title>
+                                  <path
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"
+                                  />
+                                </svg>
+                                <div class="text-primary text-sm leading-4">
+                                  {review.rating}
+                                </div>
+                              </div>
+                            </blockquote>
+                          </li>
+                        )}
+                      </For>
+                    </ul>
+                  </Show>
                 </div>
               </TabsContent>
             </Tabs>
@@ -297,40 +349,130 @@ export default function Page(props: RouteSectionProps) {
             </div>
           </div>
         </div>
-        <div class="container">
-          <div class="xl:max-w-3xl">
-            <div class="mb-4 font-semibold text-lg sm:mb-7">Оставить отзыв</div>
-            <form class="mb-10 grid grid-cols-2 gap-4">
-              <TextField validationState="invalid">
-                <TextFieldInput
-                  class="border-destructive"
-                  type="text"
-                  required
-                  placeholder="Имя*"
-                />
-                <TextFieldErrorMessage>Обязательное поле</TextFieldErrorMessage>
-              </TextField>
-              <TextField validationState="invalid">
-                <TextFieldInput
-                  class="border-destructive"
-                  type="email"
-                  required
-                  placeholder="Email*"
-                />
-                <TextFieldErrorMessage>
-                  Неверный формат почты
-                </TextFieldErrorMessage>
-              </TextField>
-              <TextField class="col-span-2">
-                <TextFieldTextArea required placeholder="Комментарий*" />
-              </TextField>
-              <div>
-                <Button>Отправить</Button>
-              </div>
-            </form>
-          </div>
-        </div>
+        <LeaveReview courseId={courseId()} />
       </Suspense>
     </ErrorBoundary>
   );
 }
+
+const leaveReviewSchema = z.object({
+  courseId: z.string(),
+  comment: z.string().min(15).max(1000),
+  rating: z.coerce.number().min(1).max(5),
+});
+
+const leaveReviewAction = action(async (formData: FormData) => {
+  const validated = leaveReviewSchema.safeParse({
+    courseId: formData.get("courseId"),
+    comment: formData.get("comment"),
+    rating: formData.get("rating"),
+  });
+  if (!validated.success) {
+    console.log(validated.error.formErrors.fieldErrors);
+    return json(
+      {
+        data: null,
+        errors: validated.error.formErrors.fieldErrors,
+      },
+      { revalidate: "nothing" },
+    );
+  }
+  await api.POST("/courses/{id}/reviews", {
+    params: { path: { id: validated.data.courseId } },
+    body: {
+      comment: validated.data.comment,
+      rating: validated.data.rating,
+    },
+  });
+  return json(
+    {
+      data: true,
+      errors: null,
+    },
+    {
+      revalidate: [
+        getCourseReviews.key,
+        getCourse.keyFor(validated.data.courseId),
+        getCourseReviews.keyFor(validated.data.courseId),
+      ],
+    },
+  );
+}, "/courses/{id}/reviews:post");
+
+interface LeaveReviewProps {
+  courseId: string;
+}
+
+const LeaveReview: Component<LeaveReviewProps> = (props) => {
+  let formRef!: HTMLFormElement;
+
+  const existingReview = createAsync(() =>
+    getMyCourseReview(props.courseId).catch(() => null),
+  );
+
+  const submission = useSubmission(leaveReviewAction);
+
+  createEffect(() => {
+    if (submission.result?.data) {
+      formRef.reset();
+    }
+  });
+
+  return (
+    <>
+      <div class="container">
+        <Suspense>
+          <Show when={existingReview() === null}>
+            <div class="relative xl:max-w-3xl">
+              <div class="mb-4 font-semibold text-lg">Оставить отзыв</div>
+              <form
+                ref={formRef}
+                class="mb-10"
+                action={leaveReviewAction}
+                method="post"
+              >
+                <input type="hidden" name="courseId" value={props.courseId} />
+                <TextField class="mb-4">
+                  <TextFieldTextArea
+                    required
+                    name="comment"
+                    placeholder="Комментарий"
+                  />
+                  <TextFieldErrorMessage>
+                    {submission.result?.errors?.comment}
+                  </TextFieldErrorMessage>
+                </TextField>
+                <div class="mb-4">
+                  <StarRating required name="rating" />
+                </div>
+                <div>
+                  <Button type="submit">Отправить</Button>
+                </div>
+              </form>
+              <AuthShow
+                unauth={
+                  <>
+                    <div class="absolute inset-0 grid place-items-center bg-white/85" />
+                    <div class="-translate-1/2 absolute top-1/2 left-1/2 text-center">
+                      <Button as="a" variant="link" href="/login">
+                        Авторизуйтесь, чтобы оставить отзыв
+                      </Button>
+                    </div>
+                  </>
+                }
+              />
+            </div>
+          </Show>
+        </Suspense>
+      </div>
+      <Toast
+        when={Boolean(submission.result?.errors)}
+        action={(toast) => toast.error("Не удалось оставить отзыв")}
+      />
+      <Toast
+        when={Boolean(submission.result?.data)}
+        action={(toast) => toast.success("Отзыв успешно отправлен")}
+      />
+    </>
+  );
+};

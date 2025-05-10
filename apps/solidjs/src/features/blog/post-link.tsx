@@ -22,7 +22,7 @@ export const PostLink: Component<PostLinkProps> = (props) => {
           class="h-52 @lg:min-h-62 w-full @lg:max-w-1/3 rounded-t-2xl @lg:rounded-l-2xl @lg:rounded-tr-none object-cover"
           alt={props.title}
         />
-        <div class="@sm:p-5 p-4">
+        <div class="flex grow flex-col @sm:p-5 p-4">
           <h6 class="mb-3 font-semibold @sm:text-xl">{props.title}</h6>
           <div class="mb-3 flex items-center gap-2">
             <img src="/calendar.svg" alt="date" />

@@ -152,12 +152,11 @@ export default function Page() {
           Напишите нам
         </h6>
         <div class="mb-5 font-normal text-neutral-600 leading-7">
-          Ваш адрес электронной почты опубликован не будет. Поля, обязательные
-          для заполнения, помечены *
+          Ваш адрес электронной почты опубликован не будет.
         </div>
         <form
           ref={formRef}
-          class="mb-10 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2"
+          class="mb-10 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-2"
           action={contactAction}
           method="post"
         >

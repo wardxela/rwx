@@ -4,7 +4,7 @@ export class CategoryDto {
   description?: string | null;
 }
 
-export class CategoryDtoCounted {
+export class CategoryCountedDto {
   id: number;
   name: string;
   description?: string | null;

@@ -32,6 +32,47 @@ export class BlogController {
     private readonly categoriesService: CategoriesService,
   ) {}
 
+  @Get("posts")
+  async getAllPosts(@Query() filters: PostFiltersDto): Promise<PostsDto> {
+    return this.service.getPosts({
+      ...filters,
+      published: true,
+    });
+  }
+
+  @Get("posts/mine")
+  @Roles(["INSTRUCTOR"])
+  @UseGuards(SessionGuard)
+  async getMyPosts(
+    @Req() req: Request,
+    @Query() filters: PostFiltersDto,
+  ): Promise<PostsDto> {
+    return this.service.getPosts({
+      ...filters,
+      authorId: req.user!.id,
+    });
+  }
+
+  @Get("posts/:id")
+  async getPost(
+    @Req() req: Request,
+    @Param("id") id: string,
+  ): Promise<PostDto> {
+    const post = await this.service.getPost(id);
+    if (!post) {
+      throw new NotFoundException(`Post with id ${id} not found`);
+    }
+    if (!post.published && post.author.id !== req?.user?.id) {
+      throw new ForbiddenException("The post is not available yet");
+    }
+    return post;
+  }
+
+  @Get("posts/:id/comments")
+  async getPostComments(@Param("id") postId: string): Promise<CommentDto[]> {
+    return this.service.getPostComments(postId);
+  }
+
   @Post("posts")
   @Roles(["INSTRUCTOR"])
   @UseGuards(SessionGuard)
@@ -77,47 +118,6 @@ export class BlogController {
       throw new ForbiddenException("You are not the author of this post");
     }
     return this.service.deletePost(id);
-  }
-
-  @Get("posts")
-  async getAllPosts(@Query() filters: PostFiltersDto): Promise<PostsDto> {
-    return this.service.getPosts({
-      ...filters,
-      published: true,
-    });
-  }
-
-  @Get("posts/mine")
-  @Roles(["INSTRUCTOR"])
-  @UseGuards(SessionGuard)
-  async getMyPosts(
-    @Req() req: Request,
-    @Query() filters: PostFiltersDto,
-  ): Promise<PostsDto> {
-    return this.service.getPosts({
-      ...filters,
-      authorId: req.user!.id,
-    });
-  }
-
-  @Get("posts/:id")
-  async getPost(
-    @Req() req: Request,
-    @Param("id") id: string,
-  ): Promise<PostDto> {
-    const post = await this.service.getPost(id);
-    if (!post) {
-      throw new NotFoundException(`Post with id ${id} not found`);
-    }
-    if (!post.published && post.author.id !== req?.user?.id) {
-      throw new ForbiddenException("The post is not available yet");
-    }
-    return post;
-  }
-
-  @Get("posts/:id/comments")
-  async getPostComments(@Param("id") postId: string): Promise<CommentDto[]> {
-    return this.service.getPostComments(postId);
   }
 
   @Post("posts/:id/comments")

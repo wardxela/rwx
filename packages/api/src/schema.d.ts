@@ -95,22 +95,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/files/upload": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["FilesController_uploadFile"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/files/{fileName}": {
         parameters: {
             query?: never;
@@ -121,6 +105,22 @@ export interface paths {
         get: operations["FilesController_getFile"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/files/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["FilesController_uploadFile"];
         delete?: never;
         options?: never;
         head?: never;
@@ -143,22 +143,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/blog/posts/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["BlogController_getPost"];
-        put: operations["BlogController_updatePost"];
-        post?: never;
-        delete: operations["BlogController_deletePost"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/blog/posts/mine": {
         parameters: {
             query?: never;
@@ -170,6 +154,22 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/blog/posts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BlogController_getPost"];
+        put: operations["BlogController_updatePost"];
+        post?: never;
+        delete: operations["BlogController_deletePost"];
         options?: never;
         head?: never;
         patch?: never;
@@ -287,22 +287,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/courses/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["CoursesController_getCourse"];
-        put: operations["CoursesController_updateCourse"];
-        post?: never;
-        delete: operations["CoursesController_deleteCourse"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/courses/mine": {
         parameters: {
             query?: never;
@@ -367,6 +351,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/courses/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CoursesController_getCourse"];
+        put: operations["CoursesController_updateCourse"];
+        post?: never;
+        delete: operations["CoursesController_deleteCourse"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/courses/{id}/structure": {
         parameters: {
             query?: never;
@@ -375,6 +375,38 @@ export interface paths {
             cookie?: never;
         };
         get: operations["CoursesController_getCourseStructure"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/courses/{id}/reviews": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CoursesController_getCourseReviews"];
+        put?: never;
+        post: operations["CoursesController_leaveReview"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/courses/{id}/reviews/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CoursesController_getCourseReview"];
         put?: never;
         post?: never;
         delete?: never;
@@ -409,19 +441,6 @@ export interface components {
         };
         FileDto: {
             url: string;
-        };
-        PostCreateDto: {
-            title: string;
-        };
-        PostUpdateDto: {
-            title?: string;
-            content?: Record<string, never>;
-            excerpt?: string;
-            /** Format: uri */
-            image?: string;
-            published?: boolean;
-            categoryId?: number;
-            tags?: number[];
         };
         PostAuthorDto: {
             id: string;
@@ -476,20 +495,27 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
         };
+        PostCreateDto: {
+            title: string;
+        };
+        PostUpdateDto: {
+            title?: string;
+            content?: Record<string, never>;
+            excerpt?: string;
+            /** Format: uri */
+            image?: string;
+            published?: boolean;
+            categoryId?: number;
+            tags?: number[];
+        };
         CommentCreateDto: {
             content: string;
         };
-        CategoryDtoCounted: {
+        CategoryCountedDto: {
             id: number;
             name: string;
             description?: string | null;
             count: Record<string, never>;
-        };
-        SendMessageDto: {
-            name: string;
-            /** Format: email */
-            email: string;
-            message: string;
         };
         MessageDto: {
             id: number;
@@ -499,8 +525,11 @@ export interface components {
             /** Format: date-time */
             createdAt: string;
         };
-        CourseCreateDto: {
-            title: string;
+        SendMessageDto: {
+            name: string;
+            /** Format: email */
+            email: string;
+            message: string;
         };
         CourseDto: {
             id: string;
@@ -576,6 +605,29 @@ export interface components {
             createdAt: string;
             /** Format: date-time */
             updatedAt: string;
+        };
+        ReviewDto: {
+            id: string;
+            rating: number;
+            comment: string;
+            author: {
+                id: string;
+                firstName: string;
+                lastName: string;
+                image: string | null;
+                bio: string | null;
+            };
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        CourseCreateDto: {
+            title: string;
+        };
+        ReviewCreateDto: {
+            comment: string;
+            rating: number;
         };
     };
     responses: never;
@@ -715,25 +767,6 @@ export interface operations {
             };
         };
     };
-    FilesController_uploadFile: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FileDto"];
-                };
-            };
-        };
-    };
     FilesController_getFile: {
         parameters: {
             query?: never;
@@ -750,6 +783,25 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    FilesController_uploadFile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileDto"];
+                };
             };
         };
     };
@@ -796,6 +848,31 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    BlogController_getMyPosts: {
+        parameters: {
+            query?: {
+                search?: string;
+                tags?: number[];
+                categories?: number[];
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PostsDto"];
+                };
             };
         };
     };
@@ -866,31 +943,6 @@ export interface operations {
             };
         };
     };
-    BlogController_getMyPosts: {
-        parameters: {
-            query?: {
-                search?: string;
-                tags?: number[];
-                categories?: number[];
-                limit?: number;
-                offset?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PostsDto"];
-                };
-            };
-        };
-    };
     BlogController_getPostComments: {
         parameters: {
             query?: never;
@@ -951,7 +1003,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CategoryDtoCounted"][];
+                    "application/json": components["schemas"]["CategoryCountedDto"][];
                 };
             };
         };
@@ -1106,6 +1158,93 @@ export interface operations {
             };
         };
     };
+    CoursesController_getMyCourses: {
+        parameters: {
+            query?: {
+                search?: string;
+                authors?: string[];
+                categories?: number[];
+                minPrice?: number;
+                maxPrice?: number;
+                rating?: number;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CoursesDto"];
+                };
+            };
+        };
+    };
+    CoursesController_getCategories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryCountedDto"][];
+                };
+            };
+        };
+    };
+    CoursesController_getAuthors: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserCountedDto"][];
+                };
+            };
+        };
+    };
+    CoursesController_getCourseLesson: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonDto"];
+                };
+            };
+        };
+    };
     CoursesController_getCourse: {
         parameters: {
             query?: never;
@@ -1167,93 +1306,6 @@ export interface operations {
             };
         };
     };
-    CoursesController_getMyCourses: {
-        parameters: {
-            query?: {
-                search?: string;
-                authors?: string[];
-                categories?: number[];
-                minPrice?: number;
-                maxPrice?: number;
-                rating?: number;
-                limit?: number;
-                offset?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CoursesDto"];
-                };
-            };
-        };
-    };
-    CoursesController_getCategories: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CategoryDtoCounted"][];
-                };
-            };
-        };
-    };
-    CoursesController_getAuthors: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserCountedDto"][];
-                };
-            };
-        };
-    };
-    CoursesController_getCourseLesson: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LessonDto"];
-                };
-            };
-        };
-    };
     CoursesController_getCourseStructure: {
         parameters: {
             query?: never;
@@ -1271,6 +1323,71 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ModuleDto"][];
+                };
+            };
+        };
+    };
+    CoursesController_getCourseReviews: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewDto"][];
+                };
+            };
+        };
+    };
+    CoursesController_leaveReview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewCreateDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CoursesController_getCourseReview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewDto"];
                 };
             };
         };

@@ -7,15 +7,15 @@ import { SendMessageDto } from "./dto/send-message.dto";
 export class ContactsController {
   constructor(private readonly service: ContactsService) {}
 
+  @Get()
+  async getAll(): Promise<MessageDto[]> {
+    return this.service.getAll();
+  }
+
   @Post()
   async sendMessage(@Body() dto: SendMessageDto): Promise<boolean> {
     await this.service.saveMessage(dto);
     return true;
-  }
-
-  @Get()
-  async getAll(): Promise<MessageDto[]> {
-    return this.service.getAll();
   }
 
   @Delete(":id")

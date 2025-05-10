@@ -117,10 +117,11 @@ const CategoriesFilters = (props: CategoriesFiltersProps) => {
           fallback={
             <For each={Array.from({ length: 6 })}>
               {() => (
-                <li class="flex h-6 gap-2">
+                <div class="flex h-6 gap-2 py-1">
+                  <Skeleton class="w-4" />
                   <Skeleton class="grow" />
-                  <Skeleton class="w-5" />
-                </li>
+                  <Skeleton class="w-4" />
+                </div>
               )}
             </For>
           }
@@ -171,12 +172,13 @@ const AuthorsFilters = (props: AuthorsFiltersProps) => {
       <div class="space-y-2">
         <Suspense
           fallback={
-            <For each={Array.from({ length: 6 })}>
+            <For each={Array.from({ length: 3 })}>
               {() => (
-                <li class="flex h-6 gap-2">
+                <div class="flex h-6 gap-2 py-1">
+                  <Skeleton class="w-4" />
                   <Skeleton class="grow" />
-                  <Skeleton class="w-5" />
-                </li>
+                  <Skeleton class="w-4" />
+                </div>
               )}
             </For>
           }

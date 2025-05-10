@@ -13,6 +13,7 @@ import { CourseDto, CoursesDto } from "./dto/course.dto";
 import { LessonUpdateDto } from "./dto/lesson-update.dto";
 import { ModuleCreateDto } from "./dto/module-create.dto";
 import { LessonDto, ModuleDto } from "./dto/module.dto";
+import { ReviewCreateDto, ReviewDto } from "./dto/review.dto";
 
 @Injectable()
 export class CoursesService {
@@ -86,6 +87,25 @@ export class CoursesService {
       .execute();
   }
 
+  async leaveReview(
+    userId: string,
+    courseId: string,
+    data: ReviewCreateDto,
+  ): Promise<string> {
+    const { id } = await this.db
+      .insertInto("CourseReview")
+      .values({
+        userId,
+        courseId,
+        comment: data.comment,
+        rating: data.rating,
+        updatedAt: new Date(),
+      })
+      .returning(["CourseReview.id"])
+      .executeTakeFirstOrThrow();
+    return id;
+  }
+
   private async getNextModulePosition(courseId: string): Promise<number> {
     const result = await this.db
       .selectFrom("Module")
@@ -98,7 +118,7 @@ export class CoursesService {
   async getCourse(id: string): Promise<CourseDto | null> {
     const course = await this.db
       .selectFrom("Course")
-      .leftJoin("User", "User.id", "Course.authorId")
+      .innerJoin("User", "User.id", "Course.authorId")
       .leftJoin("Category", "Category.id", "Course.categoryId")
       .leftJoin("Module", "Module.courseId", "Course.id")
       .leftJoin("Lesson", "Lesson.moduleId", "Module.id")
@@ -147,9 +167,9 @@ export class CoursesService {
       createdAt: course.createdAt,
       updatedAt: course.updatedAt,
       author: {
-        id: course.authorId!,
-        firstName: course.authorFirstName!,
-        lastName: course.authorLastName!,
+        id: course.authorId,
+        firstName: course.authorFirstName,
+        lastName: course.authorLastName,
         bio: course.authorBio,
         image: course.authorImage
           ? this.filesService.resolve(course.authorImage)
@@ -379,6 +399,89 @@ export class CoursesService {
       createdAt: module.createdAt,
       updatedAt: module.updatedAt,
     }));
+  }
+
+  async getCourseReviews(id: string): Promise<ReviewDto[]> {
+    const reviews = await this.db
+      .selectFrom("CourseReview")
+      .innerJoin("User", "User.id", "CourseReview.userId")
+      .where("CourseReview.courseId", "=", id)
+      .select([
+        "CourseReview.id",
+        "CourseReview.rating",
+        "CourseReview.comment",
+        "CourseReview.createdAt",
+        "CourseReview.updatedAt",
+        "User.id as authorId",
+        "User.firstName as authorFirstName",
+        "User.lastName as authorLastName",
+        "User.image as authorImage",
+        "User.bio as authorBio",
+      ])
+      .orderBy("CourseReview.createdAt", "desc")
+      .execute();
+
+    return reviews.map((review) => ({
+      id: review.id,
+      rating: review.rating,
+      comment: review.comment,
+      createdAt: review.createdAt,
+      updatedAt: review.updatedAt,
+      author: {
+        id: review.authorId,
+        firstName: review.authorFirstName,
+        lastName: review.authorLastName,
+        image: review.authorImage
+          ? this.filesService.resolve(review.authorImage)
+          : null,
+        bio: review.authorBio,
+      },
+    }));
+  }
+
+  async getCourseReviewByUserId(
+    userId: string,
+    courseId: string,
+  ): Promise<ReviewDto | null> {
+    const review = await this.db
+      .selectFrom("CourseReview")
+      .innerJoin("User", "User.id", "CourseReview.userId")
+      .where("CourseReview.userId", "=", userId)
+      .where("CourseReview.courseId", "=", courseId)
+      .select([
+        "CourseReview.id",
+        "CourseReview.rating",
+        "CourseReview.comment",
+        "CourseReview.createdAt",
+        "CourseReview.updatedAt",
+        "User.id as authorId",
+        "User.firstName as authorFirstName",
+        "User.lastName as authorLastName",
+        "User.image as authorImage",
+        "User.bio as authorBio",
+      ])
+      .orderBy("CourseReview.createdAt", "desc")
+      .executeTakeFirst();
+
+    if (!review) {
+      return null;
+    }
+    return {
+      id: review.id,
+      rating: review.rating,
+      comment: review.comment,
+      createdAt: review.createdAt,
+      updatedAt: review.updatedAt,
+      author: {
+        id: review.authorId,
+        firstName: review.authorFirstName,
+        lastName: review.authorLastName,
+        image: review.authorImage
+          ? this.filesService.resolve(review.authorImage)
+          : null,
+        bio: review.authorBio,
+      },
+    };
   }
 
   async getCourseLesson(lessonId: string): Promise<LessonDto> {
