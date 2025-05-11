@@ -1,5 +1,7 @@
-import type { Component } from "solid-js";
+import { type Component, For, Suspense } from "solid-js";
 
+import { createAsync } from "@solidjs/router";
+import { getCourseCategories } from "#queries";
 import { cn } from "#ui/utils";
 
 export interface FooterProps {
@@ -7,6 +9,8 @@ export interface FooterProps {
 }
 
 export const Footer: Component<FooterProps> = (props) => {
+  const categories = createAsync(() => getCourseCategories());
+
   return (
     <footer class={cn("bg-neutral-100", props.class)}>
       <div class="container">
@@ -54,46 +58,20 @@ export const Footer: Component<FooterProps> = (props) => {
           <div class="max-w-48 grow">
             <h6 class="mb-8 font-semibold text-xl">Программы</h6>
             <ul class="space-y-1">
-              <li>
-                <a
-                  href="/courses"
-                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
-                >
-                  Дизайн
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/courses"
-                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
-                >
-                  Бизнес
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/courses"
-                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
-                >
-                  ПО
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/courses"
-                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
-                >
-                  Языки
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/courses"
-                  class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
-                >
-                  Программирование
-                </a>
-              </li>
+              <Suspense>
+                <For each={categories()?.slice(0, 5)}>
+                  {(category) => (
+                    <li>
+                      <a
+                        href={`/courses?categories=${category.id}`}
+                        class="font-medium text-lg text-neutral-600 leading-10 transition hover:text-primary"
+                      >
+                        {category.name}
+                      </a>
+                    </li>
+                  )}
+                </For>
+              </Suspense>
             </ul>
           </div>
           <div class="max-w-sm grow">

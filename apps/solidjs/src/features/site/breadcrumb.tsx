@@ -1,7 +1,8 @@
-import { useLocation } from "@solidjs/router";
+import { createAsync, useLocation } from "@solidjs/router";
 import type { Component } from "solid-js";
-import { For, Show, createMemo } from "solid-js";
+import { For, Show, Suspense, createEffect, createMemo } from "solid-js";
 
+import { getCourse, getPost } from "#queries";
 import {
   BreadcrumbEllipsis,
   BreadcrumbItem,
@@ -11,29 +12,30 @@ import {
   BreadcrumbSeparator,
 } from "#ui/breadcrumb";
 
+interface TitledLink {
+  title: string;
+  href: string;
+}
+
+const MAX_LENGTH = 4;
+
 export const Breadcrumb: Component = () => {
   const location = useLocation();
 
-  const links = createMemo(() => {
-    let href = "";
-    return location.pathname
-      .split("/")
-      .filter(Boolean)
-      .map((segment) => {
-        href = `${href}/${segment}`;
-        return {
-          title: segment in knownSegments ? knownSegments[segment] : segment,
-          href,
-        };
-      });
+  const links = createAsync(() =>
+    resolveSegments(location.pathname.split("/").filter(Boolean)),
+  );
+
+  createEffect(() => {
+    console.log(links());
   });
 
   const closestLinks = () => {
-    return links().slice(-2);
+    return links()?.slice(-MAX_LENGTH);
   };
 
   const isPathTooLong = () => {
-    return links().length > 2;
+    return (links()?.length ?? 0) > MAX_LENGTH;
   };
 
   return (
@@ -46,38 +48,40 @@ export const Breadcrumb: Component = () => {
                 Главная
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <Show when={links().length > 0}>
-              <BreadcrumbItem>
-                <BreadcrumbSeparator />
-              </BreadcrumbItem>
-              <Show when={isPathTooLong()}>
-                <BreadcrumbItem>
-                  <BreadcrumbEllipsis />
-                </BreadcrumbItem>
+            <Suspense>
+              <Show when={links()?.length}>
                 <BreadcrumbItem>
                   <BreadcrumbSeparator />
                 </BreadcrumbItem>
-              </Show>
-            </Show>
-            <For each={closestLinks()}>
-              {(item, index) => (
-                <>
+                <Show when={isPathTooLong()}>
                   <BreadcrumbItem>
-                    <BreadcrumbLink
-                      href={item.href}
-                      current={item.href === location.pathname}
-                    >
-                      {item.title}
-                    </BreadcrumbLink>
+                    <BreadcrumbEllipsis />
                   </BreadcrumbItem>
-                  <Show when={index() !== closestLinks().length - 1}>
+                  <BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                  </BreadcrumbItem>
+                </Show>
+              </Show>
+              <For each={closestLinks()}>
+                {(item, index) => (
+                  <>
                     <BreadcrumbItem>
-                      <BreadcrumbSeparator />
+                      <BreadcrumbLink
+                        href={item.href}
+                        current={item.href === location.pathname}
+                      >
+                        {item.title}
+                      </BreadcrumbLink>
                     </BreadcrumbItem>
-                  </Show>
-                </>
-              )}
-            </For>
+                    <Show when={index() !== (closestLinks()?.length ?? 0) - 1}>
+                      <BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                      </BreadcrumbItem>
+                    </Show>
+                  </>
+                )}
+              </For>
+            </Suspense>
           </BreadcrumbList>
         </BreadcrumbOriginal>
       </div>
@@ -85,7 +89,6 @@ export const Breadcrumb: Component = () => {
   );
 };
 
-// ! Keep it up to date
 const knownSegments: Record<string, string> = {
   courses: "Курсы",
   blog: "Блог",
@@ -93,3 +96,67 @@ const knownSegments: Record<string, string> = {
   contacts: "Контакты",
   profile: "Профиль",
 };
+
+const ResolveSegmentState = {
+  Default: 0,
+  Course: 1,
+  Post: 2,
+};
+
+async function resolveSegments(segments: string[]): Promise<TitledLink[]> {
+  const links: TitledLink[] = [];
+
+  let state = ResolveSegmentState.Default;
+  let href = "";
+
+  for (const segment of segments) {
+    href += `/${segment}`;
+    if (state === ResolveSegmentState.Course) {
+      const id = await getCourse(segment)
+        .catch(() => null)
+        .then((res) => (res ? shortTitle(res.title) : null));
+      links.push({
+        title: id ?? segment,
+        href,
+      });
+      state = ResolveSegmentState.Default;
+      continue;
+    }
+    if (state === ResolveSegmentState.Post) {
+      const id = await getPost(segment)
+        .catch(() => null)
+        .then((res) => (res ? shortTitle(res.title) : null));
+      links.push({
+        title: id ?? segment,
+        href,
+      });
+      state = ResolveSegmentState.Default;
+      continue;
+    }
+    if (knownSegments[segment]) {
+      if (segment === "blog") {
+        state = ResolveSegmentState.Post;
+      } else if (segment === "courses") {
+        state = ResolveSegmentState.Course;
+      }
+      links.push({
+        title: knownSegments[segment],
+        href,
+      });
+      continue;
+    }
+    links.push({
+      title: segment,
+      href,
+    });
+  }
+
+  return links;
+}
+
+function shortTitle(title: string, length = 40) {
+  if (title.length >= length) {
+    return title.slice(0, length - 3).padEnd(length, "...");
+  }
+  return title;
+}
