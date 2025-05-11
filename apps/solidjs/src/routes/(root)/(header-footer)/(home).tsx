@@ -13,7 +13,8 @@ import {
   type CourseCategoryLinkProps,
 } from "#features/course/course-category-card-link";
 import { SiteTitle } from "#features/site/site-title";
-import { getCourses, getPosts } from "#queries";
+import { getCourseCategories, getCourses, getPosts } from "#queries";
+import { Skeleton } from "#ui/skeleton";
 
 const staticReviews = [
   {
@@ -43,6 +44,8 @@ const staticReviews = [
 ];
 
 export default function Page() {
+  const categories = createAsync(() => getCourseCategories());
+
   return (
     <>
       <SiteTitle>Главная</SiteTitle>
@@ -80,14 +83,29 @@ export default function Page() {
               }
             />
             <div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 sm:gap-7">
-              <For each={staticCategories}>
-                {(item, index) => (
-                  <CourseCategoryLink
-                    class={index() > 3 ? "max-sm:hidden" : undefined}
-                    {...item}
-                  />
-                )}
-              </For>
+              <Suspense
+                fallback={
+                  <For each={Array.from({ length: 10 })}>
+                    {(_, index) => (
+                      <Skeleton
+                        class="aspect-square rounded-3xl"
+                        classList={{
+                          "max-sm:hidden": index() > 3,
+                        }}
+                      />
+                    )}
+                  </For>
+                }
+              >
+                <For each={categories()?.slice(0, 10)}>
+                  {(category, index) => (
+                    <CourseCategoryLink
+                      class={index() > 3 ? "max-sm:hidden" : undefined}
+                      data={category}
+                    />
+                  )}
+                </For>
+              </Suspense>
             </div>
           </div>
         </section>
@@ -337,66 +355,3 @@ const SectionHeader: Component<{
     </div>
   );
 };
-
-const staticCategories: CourseCategoryLinkProps[] = [
-  {
-    href: "/",
-    imgSrc: "/design.svg",
-    title: "Дизайн",
-    count: 13,
-  },
-  {
-    href: "/",
-    imgSrc: "/development.svg",
-    title: "Разработка",
-    count: 32,
-  },
-  {
-    href: "/",
-    imgSrc: "/communication.svg",
-    title: "Коммуникация",
-    count: 32,
-  },
-  {
-    href: "/",
-    imgSrc: "/video-editing.svg",
-    title: "Монтирование",
-    count: 32,
-  },
-  {
-    href: "/",
-    imgSrc: "/photo-shooting.svg",
-    title: "Фотосъемка",
-    count: 32,
-  },
-  {
-    href: "/",
-    imgSrc: "/marketing.svg",
-    title: "Маркетинг",
-    count: 32,
-  },
-  {
-    href: "/",
-    imgSrc: "/texts.svg",
-    title: "Тексты",
-    count: 32,
-  },
-  {
-    href: "/",
-    imgSrc: "/finance.svg",
-    title: "Финансы",
-    count: 32,
-  },
-  {
-    href: "/",
-    imgSrc: "/science.svg",
-    title: "Наука",
-    count: 32,
-  },
-  {
-    href: "/",
-    imgSrc: "/design.svg",
-    title: "Сети",
-    count: 32,
-  },
-];
