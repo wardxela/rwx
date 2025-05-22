@@ -155,4 +155,9 @@ export const getCourseLesson = query(
   "/courses/lessons/{id}",
 );
 
+export const getMessages = query(async () => {
+  const response = await api.GET("/messages");
+  return response.data ?? [];
+}, "/messages");
+
 export class NotFoundError extends Error {}

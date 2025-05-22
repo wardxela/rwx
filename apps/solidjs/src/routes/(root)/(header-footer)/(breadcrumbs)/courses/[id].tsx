@@ -56,11 +56,9 @@ export default function Page(props: RouteSectionProps) {
       return "";
     }
     try {
-      console.log(json);
       // @ts-expect-error It is OutputData
       return edjsParser.parse(json);
     } catch (e) {
-      console.log(e);
       return "Вопрос-ответ в разработке...";
     }
   };
@@ -368,7 +366,6 @@ const leaveReviewAction = action(async (formData: FormData) => {
     rating: formData.get("rating"),
   });
   if (!validated.success) {
-    console.log(validated.error.formErrors.fieldErrors);
     return json(
       {
         data: null,

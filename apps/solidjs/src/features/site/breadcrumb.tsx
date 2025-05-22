@@ -26,10 +26,6 @@ export const Breadcrumb: Component = () => {
     resolveSegments(location.pathname.split("/").filter(Boolean)),
   );
 
-  createEffect(() => {
-    console.log(links());
-  });
-
   const closestLinks = () => {
     return links()?.slice(-MAX_LENGTH);
   };

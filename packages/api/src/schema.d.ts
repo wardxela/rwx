@@ -232,30 +232,30 @@ export interface paths {
         };
         get: operations["TagsController_findAll"];
         put?: never;
-        post?: never;
+        post: operations["TagsController_create"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/contacts": {
+    "/messages": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["ContactsController_getAll"];
+        get: operations["MessagesController_getAll"];
         put?: never;
-        post: operations["ContactsController_sendMessage"];
+        post: operations["MessagesController_sendMessage"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/contacts/{id}": {
+    "/messages/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -265,7 +265,7 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        delete: operations["ContactsController_deleteMessage"];
+        delete: operations["MessagesController_deleteMessage"];
         options?: never;
         head?: never;
         patch?: never;
@@ -516,6 +516,9 @@ export interface components {
             name: string;
             description?: string | null;
             count: Record<string, never>;
+        };
+        TagCreateDto: {
+            name: string;
         };
         MessageDto: {
             id: number;
@@ -1046,7 +1049,30 @@ export interface operations {
             };
         };
     };
-    ContactsController_getAll: {
+    TagsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TagCreateDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": number;
+                };
+            };
+        };
+    };
+    MessagesController_getAll: {
         parameters: {
             query?: never;
             header?: never;
@@ -1065,7 +1091,7 @@ export interface operations {
             };
         };
     };
-    ContactsController_sendMessage: {
+    MessagesController_sendMessage: {
         parameters: {
             query?: never;
             header?: never;
@@ -1088,7 +1114,7 @@ export interface operations {
             };
         };
     };
-    ContactsController_deleteMessage: {
+    MessagesController_deleteMessage: {
         parameters: {
             query?: never;
             header?: never;

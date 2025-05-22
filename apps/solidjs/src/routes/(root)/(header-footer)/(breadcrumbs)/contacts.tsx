@@ -33,7 +33,7 @@ const contactAction = action(async (formData: FormData) => {
       { revalidate: "nothing" },
     );
   }
-  await api.POST("/contacts", {
+  await api.POST("/messages", {
     body: {
       name: validated.data.name,
       email: validated.data.email,
@@ -44,7 +44,7 @@ const contactAction = action(async (formData: FormData) => {
     data: true,
     errors: null,
   });
-}, "/contacts:post");
+}, "/messages:post");
 
 export default function Page() {
   let formRef!: HTMLFormElement;

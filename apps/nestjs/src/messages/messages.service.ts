@@ -6,7 +6,7 @@ import { MessageDto } from "./dto/message.dto";
 import { SendMessageDto } from "./dto/send-message.dto";
 
 @Injectable()
-export class ContactsService {
+export class MessagesService {
   constructor(@InjectKysely() private readonly db: Kysely<DB>) {}
 
   async saveMessage(dto: SendMessageDto): Promise<void> {

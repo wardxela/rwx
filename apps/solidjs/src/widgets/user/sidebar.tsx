@@ -58,6 +58,17 @@ export function UserSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </AuthShow>
+              <AuthShow roles={["ADMIN"]}>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    as={A}
+                    href="/admin"
+                    isActive={Boolean(useMatch(() => "/admin")())}
+                  >
+                    <span>Админ</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </AuthShow>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

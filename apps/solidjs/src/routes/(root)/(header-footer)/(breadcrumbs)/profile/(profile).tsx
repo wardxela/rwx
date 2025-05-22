@@ -6,12 +6,13 @@ import {
   useAction,
   useSubmission,
 } from "@solidjs/router";
-import { Suspense } from "solid-js";
+import { For, Match, Suspense, Switch } from "solid-js";
 import { z } from "zod";
 import api from "#api";
 import { SiteTitle } from "#features/site/site-title";
 import { UserAvatar } from "#features/user/avatar";
 import { getMe, uploadFileAction } from "#queries";
+import { Badge } from "#ui/badge";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import {
@@ -134,7 +135,7 @@ export default function Page() {
           <div class="space-y-6">
             <h2 class="font-semibold text-xl">Данные</h2>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <div class="col-span-full">
+              <div>
                 <Label for="photo">Аватар</Label>
                 <div class="mt-2 flex items-center gap-x-3">
                   <UserAvatar class="size-12" />
@@ -150,6 +151,26 @@ export default function Page() {
                   >
                     Изменить
                   </Button>
+                </div>
+              </div>
+              <div>
+                <Label>Роли</Label>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  <For
+                    each={profile()?.roles}
+                    fallback={<p class="text-gray-500 text-sm">Нет ролей</p>}
+                  >
+                    {(role) => (
+                      <Switch fallback={<Badge>Администратор</Badge>}>
+                        <Match when={role === "STUDENT"}>
+                          <Badge variant="secondary">Студент</Badge>
+                        </Match>
+                        <Match when={role === "INSTRUCTOR"}>
+                          <Badge>Преподаватель</Badge>
+                        </Match>
+                      </Switch>
+                    )}
+                  </For>
                 </div>
               </div>
               <TextField
