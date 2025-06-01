@@ -6,7 +6,7 @@
   "types": "dist/index.ts",
   "scripts": {
     "build": "prisma generate",
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "clean": "git clean -xdf .turbo dist node_modules",
     "seed": "prisma migrate reset && tsx --env-file=.env ./seeds/seed.ts",
     "dev": "prisma studio --browser none",
     "migrate": "prisma db push",
@@ -14,8 +14,8 @@
   },
   "devDependencies": {
     "kysely": "^0.28.2",
-    "pg": "^8.15.6",
-    "prisma": "^6.7.0",
+    "pg": "^8.16.0",
+    "prisma": "^6.8.2",
     "prisma-kysely": "^1.8.0",
     "tsx": "^4.19.4"
   }
