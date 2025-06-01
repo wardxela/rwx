@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./dist/schema.d.ts"
+    ".": "./src/schema.d.ts"
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsx ./scripts/openapi.ts",
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "build:api": "tsx ./scripts/openapi.ts",
+    "clean": "git clean -xdf .cache .turbo node_modules",
     "typecheck": "tsc --customConditions disable"
   },
   "dependencies": {

@@ -1,5 +1,5 @@
 {
-  "name": "create-t3-turbo",
+  "name": "rwx",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -15,10 +15,9 @@
     "migrate": "bun --cwd packages/db migrate",
     "migrate:dev": "bun --cwd packages/db migrate:dev",
     "seed": "bun --cwd packages/db seed",
-    "build:api": "bun --cwd packages/api build",
+    "build:api": "bun --cwd packages/api build:api",
     "build:db": "bun --cwd packages/db build",
-    "ui-add": "turbo run ui-add",
-    "prepare": "husky"
+    "ui-add": "turbo run ui-add"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -30,9 +29,6 @@
     "turbo": "^2.5.4",
     "typescript": "^5.8.3"
   },
-  "packageManager": "bun@1.2.15",
-  "workspaces": ["apps/*", "packages/*", "tooling/*"],
-  "dependencies": {
-    "@types/mime-types": "^3.0.0"
-  }
+  "packageManager": "bun@1.2.14",
+  "workspaces": ["apps/*", "packages/*", "tooling/*"]
 }

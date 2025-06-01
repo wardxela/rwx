@@ -9,7 +9,7 @@ import { createApp } from "@rwx/nestjs";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-const output = path.resolve(dirname, "../dist");
+const output = path.resolve(dirname, "../src");
 const apiClientSchemaPath = path.resolve(output, "schema.d.ts");
 
 async function main() {
