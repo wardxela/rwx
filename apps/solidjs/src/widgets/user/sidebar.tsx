@@ -12,19 +12,6 @@ import {
   SidebarMenuItem,
 } from "#ui/sidebar";
 
-const links = [
-  {
-    title: "Данные",
-    url: "/profile",
-    icon: null,
-  },
-  {
-    title: "Курсы",
-    url: "/profile/courses",
-    icon: null,
-  },
-];
-
 export function UserSidebar() {
   return (
     <Sidebar collapsible="none">
@@ -33,20 +20,15 @@ export function UserSidebar() {
           <SidebarGroupLabel>Профиль</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <For each={links}>
-                {(item) => (
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
-                      as={A}
-                      href={item.url}
-                      isActive={Boolean(useMatch(() => item.url)())}
-                    >
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )}
-              </For>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  as={A}
+                  href="/profile"
+                  isActive={Boolean(useMatch(() => "/profile")())}
+                >
+                  <span>Данные</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               <AuthShow roles={["INSTRUCTOR"]}>
                 <SidebarMenuItem>
                   <SidebarMenuButton

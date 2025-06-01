@@ -81,30 +81,30 @@ const items = [
       </svg>
     ),
   },
-  {
-    title: "Отзывы",
-    url: "/admin/reviews",
-    icon: (
-      <svg
-        width="15"
-        height="15"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <title>Reviews</title>
-        <g
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-        >
-          <circle cx="12" cy="8" r="5" />
-          <path d="M20 21a8 8 0 0 0-16 0" />
-        </g>
-      </svg>
-    ),
-  },
+  // {
+  //   title: "Отзывы",
+  //   url: "/admin/reviews",
+  //   icon: (
+  //     <svg
+  //       width="15"
+  //       height="15"
+  //       viewBox="0 0 24 24"
+  //       xmlns="http://www.w3.org/2000/svg"
+  //     >
+  //       <title>Reviews</title>
+  //       <g
+  //         fill="none"
+  //         stroke="currentColor"
+  //         stroke-linecap="round"
+  //         stroke-linejoin="round"
+  //         stroke-width="2"
+  //       >
+  //         <circle cx="12" cy="8" r="5" />
+  //         <path d="M20 21a8 8 0 0 0-16 0" />
+  //       </g>
+  //     </svg>
+  //   ),
+  // },
   {
     title: "Сообщения",
     url: "/admin/messages",
