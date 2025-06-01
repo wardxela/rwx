@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --continue",
+    "start:nestjs": "npm --prefix apps/nestjs run start:prod",
     "biome": "turbo run format-and-lint",
     "biome:fix": "biome check . --write",
     "format-and-lint": "biome check .",
@@ -12,16 +13,17 @@
     "clean:workspaces": "turbo run clean",
     "list-updates": "ncu -ws",
     "update": "ncu -ws -i",
-    "migrate": "bun --cwd packages/db migrate",
-    "migrate:dev": "bun --cwd packages/db migrate:dev",
-    "seed": "bun --cwd packages/db seed",
-    "build:api": "bun --cwd packages/api build:api",
-    "build:db": "bun --cwd packages/db build",
+    "migrate": "npm --prefix packages/db run migrate",
+    "migrate:dev": "npm --prefix packages/db run migrate:dev",
+    "migrate:deploy": "npm --prefix packages/db run migrate:deploy",
+    "seed": "npm --prefix packages/db run seed",
+    "build:api": "npm --prefix packages/api run build:api",
+    "build:db": "npm --prefix packages/db run build",
     "ui-add": "turbo run ui-add"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@rwx/api": "workspace:*",
+    "@rwx/api": "*",
     "@turbo/gen": "^2.5.4",
     "@types/node": "^22.15.29",
     "husky": "^9.1.7",
@@ -29,6 +31,6 @@
     "turbo": "^2.5.4",
     "typescript": "^5.8.3"
   },
-  "packageManager": "bun@1.2.14",
+  "packageManager": "npm@10.9.1",
   "workspaces": ["apps/*", "packages/*", "tooling/*"]
 }

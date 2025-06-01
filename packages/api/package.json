@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "@nestjs/swagger": "^11.2.0",
-    "@rwx/nestjs": "workspace:*",
-    "@rwx/tsconfig": "workspace:*",
+    "@rwx/nestjs": "*",
+    "@rwx/tsconfig": "*",
     "openapi-typescript": "^7.8.0",
     "tsx": "^4.19.4"
   }

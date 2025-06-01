@@ -4,7 +4,7 @@ FROM base AS builder
 WORKDIR /app
 RUN npm install --global turbo
 COPY . .
-RUN turbo prune @rwx/solidjs --docker --skip-infer
+RUN turbo prune @rwx/nestjs --docker --skip-infer
 
 FROM base AS installer
 WORKDIR /app
@@ -16,8 +16,10 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 solidjs
-USER solidjs
-COPY --from=installer --chown=solidjs:nodejs /app/apps/solidjs/.output/ .
+RUN adduser --system --uid 1001 nestjs
+USER nestjs
+COPY --from=installer --chown=nestjs:nodejs /app/ .
+COPY nest-up.sh /app/nest-up.sh
+# RUN chmod +x /app/nest-up.sh
 
-CMD ["node", "/app/server/index.mjs"]
+ENTRYPOINT ["/app/nest-up.sh"]

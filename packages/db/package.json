@@ -7,10 +7,11 @@
   "scripts": {
     "build": "prisma generate",
     "clean": "git clean -xdf .turbo dist node_modules",
-    "seed": "prisma migrate reset && tsx --env-file=.env ./seeds/seed.ts",
+    "seed": "tsx --env-file=.env ./seeds/seed.ts",
     "dev": "prisma studio --browser none",
     "migrate": "prisma db push",
-    "migrate:dev": "prisma migrate dev"
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy"
   },
   "devDependencies": {
     "kysely": "^0.28.2",
