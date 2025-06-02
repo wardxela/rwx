@@ -10,7 +10,7 @@ export default function App() {
     <Router
       root={(props) => (
         <MetaProvider>
-          <Title>SolidStart - Basic</Title>
+          <Title>ЧИП</Title>
           <Suspense>{props.children}</Suspense>
         </MetaProvider>
       )}
