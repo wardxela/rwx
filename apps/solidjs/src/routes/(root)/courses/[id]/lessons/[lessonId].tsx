@@ -26,10 +26,16 @@ export default function Layout(props: RouteSectionProps) {
   return (
     <Authenticated>
       <div class="fixed inset-0 bg-neutral-100">
-        <div class="fixed top-0 left-0 flex h-18 w-100 items-center border-neutral-100 border-r border-b bg-white px-10">
+        <div class="fixed top-0 left-0 flex h-18 w-full items-center border-neutral-100 border-r border-b bg-white px-4 md:w-100 md:border-r md:px-10">
           <div class="font-medium text-primary leading-none">Курс</div>
+          {/* Mobile menu button goes here later if needed */}
+          <div class="ml-auto flex items-center gap-3 md:hidden">
+            <A href="/profile">
+              <UserAvatar />
+            </A>
+          </div>
         </div>
-        <header class="fixed top-0 right-0 left-100 flex h-18 items-center border-neutral-100 border-b bg-white px-10">
+        <header class="fixed top-0 right-0 left-full hidden h-18 items-center border-neutral-100 border-b bg-white px-10 md:left-100 md:flex">
           <A
             href={`/courses/${courseId()}`}
             class="group flex items-center gap-2.5"
@@ -62,7 +68,7 @@ export default function Layout(props: RouteSectionProps) {
             </A>
           </div>
         </header>
-        <div class="fixed top-18 left-0 h-full w-100 border-neutral-100 border-r bg-white pt-2.5">
+        <div class="fixed top-18 left-0 hidden h-full w-0 border-neutral-100 border-r bg-white pt-2.5 md:block md:w-100 md:border-r">
           <Suspense>
             <Accordion collapsible defaultValue={defaultValue()}>
               <For each={structure()}>
@@ -93,7 +99,7 @@ export default function Layout(props: RouteSectionProps) {
             </Accordion>
           </Suspense>
         </div>
-        <div class="h-full overflow-y-auto pt-26 pb-10 pl-110">
+        <div class="h-full overflow-y-auto px-4 pt-26 pb-10 md:px-0 md:pl-110">
           {props.children}
         </div>
       </div>
