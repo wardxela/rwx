@@ -8,7 +8,7 @@ export default function Layout(props: RouteSectionProps) {
     <Authenticated>
       <SidebarProvider>
         <div class="container flex gap-10 pt-8 pb-12 sm:pt-16 sm:pb-24">
-          <div class="shrink-0">
+          <div class="shrink-0 hidden sm:block">
             <UserSidebar />
           </div>
           <div class="grow">{props.children}</div>

@@ -52,11 +52,11 @@ export default function Page() {
       <div class="[&>*]:mb-16 sm:[&>*]:mb-24">
         <section class="relative">
           <img
-            class="-z-10 absolute top-0 left-0 block h-full w-full object-cover"
+            class="absolute top-0 left-0 object-left block h-full w-full object-cover"
             src="/hero-bg.png"
             alt="background"
           />
-          <div class="container flex min-h-96 items-center sm:min-h-[500px] md:min-h-[700px]">
+          <div class="z-10 relative container flex min-h-96 items-center sm:min-h-[500px] md:min-h-[700px]">
             <div class="max-w-68 sm:max-w-lg">
               <h1 class="mb-5 font-semibold text-3xl text-black leading-10 sm:mb-6 sm:text-5xl sm:leading-[60px]">
                 Улучши свои <br /> навыки

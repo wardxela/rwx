@@ -28,4 +28,13 @@ export default [
     image: "https://api.dicebear.com/7.x/avataaars/svg?seed=instructor2",
     updatedAt: new Date(),
   },
+  {
+    email: "wardxela@yandex.com",
+    firstName: "Александр",
+    lastName: "Тюринов",
+    roles: ["INSTRUCTOR", "ADMIN"] satisfies UserRole[],
+    bio: "Опытный разработчик с 5-летним стажем, занимается разработкой ПО и преподаванием.",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=instructor1",
+    updatedAt: new Date(),
+  },
 ];

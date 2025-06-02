@@ -134,7 +134,7 @@
 html,
 body,
 #app {
-  @apply h-full;
+  @apply h-full bg-white;
 }
 
 body {
@@ -143,4 +143,8 @@ body {
 
 .ce-block__content {
   @apply prose;
+}
+
+pre {
+    @apply grid grid-cols-1;
 }
