@@ -7,7 +7,7 @@ services:
     networks:
       - app_network
     ports:
-      - 5432:5432
+      - 127.0.0.1:5432:5432
   solidjs:
     build:
       context: .
@@ -17,7 +17,7 @@ services:
     networks:
       - app_network
     ports:
-      - 3000:3000
+      - 127.0.0.1:3000:3000
   nestjs:
     build:
       context: .
@@ -27,7 +27,7 @@ services:
     networks:
       - app_network
     ports:
-      - 3001:3001
+      - 127.0.0.1:3001:3001
 
 networks:
   app_network:

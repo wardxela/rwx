@@ -52,7 +52,7 @@ export default function Page() {
       <div class="[&>*]:mb-16 sm:[&>*]:mb-24">
         <section class="relative">
           <img
-            class="absolute top-0 left-0 block h-full w-full object-cover object-left"
+            class="absolute top-0 left-0 block h-full w-full object-cover object-left md:object-center"
             src="/hero-bg.png"
             alt="background"
           />

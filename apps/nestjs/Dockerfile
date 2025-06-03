@@ -9,7 +9,7 @@ RUN turbo prune @rwx/nestjs --docker --skip-infer
 FROM base AS installer
 WORKDIR /app
 COPY --from=builder /app/out/json/ .
-RUN npm install
+RUN npm ci && npm cache clean --force
 COPY --from=builder /app/out/full/ .
 RUN npm run build
 
@@ -20,6 +20,5 @@ RUN adduser --system --uid 1001 nestjs
 USER nestjs
 COPY --from=installer --chown=nestjs:nodejs /app/ .
 COPY nest-up.sh /app/nest-up.sh
-# RUN chmod +x /app/nest-up.sh
 
 ENTRYPOINT ["/app/nest-up.sh"]

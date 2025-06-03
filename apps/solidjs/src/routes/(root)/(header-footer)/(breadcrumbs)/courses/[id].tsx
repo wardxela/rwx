@@ -449,7 +449,7 @@ const LeaveReview: Component<LeaveReviewProps> = (props) => {
               <AuthShow
                 unauth={
                   <>
-                    <div class="absolute inset-0 grid place-items-center bg-white/85" />
+                    <div class="absolute inset-0 z-100 grid place-items-center bg-white/85" />
                     <div class="-translate-1/2 absolute top-1/2 left-1/2 text-center">
                       <Button as="a" variant="link" href="/login">
                         Авторизуйтесь, чтобы оставить отзыв

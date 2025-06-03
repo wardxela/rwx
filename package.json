@@ -17,6 +17,7 @@
     "migrate:dev": "npm --prefix packages/db run migrate:dev",
     "migrate:deploy": "npm --prefix packages/db run migrate:deploy",
     "seed": "npm --prefix packages/db run seed",
+    "seed:prod": "npm --prefix packages/db run seed:prod",
     "build:api": "npm --prefix packages/api run build:api",
     "build:db": "npm --prefix packages/db run build",
     "ui-add": "turbo run ui-add"

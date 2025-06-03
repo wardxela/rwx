@@ -9,7 +9,8 @@ RUN turbo prune @rwx/solidjs --docker --skip-infer
 FROM base AS installer
 WORKDIR /app
 COPY --from=builder /app/out/json/ .
-RUN npm install
+RUN npm ci && npm cache clean --force
+COPY --from=builder /app/.env .
 COPY --from=builder /app/out/full/ .
 RUN npm run build
 
@@ -18,6 +19,6 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 solidjs
 USER solidjs
-COPY --from=installer --chown=solidjs:nodejs /app/apps/solidjs/.output/ .
+COPY --from=installer --chown=solidjs:nodejs /app/ .
 
-CMD ["node", "/app/server/index.mjs"]
+CMD ["node", "/app/apps/solidjs/.output/server/index.mjs"]

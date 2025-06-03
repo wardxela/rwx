@@ -1,7 +1,6 @@
 import { GuestOnly } from "#features/auth/guards";
 import { SiteTitle } from "#features/site/site-title";
 import { Button } from "#ui/button";
-import { BACKEND_URL } from "../../../../../shared/const";
 
 export default function Page() {
   return (
@@ -16,7 +15,7 @@ export default function Page() {
               <div class="flex flex-col gap-2">
                 <Button
                   as="a"
-                  href={`${BACKEND_URL}/auth/yandex`}
+                  href={`${import.meta.env.VITE_API_URL}/auth/yandex`}
                   variant="outline"
                   class="gap-2"
                 >
@@ -41,7 +40,7 @@ export default function Page() {
                 </Button>
                 <Button
                   as="a"
-                  href={`${BACKEND_URL}/auth/github`}
+                  href={`${import.meta.env.VITE_API_URL}/auth/github`}
                   variant="outline"
                   class="gap-2"
                 >

@@ -114,7 +114,7 @@ export default function Page() {
           </DialogContent>
         </Dialog>
       </div>
-      <div class="mb-6 grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
+      <div class="mb-6 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
         <Suspense
           fallback={
             <For each={Array.from({ length: 4 })}>

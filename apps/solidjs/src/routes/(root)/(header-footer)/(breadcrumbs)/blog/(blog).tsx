@@ -161,7 +161,7 @@ export default function Page() {
       <div
         class="mb-10 grid gap-4"
         classList={{
-          "grid-cols-[repeat(auto-fill,minmax(260px,1fr))]": isGridView(),
+          "grid-cols-[repeat(auto-fill,minmax(300px,1fr))]": isGridView(),
         }}
       >
         <Suspense

@@ -31,7 +31,7 @@ export async function createApp() {
         tableName: "Session",
       }),
       cookie: {
-        sameSite: false,
+        sameSite: true,
         httpOnly: true,
         maxAge: 6_000_000,
       },
