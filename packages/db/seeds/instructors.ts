@@ -38,7 +38,7 @@ export default [
     updatedAt: new Date(),
   },
   {
-    email: "greenbabyborn@gmail.com",
+    email: "kisovetar@ya.ru",
     firstName: "Дмитрий",
     lastName: "Кузнецов",
     roles: ["INSTRUCTOR", "ADMIN"] satisfies UserRole[],
