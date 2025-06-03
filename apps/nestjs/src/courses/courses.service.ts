@@ -379,7 +379,8 @@ export class CoursesService {
         "Lesson.updatedAt",
         "Lesson.moduleId",
       ])
-      .orderBy(["Lesson.moduleId", "Lesson.position"])
+      .orderBy("Lesson.moduleId")
+      .orderBy("Lesson.position")
       .execute();
     const lessonsByModule = lessons.reduce(
       (acc, lesson) => {
