@@ -37,4 +37,13 @@ export default [
     image: "https://api.dicebear.com/7.x/avataaars/svg?seed=instructor1",
     updatedAt: new Date(),
   },
+  {
+    email: "greenbabyborn@gmail.com",
+    firstName: "Дмитрий",
+    lastName: "Кузнецов",
+    roles: ["INSTRUCTOR", "ADMIN"] satisfies UserRole[],
+    bio: "Профессионал в области кибербезопасности и сетевых технологий с 7-летним опытом.",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=admin1",
+    updatedAt: new Date(),
+  },
 ];

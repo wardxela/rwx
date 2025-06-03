@@ -18,3 +18,4 @@ General development plan:
 - [ ] Create Backend with Nest.js
 - [ ] Create Web UI with Next.js
 - [ ] Create MVP to showcase the platform
+- [ ] ошибки на русском языке
