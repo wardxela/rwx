@@ -34,6 +34,7 @@ export async function createApp() {
         sameSite: "lax",
         httpOnly: true,
         maxAge: 6_000_000,
+        domain: `.${configService.get("APP_DOMAIN")}`,
       },
     }),
   );

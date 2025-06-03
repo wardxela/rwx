@@ -10,6 +10,7 @@ const envSchema = z.object({
   NESTJS_CLIENT_URL: z.string().url(),
   NESTJS_CLIENT_AUTH_CALLBACK_URL: z.string().url(),
   NESTJS_SESSION_SECRET: z.string().nonempty(),
+  APP_DOMAIN: z.string().nonempty(),
 });
 
 export type Env = z.infer<typeof envSchema>;
