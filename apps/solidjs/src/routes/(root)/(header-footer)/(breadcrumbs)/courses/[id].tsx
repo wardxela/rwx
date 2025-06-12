@@ -16,7 +16,7 @@ import {
   Suspense,
   createEffect,
 } from "solid-js";
-import { z } from "zod";
+import { z } from "zod/v4";
 import api from "#api";
 import { AuthShow } from "#features/auth/guards";
 import { NotFound } from "#features/site/not-found";
@@ -370,7 +370,7 @@ const leaveReviewAction = action(async (formData: FormData) => {
     return json(
       {
         data: null,
-        errors: validated.error.formErrors.fieldErrors,
+        errors: z.flattenError(validated.error).fieldErrors,
       },
       { revalidate: "nothing" },
     );

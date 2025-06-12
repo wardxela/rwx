@@ -9,8 +9,8 @@ import {
   useSubmission,
 } from "@solidjs/router";
 import { clientOnly } from "@solidjs/start";
-import { ErrorBoundary, Show, Suspense, createSignal } from "solid-js";
-import { z } from "zod";
+import { ErrorBoundary, Show, Suspense } from "solid-js";
+import { z } from "zod/v4";
 import api from "#api";
 import { SelectCategory } from "#features/categories/select-category";
 import { NotFound } from "#features/site/not-found";
@@ -46,7 +46,7 @@ const deletePostAction = action(async (id: string) => {
 
 const updatePostSchema = z.object({
   title: z.string().min(3).max(100).optional(),
-  content: z.unknown(),
+  content: z.unknown().optional(),
   excerpt: z.string().max(1000).optional(),
   image: z.string().optional(),
   published: z.boolean().optional(),
@@ -62,7 +62,7 @@ const updatePostAction = action(async (id: string, data: UpdatePostSchema) => {
     return json(
       {
         data: null,
-        errors: validated.error.formErrors.fieldErrors,
+        errors: z.flattenError(validated.error).fieldErrors,
       },
       { revalidate: "nothing" },
     );

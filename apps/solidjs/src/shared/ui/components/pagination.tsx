@@ -6,7 +6,7 @@ import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 
 import { debounce } from "@solid-primitives/scheduled";
 import { useSearchParams } from "@solidjs/router";
-import { z } from "zod";
+import { z } from "zod/v4";
 import { cn } from "#ui/utils";
 import { buttonVariants } from "./button";
 

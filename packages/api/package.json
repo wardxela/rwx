@@ -20,6 +20,6 @@
     "@rwx/nestjs": "*",
     "@rwx/tsconfig": "*",
     "openapi-typescript": "^7.8.0",
-    "tsx": "^4.19.4"
+    "tsx": "^4.20.2"
   }
 }

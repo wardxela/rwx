@@ -5,8 +5,8 @@ import {
   redirect,
   useSubmission,
 } from "@solidjs/router";
-import { For, Show, Suspense, createSignal } from "solid-js";
-import { z } from "zod";
+import { For, Show, Suspense } from "solid-js";
+import { z } from "zod/v4";
 import api from "#api";
 import { PostLink, PostLinkSkeleton } from "#features/blog/post-link";
 import { getMyPosts, getPosts } from "#queries";
@@ -33,22 +33,22 @@ const CreatePostSchema = z.object({
 });
 
 const createPost = action(async (formData: FormData) => {
-  const data = CreatePostSchema.safeParse({
+  const validated = CreatePostSchema.safeParse({
     title: formData.get("title"),
   });
-  if (!data.success) {
+  if (!validated.success) {
     return json({
       data: null,
-      errors: data.error.errors,
+      errors: z.flattenError(validated.error).fieldErrors,
     });
   }
   const response = await api.POST("/blog/posts", {
-    body: data.data,
+    body: validated.data,
   });
   if (!response.data) {
     return json({
       data: null,
-      errors: [],
+      errors: null,
     });
   }
   return redirect(`/author/blog/${response.data}`, {
@@ -70,8 +70,7 @@ export default function Page() {
     }),
   );
 
-  const titleError = () =>
-    submission.result?.errors?.find((error) => error.path.includes("title"));
+  const titleError = () => submission.result?.errors?.title;
 
   const pagesCount = () => Math.ceil((posts()?.total ?? 0) / pageSize);
 
@@ -101,7 +100,7 @@ export default function Page() {
                     <div class="col-span-3">
                       <TextFieldInput type="text" />
                       <TextFieldErrorMessage>
-                        {titleError()?.message}
+                        {titleError()}
                       </TextFieldErrorMessage>
                     </div>
                   </TextField>

@@ -17,8 +17,8 @@
   "devDependencies": {
     "kysely": "^0.28.2",
     "pg": "^8.16.0",
-    "prisma": "^6.8.2",
+    "prisma": "^6.9.0",
     "prisma-kysely": "^1.8.0",
-    "tsx": "^4.19.4"
+    "tsx": "^4.20.2"
   }
 }

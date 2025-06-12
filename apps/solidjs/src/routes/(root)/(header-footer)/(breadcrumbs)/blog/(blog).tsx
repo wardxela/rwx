@@ -1,7 +1,7 @@
 import { debounce } from "@solid-primitives/scheduled";
 import { createAsync, useSearchParams } from "@solidjs/router";
 import { For, Show, Suspense, createSignal } from "solid-js";
-import { z } from "zod";
+import { z } from "zod/v4";
 import { BlogSidebar } from "#features/blog/blog-sidebar";
 import { PostLink, PostLinkSkeleton } from "#features/blog/post-link";
 import { SiteTitle } from "#features/site/site-title";

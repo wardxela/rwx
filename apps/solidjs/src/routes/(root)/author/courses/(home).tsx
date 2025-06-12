@@ -6,7 +6,7 @@ import {
   useSubmission,
 } from "@solidjs/router";
 import { For, Show, Suspense } from "solid-js";
-import { z } from "zod";
+import { z } from "zod/v4";
 import api from "#api";
 import {
   CourseCardLink,
@@ -42,7 +42,7 @@ const createCourseAction = action(async (formData: FormData) => {
   if (!validated.success) {
     return json({
       data: null,
-      errors: validated.error.formErrors.fieldErrors,
+      errors: z.flattenError(validated.error).fieldErrors,
     });
   }
   const response = await api.POST("/courses", {

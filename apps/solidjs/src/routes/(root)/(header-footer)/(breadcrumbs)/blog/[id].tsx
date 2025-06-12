@@ -10,7 +10,7 @@ import {
   json,
   useSubmission,
 } from "@solidjs/router";
-import { z } from "zod";
+import { z } from "zod/v4";
 import api from "#api";
 import { AuthShow } from "#features/auth/guards";
 import { NotFound } from "#features/site/not-found";
@@ -180,7 +180,7 @@ export default function Page(props: RouteSectionProps) {
 
 const CommentSchema = z.object({
   postId: z.string().uuid(),
-  content: z.string().min(1).max(10000),
+  content: z.string().min(15).max(10000),
 });
 
 const leaveCommentAction = action(async (formData: FormData) => {
@@ -192,7 +192,7 @@ const leaveCommentAction = action(async (formData: FormData) => {
     return json(
       {
         data: null,
-        errors: validated.error.formErrors.fieldErrors,
+        errors: z.flattenError(validated.error).fieldErrors,
       },
       { revalidate: "nothing" },
     );

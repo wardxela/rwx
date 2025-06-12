@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
 } from "@tanstack/solid-table";
 import { For, createEffect, createSignal } from "solid-js";
-import { z } from "zod";
+import { z } from "zod/v4";
 import api from "#api";
 import { getTags } from "#queries";
 import { Button } from "#ui/button";
@@ -54,7 +54,7 @@ const createTag = action(async (formData: FormData) => {
       {
         data: null,
         errors: {
-          ...validated.error.formErrors.fieldErrors,
+          ...z.flattenError(validated.error).fieldErrors,
           server: undefined,
         },
       },

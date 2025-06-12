@@ -1,6 +1,6 @@
 import { action, json, useSubmission } from "@solidjs/router";
 import { createEffect } from "solid-js";
-import { z } from "zod";
+import { z } from "zod/v4";
 import api from "#api";
 import { SiteTitle } from "#features/site/site-title";
 import { Button } from "#ui/button";
@@ -28,7 +28,7 @@ const contactAction = action(async (formData: FormData) => {
     return json(
       {
         data: null,
-        errors: validated.error.formErrors.fieldErrors,
+        errors: z.flattenError(validated.error).fieldErrors,
       },
       { revalidate: "nothing" },
     );
@@ -165,7 +165,12 @@ export default function Page() {
               submission.result?.errors?.name ? "invalid" : "valid"
             }
           >
-            <TextFieldInput type="text" name="name" placeholder="Имя" />
+            <TextFieldInput
+              type="text"
+              name="name"
+              placeholder="Имя"
+              required
+            />
             <TextFieldErrorMessage>
               {submission.result?.errors?.name}
             </TextFieldErrorMessage>
@@ -175,7 +180,12 @@ export default function Page() {
               submission.result?.errors?.email ? "invalid" : "valid"
             }
           >
-            <TextFieldInput type="email" name="email" placeholder="Email" />
+            <TextFieldInput
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+            />
             <TextFieldErrorMessage>
               {submission.result?.errors?.email}
             </TextFieldErrorMessage>
@@ -186,7 +196,11 @@ export default function Page() {
               submission.result?.errors?.message ? "invalid" : "valid"
             }
           >
-            <TextFieldTextArea name="message" placeholder="Сообщение" />
+            <TextFieldTextArea
+              name="message"
+              placeholder="Сообщение"
+              required
+            />
             <TextFieldErrorMessage>
               {submission.result?.errors?.message}
             </TextFieldErrorMessage>

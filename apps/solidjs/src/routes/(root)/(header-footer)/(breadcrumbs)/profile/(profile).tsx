@@ -7,7 +7,7 @@ import {
   useSubmission,
 } from "@solidjs/router";
 import { For, Match, Suspense, Switch } from "solid-js";
-import { z } from "zod";
+import { z } from "zod/v4";
 import api from "#api";
 import { SiteTitle } from "#features/site/site-title";
 import { UserAvatar } from "#features/user/avatar";
@@ -31,20 +31,20 @@ const UpdateUserSchema = z.object({
 });
 
 const updateProfileAction = action(async (formData: FormData) => {
-  const data = UpdateUserSchema.safeParse({
+  const validated = UpdateUserSchema.safeParse({
     firstName: formData.get("firstName") ?? undefined,
     lastName: formData.get("lastName") ?? undefined,
     bio: formData.get("bio") ?? undefined,
     image: formData.get("image") ?? undefined,
   });
-  if (!data.success) {
+  if (!validated.success) {
     return json({
       data: null,
-      errors: data.error.errors,
+      errors: z.flattenError(validated.error).fieldErrors,
     });
   }
   const response = await api.POST("/users/me", {
-    body: data.data,
+    body: validated.data,
   });
   return json(
     {
@@ -102,26 +102,11 @@ export default function Page() {
     await updateProfile(anotherFormData);
   };
 
-  const firstNameError = () => {
-    const error = submission.result?.errors?.find((error) =>
-      error.path.includes("firstName"),
-    );
-    return error;
-  };
+  const firstNameError = () => submission.result?.errors?.firstName;
 
-  const lastNameError = () => {
-    const error = submission.result?.errors?.find((error) =>
-      error.path.includes("lastName"),
-    );
-    return error;
-  };
+  const lastNameError = () => submission.result?.errors?.lastName;
 
-  const bioError = () => {
-    const error = submission.result?.errors?.find((error) =>
-      error.path.includes("bio"),
-    );
-    return error;
-  };
+  const bioError = () => submission.result?.errors?.bio;
 
   return (
     <>
@@ -185,7 +170,7 @@ export default function Page() {
                   value={profile()?.firstName}
                 />
                 <TextFieldErrorMessage>
-                  {firstNameError()?.message}
+                  {firstNameError()}
                 </TextFieldErrorMessage>
               </TextField>
               <TextField
@@ -199,9 +184,7 @@ export default function Page() {
                   placeholder="Фамилия"
                   value={profile()?.lastName}
                 />
-                <TextFieldErrorMessage>
-                  {lastNameError()?.message}
-                </TextFieldErrorMessage>
+                <TextFieldErrorMessage>{lastNameError()}</TextFieldErrorMessage>
               </TextField>
               <TextField>
                 <TextFieldLabel>Email</TextFieldLabel>
@@ -223,9 +206,7 @@ export default function Page() {
                 value={profile()?.bio ?? ""}
                 class="resize-none"
               />
-              <TextFieldErrorMessage>
-                {bioError()?.message}
-              </TextFieldErrorMessage>
+              <TextFieldErrorMessage>{bioError()}</TextFieldErrorMessage>
             </TextField>
           </div>
           <div class="flex gap-x-4">
