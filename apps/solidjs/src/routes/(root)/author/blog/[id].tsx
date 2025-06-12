@@ -247,6 +247,7 @@ export default function Page(props: RouteSectionProps) {
                     src={post()!.image!}
                     alt={post()!.title}
                     class="aspect-[2/1] w-full rounded-lg object-cover"
+                    loading="lazy"
                   />
                 </Show>
               </div>

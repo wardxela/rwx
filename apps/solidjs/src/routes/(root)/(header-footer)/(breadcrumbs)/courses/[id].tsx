@@ -321,6 +321,7 @@ export default function Page(props: RouteSectionProps) {
               src={course()?.image ?? undefined}
               class="aspect-[1.64] w-full rounded-t-2xl"
               alt={course()?.title}
+              loading="lazy"
             />
             <div class="flex flex-col items-center justify-center gap-3 p-5 sm:gap-7.5 xl:px-13.5 xl:py-7.5">
               <div class="flex items-center gap-2">

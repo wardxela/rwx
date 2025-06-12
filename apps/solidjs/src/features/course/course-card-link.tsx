@@ -37,6 +37,7 @@ export const CourseCardLink: Component<CourseCardLinkProps> = (props) => {
           src={props.data.image ?? "/placeholder.jpg"}
           alt={props.data.title}
           class="@lg:h-auto h-52 @lg:min-h-62 @lg:max-w-1/3 rounded-t-2xl @lg:rounded-l-2xl @lg:rounded-tr-none object-cover"
+          loading="lazy"
         />
         <Show when={props.data.category}>
           <div class="absolute top-5 left-5 grid h-10 place-items-center rounded-lg bg-black px-3 py-2 text-white">

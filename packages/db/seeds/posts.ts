@@ -182,7 +182,8 @@ export default [
     },
     excerpt:
       "Подробное руководство по началу работы с Docker, включая основные концепции, команды и лучшие практики использования контейнеризации.",
-    image: "https://images.unsplash.com/photo-1605745341112-85968b19335b",
+    image:
+      "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=1200",
     categoryId: 1, // Программирование
     tags: [6], // Docker
   },
@@ -351,7 +352,7 @@ export default [
     },
     excerpt:
       "Полное руководство по использованию Git Flow в командной разработке. Узнайте, как организовать процесс разработки, управлять ветками и релизами.",
-    image: "https://images.unsplash.com/photo-1556075798-4825dfaaf498",
+    image: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=1200",
     categoryId: 1,
     tags: [7], // Git
   },
@@ -547,7 +548,8 @@ export default [
     },
     excerpt:
       "Подробное руководство по оптимизации производительности React-приложений, включая мемоизацию, code splitting, виртуализацию и лучшие практики.",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee",
+    image:
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200",
     categoryId: 1,
     tags: [1, 3, 8], // JavaScript, React, TypeScript
   },
@@ -721,7 +723,7 @@ export default [
     },
     excerpt:
       "Комплексное руководство по безопасности веб-приложений, включая защиту от XSS, SQL-инъекций, CSRF и других типов атак, а также лучшие практики реализации безопасности.",
-    image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb",
+    image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1200",
     categoryId: 1,
     tags: [1, 4], // JavaScript, Node.js
   },
@@ -902,7 +904,8 @@ export default [
     },
     excerpt:
       "Подробное руководство по основам машинного обучения на Python: от подготовки данных до создания и оценки моделей, включая практические примеры использования популярных библиотек.",
-    image: "https://images.unsplash.com/photo-1527430253228-e93688616381",
+    image:
+      "https://images.unsplash.com/photo-1527430253228-e93688616381?w=1200",
     categoryId: 1,
     tags: [2, 5], // Python, Машинное обучение
   },
@@ -1103,7 +1106,8 @@ export default [
     },
     excerpt:
       "Подробное руководство по проектированию REST API, включающее лучшие практики, примеры реализации, обработку ошибок, безопасность и документирование.",
-    image: "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2",
+    image:
+      "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?w=1200",
     categoryId: 1,
     tags: [1, 4], // JavaScript, Node.js
   },
@@ -1277,7 +1281,8 @@ export default [
     },
     excerpt:
       "Практическое руководство по построению микросервисной архитектуры, включая паттерны проектирования, межсервисное взаимодействие, мониторинг и развертывание.",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
+    image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200",
     categoryId: 1,
     tags: [1, 4, 6], // JavaScript, Node.js, Docker
   },
@@ -1458,7 +1463,8 @@ export default [
     },
     excerpt:
       "Подробное руководство по продвинутым возможностям TypeScript, включая условные типы, mapped types, generics, декораторы и паттерны типизации.",
-    image: "https://images.unsplash.com/photo-1587620962725-abab7fe55159",
+    image:
+      "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=1200",
     categoryId: 1,
     tags: [1, 8], // JavaScript, TypeScript
   },
@@ -1626,7 +1632,8 @@ export default [
     },
     excerpt:
       "Полное руководство по настройке CI/CD для веб-проектов, включая автоматизацию тестирования, деплоя, мониторинга и оптимизацию пайплайнов с использованием современных инструментов.",
-    image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb",
+    image:
+      "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=1200",
     categoryId: 1,
     tags: [6, 7], // Docker, Git
   },
@@ -1785,7 +1792,8 @@ export default [
     },
     excerpt:
       "Подробное руководство по использованию Redis для оптимизации производительности веб-приложений, включая паттерны кэширования, распределенные блокировки и управление сессиями.",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97",
+    image:
+      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200",
     categoryId: 1,
     tags: [1, 4], // JavaScript, Node.js
   },
@@ -1953,7 +1961,7 @@ export default [
     },
     excerpt:
       "Подробное руководство по созданию масштабируемого GraphQL API с использованием TypeScript, включая аутентификацию, оптимизацию производительности и обработку ошибок.",
-    image: "https://images.unsplash.com/photo-1555952517-2e8e729e0b44",
+    image: "https://images.unsplash.com/photo-1555952517-2e8e729e0b44?w=1200",
     categoryId: 1,
     tags: [1, 4, 8], // JavaScript, Node.js, TypeScript
   },
@@ -2106,7 +2114,7 @@ export default [
     },
     excerpt:
       "Полное руководство по настройке системы мониторинга и аналитики на базе ELK Stack, включая интеграцию с Node.js приложением, настройку алертинга и визуализацию данных.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200",
     categoryId: 1,
     tags: [1, 4], // JavaScript, Node.js
   },
@@ -2275,7 +2283,8 @@ export default [
     },
     excerpt:
       "Подробное руководство по построению архитектуры современных React-приложений, включая организацию кода, управление состоянием, оптимизацию производительности и тестирование.",
-    image: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2",
+    image:
+      "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=1200",
     categoryId: 1,
     tags: [1, 3, 8], // JavaScript, React, TypeScript
   },
@@ -2443,7 +2452,8 @@ export default [
     },
     excerpt:
       "Практическое руководство по использованию Kubernetes для веб-разработчиков, включая настройку кластера, управление ресурсами, мониторинг и безопасность.",
-    image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9",
+    image:
+      "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200",
     categoryId: 1,
     tags: [6], // Docker
   },
@@ -2597,7 +2607,8 @@ export default [
     },
     excerpt:
       "Подробное руководство по проектированию масштабируемых систем, включая архитектурные паттерны, масштабирование баз данных, кэширование и отказоустойчивость.",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
+    image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200",
     categoryId: 1,
     tags: [1, 4], // JavaScript, Node.js
   },

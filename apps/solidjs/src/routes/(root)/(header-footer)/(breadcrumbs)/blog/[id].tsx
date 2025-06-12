@@ -141,6 +141,7 @@ export default function Page(props: RouteSectionProps) {
             src={post()!.image!}
             alt="blog preview"
             class="mb-5 w-full rounded-3xl sm:mb-10"
+            loading="lazy"
           />
         </Show>
         <div class="prose mx-auto mb-6" innerHTML={content()} />

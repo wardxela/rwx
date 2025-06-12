@@ -103,6 +103,7 @@ function RecentPosts() {
                     alt={post.title}
                     src={post.image ?? "/placeholder.jpg"}
                     class="aspect-square max-w-24 shrink-0 rounded-xl object-cover transition group-hover:brightness-90"
+                    loading="lazy"
                   />
                   <div class="grow font-medium transition group-hover:text-primary">
                     {post.title}

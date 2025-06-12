@@ -21,6 +21,7 @@ export const PostLink: Component<PostLinkProps> = (props) => {
           src={props.image ?? "/placeholder.jpg"}
           class="h-52 @lg:min-h-62 w-full @lg:max-w-1/3 rounded-t-2xl @lg:rounded-l-2xl @lg:rounded-tr-none object-cover"
           alt={props.title}
+          loading="lazy"
         />
         <div class="flex grow flex-col @sm:p-5 p-4">
           <h6 class="mb-3 font-semibold @sm:text-xl">{props.title}</h6>

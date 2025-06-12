@@ -55,6 +55,7 @@ export default function Page() {
             class="absolute top-0 left-0 block h-full w-full object-cover object-left md:object-center"
             src="/hero-bg.png"
             alt="background"
+            loading="lazy"
           />
           <div class="container relative z-10 flex min-h-96 items-center sm:min-h-[500px] md:min-h-[700px]">
             <div class="max-w-68 sm:max-w-lg">
@@ -139,8 +140,8 @@ export default function Page() {
                   ЧИП Дополнения
                 </div>
                 <div class="mb-5 text-lg text-neutral-600 leading-7">
-                  Новый уровень плагина ЧИП - ЧИП для WordPress. Более мощный,
-                  гибкий и волшебный внутри.
+                  Изучите новые темы и углубитесь в интересующие области с
+                  нашими дополнительными материалами и ресурсами.
                 </div>
                 <Button size="lg">Исследуйте курс</Button>
               </div>

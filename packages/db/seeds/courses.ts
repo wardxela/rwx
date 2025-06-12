@@ -5,7 +5,8 @@ export default [
       "Полный курс по современной веб-разработке с использованием React, TypeScript и лучших практик. Научитесь создавать интерактивные пользовательские интерфейсы, управлять состоянием приложения и оптимизировать производительность.",
     price: 14999,
     oldPrice: 19999,
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee",
+    image:
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200",
     published: true,
     categoryId: 1,
     faq: {
@@ -489,7 +490,8 @@ export default [
       "Освойте Docker и Kubernetes для эффективной разработки и развертывания приложений. Научитесь создавать, управлять и масштабировать контейнеры, работать с Docker Compose и Kubernetes, а также развертывать приложения в production.",
     price: 12999,
     oldPrice: 16999,
-    image: "https://images.unsplash.com/photo-1605745341112-85968b19335b",
+    image:
+      "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=1200",
     published: true,
     categoryId: 1,
     faq: {
@@ -869,7 +871,8 @@ export default [
       "Практический курс английского языка для разработчиков, тестировщиков и других IT-специалистов. Освойте техническую лексику, документацию, деловую переписку и устное общение в профессиональной среде.",
     price: 9999,
     oldPrice: 12999,
-    image: "https://images.unsplash.com/photo-1588072432836-e10032774350",
+    image:
+      "https://images.unsplash.com/photo-1588072432836-e10032774350?w=1200",
     published: true,
     categoryId: 4,
     faq: {
@@ -1253,7 +1256,8 @@ export default [
       "Практический курс по созданию удобных и привлекательных интерфейсов для веб и мобильных приложений.",
     price: 11999,
     oldPrice: 14999,
-    image: "https://images.unsplash.com/photo-1541462608143-67571c6738dd ",
+    image:
+      "https://images.unsplash.com/photo-1541462608143-67571c6738dd?w=1200",
     published: true,
     categoryId: 2,
     faq: {
@@ -1777,7 +1781,7 @@ export default [
       "Полный курс по продвижению в интернете: SEO, контекстная реклама, SMM и аналитика.",
     price: 8999,
     oldPrice: 11999,
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200",
     published: true,
     categoryId: 3, // Маркетинг
     faq: {
@@ -1912,7 +1916,7 @@ export default [
       "Полный курс по продвижению в интернете: SEO, контекстная реклама, SMM и аналитика.",
     price: 8999,
     oldPrice: 11999,
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71 ",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200",
     published: true,
     categoryId: 3,
     faq: {
@@ -2425,7 +2429,8 @@ export default [
       "Как выстраивать эффективные коммуникации через экраны: от деловой переписки до видеозвонков.",
     price: 7999,
     oldPrice: 9999,
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3 ",
+    image:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200",
     published: true,
     categoryId: 10,
     faq: {
@@ -2887,7 +2892,7 @@ export default [
       "Освойте базовые кулинарные техники и научитесь готовить блюда из разных стран под руководством профессионального шеф-повара.",
     price: 8900,
     oldPrice: 11900,
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947 ",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=1200",
     published: true,
     categoryId: 18,
     faq: {
@@ -3334,7 +3339,8 @@ export default [
       "Практический курс по фундаментальным законам физики с экспериментами, которые можно повторить дома.",
     price: 12900,
     oldPrice: 15900,
-    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d ",
+    image:
+      "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=1200",
     published: true,
     categoryId: 6,
     faq: {
@@ -3776,7 +3782,8 @@ export default [
       "Погрузитесь в философию через призму повседневной жизни. Научитесь задавать важные вопросы, анализировать свои убеждения и применять философские идеи для решения реальных жизненных задач — от принятия решений до поиска смысла.",
     price: 7900,
     oldPrice: 9900,
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40",
+    image:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200",
     published: true,
     categoryId: 20,
     faq: {
@@ -4463,7 +4470,7 @@ export default [
       "Научитесь преодолевать страх сцены, структурировать речь и говорить так, чтобы вас слушали — на работе, на сцене или перед камерой.",
     price: 9900,
     oldPrice: 12900,
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200",
     published: true,
     categoryId: 10,
     faq: {
