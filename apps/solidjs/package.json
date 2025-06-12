@@ -49,6 +49,7 @@
     "@rwx/tsconfig": "*",
     "@tailwindcss/postcss": "^4.1.8",
     "@tailwindcss/typography": "^0.5.16",
+    "solid-devtools": "^0.34.0",
     "tw-animate-css": "^1.3.3"
   },
   "engines": {
