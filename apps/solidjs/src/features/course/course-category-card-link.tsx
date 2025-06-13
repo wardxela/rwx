@@ -404,7 +404,7 @@ export const CourseCategoryLink: Component<CourseCategoryLinkProps> = (
         {iconsMap[props.data.name as keyof typeof iconsMap]}
       </div>
       <div class="flex flex-col items-center justify-start gap-2 sm:gap-3">
-        <div class="text-center font-semibold text-lg capitalize transition group-hover:text-orange-500 sm:text-xl">
+        <div class="wrap-anywhere text-center font-semibold text-lg capitalize transition group-hover:text-orange-500 sm:text-xl">
           {props.data.name}
         </div>
         <div class="text-neutral-600 leading-7 sm:text-lg">
