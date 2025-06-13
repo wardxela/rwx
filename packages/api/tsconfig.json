@@ -1,5 +1,0 @@
-{
-  "extends": "@rwx/tsconfig/base.json",
-  "exclude": ["node_modules"],
-  "include": ["."]
-}

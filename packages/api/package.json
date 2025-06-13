@@ -6,20 +6,5 @@
   "exports": {
     ".": "./src/schema.d.ts"
   },
-  "license": "MIT",
-  "scripts": {
-    "build:api": "tsx ./scripts/openapi.ts",
-    "clean": "git clean -xdf .cache .turbo node_modules",
-    "typecheck": "tsc --customConditions disable"
-  },
-  "dependencies": {
-    "openapi-fetch": "^0.14.0"
-  },
-  "devDependencies": {
-    "@nestjs/swagger": "^11.2.0",
-    "@rwx/nestjs": "*",
-    "@rwx/tsconfig": "*",
-    "openapi-typescript": "^7.8.0",
-    "tsx": "^4.20.2"
-  }
+  "license": "MIT"
 }
