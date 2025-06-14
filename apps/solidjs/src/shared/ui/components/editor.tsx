@@ -6,6 +6,7 @@ import Image from "@editorjs/image";
 import Link from "@editorjs/link";
 import List from "@editorjs/list";
 import { type Component, createUniqueId, onCleanup, onMount } from "solid-js";
+import api from "#api";
 
 export interface EditorProps {
   initialData: unknown;
@@ -25,7 +26,32 @@ export const Editor: Component<EditorProps> = (props) => {
       tools: {
         header: Header,
         link: Link,
-        image: Image,
+        image: {
+          class: Image,
+          config: {
+            uploader: {
+              async uploadByFile(file: File) {
+                const formData = new FormData();
+                formData.append("file", file);
+                const image = await api.POST("/files/upload", {
+                  // @ts-expect-error
+                  body: formData,
+                });
+                if (!image.data) {
+                  return {
+                    success: 0,
+                  };
+                }
+                return {
+                  success: 1,
+                  file: {
+                    url: `${import.meta.env.VITE_API_URL}${image.data.url}`,
+                  },
+                };
+              },
+            },
+          },
+        },
         list: List,
         code: CodeTool,
       },
