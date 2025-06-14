@@ -396,18 +396,18 @@ export const CourseCategoryLink: Component<CourseCategoryLinkProps> = (
     <A
       href={`/courses?categories=${props.data.id}`}
       class={cn(
-        "group hover:-translate-y-2 sm:hover:-translate-y-4 inline-flex aspect-square flex-col items-center justify-center gap-4 rounded-3xl border border-gray-200 bg-white p-4 transition hover:shadow-lg sm:gap-6",
+        "group hover:-translate-y-2 sm:hover:-translate-y-4 inline-flex flex-col items-center justify-center gap-4 rounded-3xl border border-gray-200 bg-white p-6 transition hover:shadow-lg md:aspect-square",
         props.class,
       )}
     >
       <div class="relative grid w-6 place-items-center">
         {iconsMap[props.data.name as keyof typeof iconsMap]}
       </div>
-      <div class="flex flex-col items-center justify-start gap-2 sm:gap-3">
-        <div class="wrap-anywhere text-center font-semibold text-lg capitalize transition group-hover:text-orange-500 sm:text-xl">
+      <div class="flex flex-col items-center justify-start gap-1">
+        <div class="wrap-anywhere text-center font-semibold text-lg capitalize transition group-hover:text-orange-500">
           {props.data.name}
         </div>
-        <div class="text-neutral-600 leading-7 sm:text-lg">
+        <div class="text-neutral-600 leading-7">
           {count()} {coursesText()}
         </div>
       </div>

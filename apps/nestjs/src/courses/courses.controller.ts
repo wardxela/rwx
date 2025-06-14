@@ -67,6 +67,11 @@ export class CoursesController {
     return this.usersService.getAllCourseAuthors();
   }
 
+  @Get("reviews")
+  getReviews(): Promise<ReviewDto[]> {
+    return this.service.getReviews();
+  }
+
   @Get("lessons/:id")
   async getCourseLesson(@Param("id") id: string): Promise<LessonDto> {
     return this.service.getCourseLesson(id);
@@ -119,6 +124,14 @@ export class CoursesController {
     @Body() course: CourseCreateDto,
   ) {
     return res.json(await this.service.createCourse(req.user!.id, course));
+  }
+
+  @Post("/reviews/:id")
+  @Roles(["ADMIN"])
+  @UseGuards(SessionGuard)
+  async approveReview(@Param("id") id: string) {
+    await this.service.approveReview(id);
+    return true;
   }
 
   @Post(":id/reviews")

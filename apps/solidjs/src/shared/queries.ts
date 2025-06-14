@@ -160,4 +160,9 @@ export const getMessages = query(async () => {
   return response.data ?? [];
 }, "/messages");
 
+export const getReviews = query(async () => {
+  const response = await api.GET("/courses/reviews");
+  return response.data ?? [];
+}, "/reviews");
+
 export class NotFoundError extends Error {}

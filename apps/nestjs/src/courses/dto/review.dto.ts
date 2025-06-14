@@ -11,6 +11,8 @@ export class ReviewDto {
   id: string;
   rating: number;
   comment: string;
+  courseId: string;
+  approved: boolean;
   author: {
     id: string;
     firstName: string;

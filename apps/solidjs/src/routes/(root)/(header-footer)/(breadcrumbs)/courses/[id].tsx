@@ -12,10 +12,12 @@ import {
   type Component,
   ErrorBoundary,
   For,
+  Match,
   Show,
   Suspense,
   createEffect,
 } from "solid-js";
+import { Switch } from "solid-js";
 import { z } from "zod/v4";
 import api from "#api";
 import { AuthShow } from "#features/auth/guards";
@@ -420,47 +422,66 @@ const LeaveReview: Component<LeaveReviewProps> = (props) => {
     <>
       <div class="container">
         <Suspense>
-          <Show when={existingReview() === null}>
-            <div class="relative xl:max-w-3xl">
-              <div class="mb-4 font-semibold text-lg">Оставить отзыв</div>
-              <form
-                ref={formRef}
-                class="mb-10"
-                action={leaveReviewAction}
-                method="post"
-              >
-                <input type="hidden" name="courseId" value={props.courseId} />
-                <TextField class="mb-4">
-                  <TextFieldTextArea
-                    required
-                    name="comment"
-                    placeholder="Комментарий"
-                  />
-                  <TextFieldErrorMessage>
-                    {submission.result?.errors?.comment}
-                  </TextFieldErrorMessage>
-                </TextField>
-                <div class="mb-4">
-                  <StarRating required name="rating" />
-                </div>
-                <div>
-                  <Button type="submit">Отправить</Button>
-                </div>
-              </form>
-              <AuthShow
-                unauth={
-                  <>
-                    <div class="absolute inset-0 z-20 grid place-items-center bg-white/85" />
-                    <div class="-translate-1/2 absolute top-1/2 left-1/2 z-20 text-center">
-                      <Button as="a" variant="link" href="/login">
-                        Авторизуйтесь, чтобы оставить отзыв
-                      </Button>
+          <div class="mb-10 xl:max-w-3xl">
+            <Switch>
+              <Match when={existingReview() === null}>
+                <div class="relative">
+                  <div class="mb-4 font-semibold text-lg">Оставить отзыв</div>
+                  <form ref={formRef} action={leaveReviewAction} method="post">
+                    <input
+                      type="hidden"
+                      name="courseId"
+                      value={props.courseId}
+                    />
+                    <TextField
+                      class="mb-4"
+                      validationState={
+                        submission.result?.errors?.comment ? "invalid" : "valid"
+                      }
+                    >
+                      <TextFieldTextArea
+                        required
+                        name="comment"
+                        placeholder="Комментарий"
+                      />
+                      <TextFieldErrorMessage>
+                        {submission.result?.errors?.comment}
+                      </TextFieldErrorMessage>
+                    </TextField>
+                    <div class="mb-4">
+                      <StarRating required name="rating" />
                     </div>
-                  </>
-                }
-              />
-            </div>
-          </Show>
+                    <div>
+                      <Button type="submit">Отправить</Button>
+                    </div>
+                  </form>
+                  <AuthShow
+                    unauth={
+                      <>
+                        <div class="absolute inset-0 z-20 grid place-items-center bg-white/85" />
+                        <div class="-translate-1/2 absolute top-1/2 left-1/2 z-20 text-center">
+                          <Button as="a" variant="link" href="/login">
+                            Авторизуйтесь, чтобы оставить отзыв
+                          </Button>
+                        </div>
+                      </>
+                    }
+                  />
+                </div>
+              </Match>
+              <Match when={existingReview()?.approved}>
+                <div class="rounded-xl bg-green-100 p-5 text-center text-green-800">
+                  Вы уже оставили отзыв на этот курс. Ваша оценка:{" "}
+                  <span class="font-semibold">{existingReview()?.rating}</span>
+                </div>
+              </Match>
+              <Match when={!existingReview()?.approved}>
+                <div class="rounded-xl bg-yellow-100 p-5 text-center text-yellow-800">
+                  Ваш отзыв на этот курс ожидает проверки
+                </div>
+              </Match>
+            </Switch>
+          </div>
         </Suspense>
       </div>
       <Toast

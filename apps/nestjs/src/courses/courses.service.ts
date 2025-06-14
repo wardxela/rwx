@@ -123,7 +123,11 @@ export class CoursesService {
       .leftJoin("Module", "Module.courseId", "Course.id")
       .leftJoin("Lesson", "Lesson.moduleId", "Module.id")
       .leftJoin("CourseEnrollment", "CourseEnrollment.courseId", "Course.id")
-      .leftJoin("CourseReview", "CourseReview.courseId", "Course.id")
+      .leftJoin("CourseReview", (join) =>
+        join
+          .onRef("CourseReview.courseId", "=", "Course.id")
+          .on("CourseReview.approved", "=", true),
+      )
       .select(({ fn }) => [
         "Course.id",
         "Course.title",
@@ -287,7 +291,11 @@ export class CoursesService {
       .leftJoin("Module", "Module.courseId", "Course.id")
       .leftJoin("Lesson", "Lesson.moduleId", "Module.id")
       .leftJoin("CourseEnrollment", "CourseEnrollment.courseId", "Course.id")
-      .leftJoin("CourseReview", "CourseReview.courseId", "Course.id")
+      .leftJoin("CourseReview", (join) =>
+        join
+          .onRef("CourseReview.courseId", "=", "Course.id")
+          .on("CourseReview.approved", "=", true),
+      )
       .select(({ fn }) => [
         "Course.id",
         "Course.title",
@@ -406,11 +414,12 @@ export class CoursesService {
     const reviews = await this.db
       .selectFrom("CourseReview")
       .innerJoin("User", "User.id", "CourseReview.userId")
-      .where("CourseReview.courseId", "=", id)
       .select([
         "CourseReview.id",
         "CourseReview.rating",
         "CourseReview.comment",
+        "CourseReview.courseId",
+        "CourseReview.approved",
         "CourseReview.createdAt",
         "CourseReview.updatedAt",
         "User.id as authorId",
@@ -419,6 +428,8 @@ export class CoursesService {
         "User.image as authorImage",
         "User.bio as authorBio",
       ])
+      .where("CourseReview.courseId", "=", id)
+      .where("CourseReview.approved", "=", true)
       .orderBy("CourseReview.createdAt", "desc")
       .execute();
 
@@ -426,8 +437,10 @@ export class CoursesService {
       id: review.id,
       rating: review.rating,
       comment: review.comment,
+      courseId: review.courseId,
       createdAt: review.createdAt,
       updatedAt: review.updatedAt,
+      approved: review.approved,
       author: {
         id: review.authorId,
         firstName: review.authorFirstName,
@@ -453,6 +466,8 @@ export class CoursesService {
         "CourseReview.id",
         "CourseReview.rating",
         "CourseReview.comment",
+        "CourseReview.courseId",
+        "CourseReview.approved",
         "CourseReview.createdAt",
         "CourseReview.updatedAt",
         "User.id as authorId",
@@ -471,8 +486,10 @@ export class CoursesService {
       id: review.id,
       rating: review.rating,
       comment: review.comment,
+      courseId: review.courseId,
       createdAt: review.createdAt,
       updatedAt: review.updatedAt,
+      approved: review.approved,
       author: {
         id: review.authorId,
         firstName: review.authorFirstName,
@@ -483,6 +500,58 @@ export class CoursesService {
         bio: review.authorBio,
       },
     };
+  }
+
+  async getReviews(): Promise<ReviewDto[]> {
+    const reviews = await this.db
+      .selectFrom("CourseReview")
+      .innerJoin("User", "User.id", "CourseReview.userId")
+      .select([
+        "CourseReview.id",
+        "CourseReview.rating",
+        "CourseReview.comment",
+        "CourseReview.courseId",
+        "CourseReview.approved",
+        "CourseReview.createdAt",
+        "CourseReview.updatedAt",
+        "User.id as authorId",
+        "User.firstName as authorFirstName",
+        "User.lastName as authorLastName",
+        "User.image as authorImage",
+        "User.bio as authorBio",
+      ])
+      .where("CourseReview.approved", "=", false)
+      .orderBy("CourseReview.createdAt", "desc")
+      .execute();
+
+    return reviews.map((review) => ({
+      id: review.id,
+      rating: review.rating,
+      comment: review.comment,
+      courseId: review.courseId,
+      createdAt: review.createdAt,
+      updatedAt: review.updatedAt,
+      approved: review.approved,
+      author: {
+        id: review.authorId,
+        firstName: review.authorFirstName,
+        lastName: review.authorLastName,
+        image: review.authorImage
+          ? this.filesService.resolve(review.authorImage)
+          : null,
+        bio: review.authorBio,
+      },
+    }));
+  }
+
+  async approveReview(id: string): Promise<void> {
+    await this.db
+      .updateTable("CourseReview")
+      .set({
+        approved: true,
+      })
+      .where("CourseReview.id", "=", id)
+      .execute();
   }
 
   async getCourseLesson(lessonId: string): Promise<LessonDto> {
